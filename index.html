@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <title>Extrator Veicular</title>
+
+  <style>
+    :root {
+      --bg: #0b1020;
+      --card: #111827;
+      --card2: #182235;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --line: #263449;
+      --green: #22c55e;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+        Roboto, Helvetica, Arial, sans-serif;
+      background: linear-gradient(180deg,#08101f,#0b1020 45%,#101828);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      padding: 25px 16px 50px;
+    }
+
+    h1 {
+      font-size: 36px;
+      margin-bottom: 5px;
+    }
+
+    .subtitle {
+      color: var(--muted);
+      margin-bottom: 25px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 16px;
+      margin-bottom: 16px;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 250px;
+      background: #08101b;
+      color: white;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 15px;
+      font-size: 16px;
+      outline: none;
+      resize: vertical;
+    }
+
+    textarea:focus {
+      border-color: #3b82f6;
+    }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    @media(min-width:600px) {
+      .buttons {
+        grid-template-columns: repeat(3,1fr);
+      }
+    }
+
+    button {
+      border: none;
+      padding: 15px;
+      border-radius: 13px;
+      font-weight: bold;
+      font-size: 15px;
+      cursor: pointer;
+    }
+
+    .green {
+      background: var(--green);
+      color: #052e16;
+    }
+
+    .gray {
+      background: #1e293b;
+      color: white;
+    }
+
+    .red {
+      background: #451a1a;
+      color: #fecaca;
+    }
+
+    #status {
+      margin-top: 15px;
+      padding: 12px;
+      border-radius: 10px;
+      display: none;
+    }
+
+    .success {
+      display: block !important;
+      background: #052e16;
+      color: #bbf7d0;
+    }
+
+    .warning {
+      display: block !important;
+      background: #422006;
+      color: #fde68a;
+    }
+
+    #resultado {
+      display: none;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media(min-width:600px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .campo {
+      background: var(--card2);
+      border: 1px solid var(--line);
+      border-radius: 13px;
+      padding: 13px;
+    }
+
+    .campo span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .campo strong {
+      font-size: 16px;
+      word-break: break-word;
+    }
+
+    pre {
+      white-space: pre-wrap;
+      word-break: break-word;
+      background: #08101b;
+      padding: 15px;
+      border-radius: 12px;
+      overflow: auto;
+    }
+
+    details {
+      margin-top: 15px;
+    }
+
+    summary {
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    .privacy {
+      text-align: center;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 25px;
+    }
+  </style>
+</head>
+
+<body>
+
+<div class="container">
+
+  <h1>🚗 Extrator Veicular</h1>
+
+  <div class="subtitle">
+    Cole o conteúdo da consulta para organizar automaticamente os dados.
+  </div>
+
+  <div class="card">
+
+    <textarea
+      id="entrada"
+      placeholder="Cole aqui todo o conteúdo da consulta veicular..."
+    ></textarea>
+
+    <div class="buttons">
+
+      <button class="green" onclick="extrair()">
+        🔎 Extrair dados
+      </button>
+
+      <button class="gray" onclick="colar()">
+        📋 Colar
+      </button>
+
+      <button class="red" onclick="limpar()">
+        🗑 Limpar
+      </button>
+
+    </div>
+
+    <div id="status"></div>
+
+  </div>
+
+  <div id="resultado">
+
+    <div class="card">
+
+      <h2>Dados encontrados</h2>
+
+      <div id="campos" class="grid"></div>
+
+      <div class="buttons">
+
+        <button class="green" onclick="copiarTudo()">
+          📋 Copiar tudo
+        </button>
+
+        <button class="gray" onclick="copiarJSON()">
+          { } Copiar JSON
+        </button>
+
+      </div>
+
+      <details>
+        <summary>Ver JSON</summary>
+        <pre id="json"></pre>
+      </details>
+
+    </div>
+
+  </div>
+
+  <div class="privacy">
+    🔒 Os dados são processados somente no seu aparelho.
+  </div>
+
+</div>
+
+<script>
+
+let dadosAtuais = {};
+
+const campos = [
+
+  ["placaMercosul","Placa Mercosul",
+    /PLACA\s*MERCOSUL\s*[:\-]?\s*([A-Z]{3}\d[A-Z0-9]\d{2})/i],
+
+  ["placaAntiga","Placa antiga",
+    /PLACA\s*ANTIGA\s*[:\-]?\s*([A-Z]{3}[-\s]?\d{4})/i],
+
+  ["marcaModelo","Marca / Modelo",
+    /MARCA\s*\/?\s*MODELO\s*[:\-]?\s*([^\n]+)/i],
+
+  ["municipio","Município",
+    /MUNIC[IÍ]PIO\s*[:\-]?\s*([^\n]+)/i],
+
+  ["tipo","Tipo",
+    /\bTIPO\s*[:\-]?\s*([^\n]+)/i],
+
+  ["categoria","Categoria",
+    /CATEGORIA\s*[:\-]?\s*([^\n]+)/i],
+
+  ["cor","Cor",
+    /\bCOR\s*[:\-]?\s*([^\n]+)/i],
+
+  ["combustivel","Combustível",
+    /COMBUST[IÍ]VEL\s*[:\-]?\s*([^\n]+)/i],
+
+  ["ano","Ano fabricação / modelo",
+    /ANO\s*FAB\.?\s*\/?\s*MODELO\s*[:\-]?\s*([^\n]+)/i],
+
+  ["situacao","Situação",
+    /SITUA[CÇ][AÃ]O\s*[:\-]?\s*([^\n]+)/i],
+
+  ["especie","Espécie",
+    /ESP[EÉ]CIE\s*[:\-]?\s*([^\n]+)/i],
+
+  ["carroceria","Carroceria",
+    /CARROCERIA\s*[:\-]?\s*([^\n]+)/i],
+
+  ["eixos","Eixos",
+    /EIXO[S]?\s*[:\-]?\s*([^\n]+)/i],
+
+  ["lotacao","Lotação",
+    /LOTA[CÇ][AÃ]O\s*[:\-]?\s*([^\n]+)/i],
+
+  ["potencia","Potência",
+    /POT[EÊ]NCIA\s*[:\-]?\s*([^\n]+)/i],
+
+  ["cilindradas","Cilindradas",
+    /CILINDRADAS?\s*[:\-]?\s*([^\n]+)/i],
+
+  ["procedencia","Procedência",
+    /PROCED[EÊ]NCIA\s*[:\-]?\s*([^\n]+)/i],
+
+  ["chassi","Chassi",
+    /CHASSI\s*[:\-]?\s*([A-HJ-NPR-Z0-9]{11,20})/i],
+
+  ["renavam","RENAVAM",
+    /RENAVAM\s*[:\-]?\s*(\d{8,15})/i],
+
+  ["motor","Motor",
+    /\bMOTOR\s*[:\-]?\s*([A-Z0-9.\-\/]+)/i],
+
+  ["proprietario","Proprietário",
+    /PROPRIET[AÁ]RIO\s*[:\-]?\s*([^\n]+)/i],
+
+  ["cpfCnpj","CPF / CNPJ",
+    /(?:CPF\s*\/?\s*CNPJ|CPF|CNPJ)\s*[:\-]?\s*([\d.\-\/]+)/i],
+
+  ["rouboFurto","Roubo / Furto",
+    /ROUBO\s*\/?\s*FURTO\s*[:\-]?\s*([^\n]+)/i],
+
+  ["renajud","RENAJUD",
+    /RENAJUD\s*[:\-]?\s*([^\n]+)/i],
+
+  ["renainf","RENAINF",
+    /RENAINF\s*[:\-]?\s*([^\n]+)/i],
+
+  ["leilao","Leilão",
+    /LEIL[AÃ]O\s*[:\-]?\s*([^\n]+)/i],
+
+  ["comunicacaoVenda","Comunicação de venda",
+    /COMUNICA[CÇ][AÃ]O\s*DE\s*VENDA\s*[:\-]?\s*([^\n]+)/i],
+
+  ["intencaoVenda","Intenção de venda",
+    /INTEN[CÇ][AÃ]O\s*DE\s*VENDA\s*[:\-]?\s*([^\n]+)/i],
+
+  ["emissaoCRV","Emissão CRV",
+    /EMISS[AÃ]O\s*CRV\s*[:\-]?\s*([^\n]+)/i],
+
+  ["emissaoCRLV","Emissão CRLV",
+    /EMISS[AÃ]O\s*CRLV\s*[:\-]?\s*([^\n]+)/i],
+
+  ["licenciamento","Licenciamento",
+    /(?:ANO\s*DE\s*)?LICENCIAMENTO\s*[:\-]?\s*([^\n]+)/i]
+
+];
+
+
+function normalizar(texto) {
+
+  return texto
+    .replace(/\r/g,"\n")
+    .replace(/\u00a0/g," ")
+    .replace(/[ \t]+/g," ")
+    .replace(/\n{2,}/g,"\n")
+    .trim();
+
+}
+
+
+function extrair() {
+
+  let texto = document.getElementById("entrada").value;
+
+  if(!texto.trim()) {
+
+    status("Cole o conteúdo da consulta primeiro.","warning");
+    return;
+
+  }
+
+  texto = normalizar(texto);
+
+  let dados = {};
+
+  campos.forEach(c => {
+
+    const chave = c[0];
+    const regex = c[2];
+
+    const match = texto.match(regex);
+
+    if(match && match[1]) {
+
+      dados[chave] = match[1].trim();
+
+    }
+
+  });
+
+
+  /* RESTRIÇÕES */
+
+  dados.restricoes = [];
+
+  const regexRestricao =
+    /RESTRI[CÇ][AÃ]O\s*(\d+)\s*[:\-]?\s*([^\n]+)/gi;
+
+  let r;
+
+  while((r = regexRestricao.exec(texto)) !== null) {
+
+    dados.restricoes.push({
+
+      numero: r[1],
+      valor: r[2].trim()
+
+    });
+
+  }
+
+
+  dadosAtuais = dados;
+
+  mostrar(dados);
+
+}
+
+
+function mostrar(dados) {
+
+  const area = document.getElementById("campos");
+
+  area.innerHTML = "";
+
+  let encontrados = 0;
+
+
+  campos.forEach(c => {
+
+    const chave = c[0];
+    const nome = c[1];
+
+    if(dados[chave]) {
+
+      encontrados++;
+
+      const div = document.createElement("div");
+
+      div.className = "campo";
+
+      div.innerHTML =
+        "<span>"+esc(nome)+"</span>"+
+        "<strong>"+esc(dados[chave])+"</strong>";
+
+      area.appendChild(div);
+
+    }
+
+  });
+
+
+  if(dados.restricoes) {
+
+    dados.restricoes.forEach(r => {
+
+      encontrados++;
+
+      const div = document.createElement("div");
+
+      div.className = "campo";
+
+      div.innerHTML =
+        "<span>Restrição "+esc(r.numero)+"</span>"+
+        "<strong>"+esc(r.valor)+"</strong>";
+
+      area.appendChild(div);
+
+    });
+
+  }
+
+
+  document.getElementById("json").textContent =
+    JSON.stringify(dados,null,2);
+
+
+  document.getElementById("resultado").style.display =
+    "block";
+
+
+  if(encontrados > 0) {
+
+    status(
+      encontrados+" campo(s) encontrado(s).",
+      "success"
+    );
+
+  } else {
+
+    status(
+      "Nenhum campo reconhecido. Tente copiar o conteúdo completo da consulta.",
+      "warning"
+    );
+
+  }
+
+}
+
+
+function status(texto,tipo) {
+
+  const s = document.getElementById("status");
+
+  s.className = tipo;
+
+  s.textContent = texto;
+
+}
+
+
+async function colar() {
+
+  try {
+
+    const texto =
+      await navigator.clipboard.readText();
+
+    document.getElementById("entrada").value =
+      texto;
+
+    status(
+      "Conteúdo colado. Agora toque em Extrair dados.",
+      "success"
+    );
+
+  } catch(e) {
+
+    status(
+      "O Safari não permitiu colar automaticamente. Toque e segure no campo e escolha Colar.",
+      "warning"
+    );
+
+  }
+
+}
+
+
+function limpar() {
+
+  document.getElementById("entrada").value = "";
+
+  document.getElementById("campos").innerHTML = "";
+
+  document.getElementById("resultado").style.display =
+    "none";
+
+  document.getElementById("status").style.display =
+    "none";
+
+  dadosAtuais = {};
+
+}
+
+
+function textoOrganizado() {
+
+  let linhas = [];
+
+  linhas.push("CONSULTA VEICULAR");
+  linhas.push("");
+
+
+  campos.forEach(c => {
+
+    const chave = c[0];
+    const nome = c[1];
+
+    if(dadosAtuais[chave]) {
+
+      linhas.push(
+        nome+": "+dadosAtuais[chave]
+      );
+
+    }
+
+  });
+
+
+  if(dadosAtuais.restricoes) {
+
+    dadosAtuais.restricoes.forEach(r => {
+
+      linhas.push(
+        "Restrição "+r.numero+": "+r.valor
+      );
+
+    });
+
+  }
+
+
+  return linhas.join("\n");
+
+}
+
+
+async function copiarTudo() {
+
+  try {
+
+    await navigator.clipboard.writeText(
+      textoOrganizado()
+    );
+
+    status(
+      "Dados copiados.",
+      "success"
+    );
+
+  } catch(e) {
+
+    status(
+      "Não foi possível copiar automaticamente.",
+      "warning"
+    );
+
+  }
+
+}
+
+
+async function copiarJSON() {
+
+  try {
+
+    await navigator.clipboard.writeText(
+      JSON.stringify(dadosAtuais,null,2)
+    );
+
+    status(
+      "JSON copiado.",
+      "success"
+    );
+
+  } catch(e) {
+
+    status(
+      "Não foi possível copiar o JSON.",
+      "warning"
+    );
+
+  }
+
+}
+
+
+function esc(texto) {
+
+  return String(texto).replace(
+    /[&<>"']/g,
+    function(c) {
+
+      return {
+        "&":"&amp;",
+        "<":"&lt;",
+        ">":"&gt;",
+        '"':"&quot;",
+        "'":"&#039;"
+      }[c];
+
+    }
+  );
+
+}
+
+</script>
+
+</body>
+</html>
