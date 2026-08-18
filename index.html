@@ -2,46 +2,56 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Extrator Automático por Link</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Extrator Veicular</title>
   <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
   <style>
     * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { padding: 16px; background-color: #f4f6f8; color: #222; margin: 0; }
-    h2 { font-size: 1.25rem; margin-top: 0; }
-    .card { background: white; padding: 16px; border-radius: 12px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); margin-bottom: 16px; }
-    input[type="url"] { width: 100%; padding: 14px; border-radius: 8px; border: 1px solid #ccc; font-size: 15px; margin-bottom: 10px; }
-    .btn-group { display: flex; gap: 8px; flex-wrap: wrap; }
-    button { flex: 1; padding: 12px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; min-width: 120px; font-size: 14px; }
-    .btn-primary { background: #007aff; color: white; }
-    .btn-success { background: #34c759; color: white; }
-    .btn-danger { background: #ff3b30; color: white; }
-    #status { margin-top: 10px; font-size: 13px; font-weight: 500; }
+    body { padding: 12px; background-color: #f2f2f7; color: #1c1c1e; margin: 0; }
+    .card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px; }
+    h2 { font-size: 1.15rem; margin: 0 0 12px 0; color: #000; }
+    input[type="url"], textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #d1d1d6; font-size: 14px; margin-bottom: 8px; }
+    textarea { height: 110px; resize: vertical; }
+    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+    .full-width { grid-column: span 2; }
+    button { padding: 12px; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; }
+    .btn-primary { background: #007aff; color: #fff; }
+    .btn-secondary { background: #5856d6; color: #fff; }
+    .btn-success { background: #34c759; color: #fff; }
+    .btn-danger { background: #ff3b30; color: #fff; }
+    #status { margin-top: 8px; font-size: 13px; font-weight: 500; }
     .status-loading { color: #007aff; }
     .status-error { color: #ff3b30; }
     .status-success { color: #34c759; }
-    .table-container { overflow-x: auto; max-height: 400px; border-radius: 8px; border: 1px solid #e0e0e0; background: white; }
-    table { width: 100%; border-collapse: collapse; font-size: 12px; }
-    th, td { border: 1px solid #e0e0e0; padding: 8px 10px; text-align: left; }
-    th { background: #f0f0f5; position: sticky; top: 0; }
+    .table-container { overflow-x: auto; max-height: 400px; border-radius: 8px; border: 1px solid #d1d1d6; background: #fff; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; white-space: nowrap; }
+    th, td { border: 1px solid #e5e5ea; padding: 8px 10px; text-align: left; }
+    th { background: #f2f2f7; position: sticky; top: 0; font-weight: 600; }
   </style>
 </head>
 <body>
 
   <div class="card">
-    <h2>🔗 Extrator por URL</h2>
-    <input type="url" id="targetUrl" placeholder="Cole o link aqui (https://...)" />
+    <h2>🚗 Extrator de Consultas Veiculares</h2>
+    
+    <input type="url" id="targetUrl" placeholder="Cole o link da consulta aqui..." />
+    <button class="btn-primary full-width" id="btnExtractLink" onclick="processarPorLink()">🚀 Puxar por Link</button>
+    
+    <div style="text-align: center; margin: 10px 0; color: #8e8e93; font-size: 12px;">— OU COLE O TEXTO ABAIXO —</div>
+
+    <textarea id="targetText" placeholder="Cole o texto copiado da consulta aqui..."></textarea>
     
     <div class="btn-group">
-      <button class="btn-primary" id="btnExtract" onclick="processarLink()">🚀 Puxar e Extrair</button>
+      <button class="btn-secondary" onclick="processarPorTexto()">⚡ Extrair Texto</button>
       <button class="btn-success" onclick="baixarExcel()">📥 Baixar Excel</button>
-      <button class="btn-danger" onclick="limparTudo()">🗑️ Limpar</button>
+      <button class="btn-danger full-width" onclick="limparTudo()">🗑️ Limpar Todos os Registros</button>
     </div>
+    
     <div id="status"></div>
   </div>
 
   <div class="card">
-    <h3>📊 Registros Extraídos (<span id="totalCount">0</span>)</h3>
+    <h3 style="font-size: 1rem; margin: 0 0 10px 0;">📊 Veículos Extraídos (<span id="totalCount">0</span>)</h3>
     <div class="table-container">
       <table id="dataTable">
         <thead><tr id="tableHead"></tr></thead>
@@ -53,110 +63,126 @@
   <script>
     let registros = [];
 
-    async function processarLink() {
+    // Cabeçalhos que são apenas títulos de seção e não têm valor próprio
+    const SECOES = [
+      "INFORMAÇÕES DO VEÍCULO", "ESPECIFICAÇÕES TÉCNICAS", 
+      "IDENTIFICADORES DO VEÍCULO", "DADOS DO PROPRIETÁRIO", 
+      "DADOS COMPLEMENTARES", "BRASIL", "PLACA"
+    ];
+
+    // Mapeamento das chaves de interesse do relatório
+    const CAMPOS_VEICULARES = [
+      "PLACA MERCOSUL", "PLACA ANTIGA", "MARCA / MODELO", "MUNICÍPIO",
+      "TIPO", "CATEGORIA", "COR", "COMBUSTÍVEL", "ANO FAB. / MODELO",
+      "SITUAÇÃO", "ESPÉCIE", "CARROCERIA", "EIXO", "LOTAÇÃO",
+      "POTÊNCIA", "CILINDRADAS", "PROCEDÊNCIA", "REMARCAÇÃO CHASSI",
+      "CHASSIS", "RENAVAM", "N. DO MOTOR", "NOME", "CPF/CNPJ",
+      "TIPO PESSOA", "Nº CÂMBIO", "Nº CARROCERIA", "CMT", "PBT",
+      "CMC", "EIXO TRASEIRO", "EIXO AUXILIAR", "CÓD. MUNICÍPIO",
+      "ORIGEM DA PROPRIEDADE", "DOC. PROPRIETÁRIO INDICADO", "Nº DOC. PROPRIETÁRIO INDICADO"
+    ];
+
+    async function processarPorLink() {
       const urlInput = document.getElementById('targetUrl').value.trim();
       const statusDiv = document.getElementById('status');
-      const btn = document.getElementById('btnExtract');
+      const btn = document.getElementById('btnExtractLink');
 
       if (!urlInput) {
-        statusDiv.className = 'status-error';
-        statusDiv.innerText = 'Por favor, insira uma URL válida.';
+        setStatus('Por favor, cole um link antes de continuar.', 'error');
         return;
       }
 
-      statusDiv.className = 'status-loading';
-      statusDiv.innerText = 'Acessando o link e puxando dados...';
+      setStatus('Acessando o link e extraindo dados...', 'loading');
       btn.disabled = true;
 
       try {
-        // Usa proxy para contornar bloqueio CORS do navegador
         const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(urlInput)}`;
         const response = await fetch(proxyUrl);
-        
-        if (!response.ok) throw new Error('Não foi possível carregar a página via proxy.');
+        if (!response.ok) throw new Error();
         
         const data = await response.json();
-        const conteudoBruto = data.contents;
+        if (!data.contents) throw new Error();
 
-        if (!conteudoBruto) throw new Error('Resposta vazia da página.');
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(data.contents, "text/html");
+        const textoExtraido = doc.body ? doc.body.innerText : data.contents;
 
-        const extraidos = extrairInformacoes(conteudoBruto);
-
-        if (Object.keys(extraidos).length > 0) {
-          extraidos["URL_Origem"] = urlInput;
-          registros.push(extraidos);
-          renderTabela();
-          statusDiv.className = 'status-success';
-          statusDiv.innerText = 'Dados extraídos com sucesso!';
-          document.getElementById('targetUrl').value = '';
-        } else {
-          statusDiv.className = 'status-error';
-          statusDiv.innerText = 'Página acessada, mas nenhum dado estruturado foi reconhecido.';
-        }
+        executarParser(textoExtraido, urlInput);
+        document.getElementById('targetUrl').value = '';
       } catch (err) {
-        statusDiv.className = 'status-error';
-        statusDiv.innerText = 'Erro ao acessar: O site pode ter proteção antibot (Cloudflare) ou exigir login.';
+        setStatus('Bloqueio no link. Se falhar, copie o texto da página e use "Extrair Texto".', 'error');
       } finally {
         btn.disabled = false;
       }
     }
 
-    function extrairInformacoes(conteudo) {
-      let resultado = {};
+    function processarPorTexto() {
+      const texto = document.getElementById('targetText').value.trim();
+      if (!texto) {
+        setStatus('Cole o texto antes de extrair.', 'error');
+        return;
+      }
+      executarParser(texto, "Texto Colado");
+      document.getElementById('targetText').value = '';
+    }
 
-      // 1. Tenta tratar como JSON
-      try {
-        const jsonParsed = JSON.parse(conteudo);
-        if (typeof jsonParsed === 'object') return jsonParsed;
-      } catch (e) {}
+    function executarParser(textoBruto, origem) {
+      const linhas = textoBruto
+        .split('\n')
+        .map(l => l.trim())
+        .filter(l => l.length > 0 && !SECOES.includes(l.toUpperCase()));
 
-      // 2. Converte HTML em texto limpo e busca tabelas
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(conteudo, "text/html");
+      let dados = {};
 
-      // Puxa pares de tabelas <tr><td>Chave</td><td>Valor</td></tr>
-      const rows = doc.querySelectorAll('tr');
-      rows.forEach(tr => {
-        const cells = tr.querySelectorAll('td, th');
-        if (cells.length === 2) {
-          const k = cells[0].textContent.trim().replace(/[:=–-]$/, '');
-          const v = cells[1].textContent.trim();
-          if (k && v && k.length < 40) resultado[k] = v;
-        }
-      });
+      for (let i = 0; i < linhas.length; i++) {
+        let linha = linhas[i];
+        let linhaUpper = linha.toUpperCase();
 
-      const textoLimpo = doc.body ? doc.body.innerText : conteudo;
-
-      // 3. Extração por Linhas (Chave: Valor)
-      const linhas = textoLimpo.split('\n');
-      linhas.forEach(linha => {
-        const match = linha.match(/^([^:=–-]+?)[:=–-]\s*(.+)$/);
-        if (match) {
-          const chave = match[1].trim();
-          const valor = match[2].trim();
-          if (chave.length < 40 && valor) {
-            resultado[chave] = valor;
+        // Linhas estilo "Última emissão CRV: 03/12/2021"
+        if (linha.includes(':')) {
+          let partes = linha.split(':');
+          let k = partes[0].trim();
+          let v = partes.slice(1).join(':').trim();
+          if (k.length < 35 && v) {
+            dados[k] = v;
+            continue;
           }
         }
-      });
 
-      // 4. Regex para campos soltos
-      const regexes = {
-        "CPF": /\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/g,
-        "CNPJ": /\b\d{2}\.?\d{3}\.?\d{3}\/\d{4}-?\d{2}\b/g,
-        "Email": /[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+/g,
-        "Telefone": /\(?\d{2}\)?\s*(?:9\d{4}|\d{4})[-\s]?\d{4}/g,
-        "CEP": /\b\d{5}-?\d{3}\b/g
-      };
+        // Verifica se a linha atual é um dos campos conhecidos
+        let campoEncontrado = CAMPOS_VEICULARES.find(c => c === linhaUpper);
 
-      for (let campo in regexes) {
-        if (!resultado[campo]) {
-          const matches = textoLimpo.match(regexes[campo]);
-          if (matches) resultado[campo] = [...new Set(matches)].join(", ");
+        if (campoEncontrado && i + 1 < linhas.length) {
+          let valor = linhas[i + 1];
+          // Se o valor seguinte não for outro campo conhecido
+          if (!CAMPOS_VEICULARES.includes(valor.toUpperCase())) {
+            dados[campoEncontrado] = valor;
+            i++; // Pula o valor já consumido
+          }
         }
       }
 
-      return resultado;
+      // Capturas adicionais via Regex para segurança
+      const regexPlacaMercosul = textoBruto.match(/\b[A-Z]{3}[0-9][A-Z0-9][0-9]{2}\b/g);
+      if (regexPlacaMercosul && !dados["PLACA MERCOSUL"]) dados["PLACA MERCOSUL"] = regexPlacaMercosul[0];
+
+      const regexCpf = textoBruto.match(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/g);
+      if (regexCpf && !dados["CPF/CNPJ"]) dados["CPF/CNPJ"] = regexCpf[0];
+
+      if (Object.keys(dados).length > 0) {
+        dados["Origem"] = origem;
+        registros.push(dados);
+        renderTabela();
+        setStatus(`Veículo (${dados["PLACA MERCOSUL"] || dados["PLACA ANTIGA"] || "Extraído"}) adicionado com sucesso!`, 'success');
+      } else {
+        setStatus('Não foi possível identificar os dados veiculares no conteúdo.', 'error');
+      }
+    }
+
+    function setStatus(msg, tipo) {
+      const statusDiv = document.getElementById('status');
+      statusDiv.className = 'status-' + tipo;
+      statusDiv.innerText = msg;
     }
 
     function renderTabela() {
@@ -185,8 +211,8 @@
       if (registros.length === 0) return alert('Nenhum registro para exportar.');
       const ws = XLSX.utils.json_to_sheet(registros);
       const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Consultas");
-      XLSX.writeFile(wb, "consultas_extraidas.xlsx");
+      XLSX.utils.book_append_sheet(wb, ws, "Consultas_Veiculares");
+      XLSX.writeFile(wb, "consultas_veiculares.xlsx");
     }
 
     function limparTudo() {
