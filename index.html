@@ -1,225 +1,1194 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Extrator Veicular</title>
-  <script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
-  <style>
-    * { box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
-    body { padding: 12px; background-color: #f2f2f7; color: #1c1c1e; margin: 0; }
-    .card { background: #ffffff; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); margin-bottom: 12px; }
-    h2 { font-size: 1.15rem; margin: 0 0 12px 0; color: #000; }
-    input[type="url"], textarea { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #d1d1d6; font-size: 14px; margin-bottom: 8px; }
-    textarea { height: 110px; resize: vertical; }
-    .btn-group { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
-    .full-width { grid-column: span 2; }
-    button { padding: 12px; border: none; border-radius: 8px; font-weight: 600; font-size: 14px; cursor: pointer; }
-    .btn-primary { background: #007aff; color: #fff; }
-    .btn-secondary { background: #5856d6; color: #fff; }
-    .btn-success { background: #34c759; color: #fff; }
-    .btn-danger { background: #ff3b30; color: #fff; }
-    #status { margin-top: 8px; font-size: 13px; font-weight: 500; }
-    .status-loading { color: #007aff; }
-    .status-error { color: #ff3b30; }
-    .status-success { color: #34c759; }
-    .table-container { overflow-x: auto; max-height: 400px; border-radius: 8px; border: 1px solid #d1d1d6; background: #fff; }
-    table { width: 100%; border-collapse: collapse; font-size: 11px; white-space: nowrap; }
-    th, td { border: 1px solid #e5e5ea; padding: 8px 10px; text-align: left; }
-    th { background: #f2f2f7; position: sticky; top: 0; font-weight: 600; }
-  </style>
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width,
+initial-scale=1,
+maximum-scale=1,
+user-scalable=no,
+viewport-fit=cover">
+
+<meta name="theme-color" content="#000000">
+
+<title>Diagnóstico Mobile</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+    user-select:none;
+}
+
+html,body{
+    margin:0;
+    width:100%;
+    height:100%;
+    overflow:hidden;
+    background:#000;
+    color:white;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+
+.tela{
+    position:fixed;
+    inset:0;
+    display:none;
+}
+
+/* ==========================
+   TELA INICIAL
+========================== */
+
+#inicio{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+    background:
+    radial-gradient(circle at center,#202020,#050505 70%);
+}
+
+.iconeInicial{
+    width:100px;
+    height:100px;
+    border-radius:28px;
+    background:white;
+    color:black;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:50px;
+    margin-bottom:25px;
+}
+
+#inicio h1{
+    font-size:32px;
+    margin:0 0 12px;
+}
+
+#inicio p{
+    color:#aaa;
+    font-size:17px;
+    line-height:1.6;
+    max-width:380px;
+}
+
+.botaoPrincipal{
+    width:100%;
+    max-width:390px;
+    padding:20px;
+    border:none;
+    border-radius:18px;
+    background:white;
+    color:black;
+    font-size:19px;
+    font-weight:900;
+    margin-top:25px;
+}
+
+/* ==========================
+   TESTE
+========================== */
+
+#teste{
+    background:#080808;
+    padding-top:env(safe-area-inset-top);
+}
+
+.header{
+    height:65px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-bottom:1px solid #252525;
+    font-weight:700;
+}
+
+.conteudo{
+    padding:30px 22px;
+    text-align:center;
+}
+
+.loader{
+    width:85px;
+    height:85px;
+    margin:30px auto;
+    border:8px solid #252525;
+    border-top-color:white;
+    border-radius:50%;
+    animation:girar .7s linear infinite;
+}
+
+@keyframes girar{
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+#porcentagem{
+    font-size:65px;
+    font-weight:900;
+}
+
+#status{
+    margin-top:15px;
+    min-height:55px;
+    color:#aaa;
+    font-size:17px;
+}
+
+.barra{
+    width:100%;
+    height:14px;
+    background:#242424;
+    border-radius:30px;
+    overflow:hidden;
+    margin-top:25px;
+}
+
+#progresso{
+    height:100%;
+    width:0%;
+    background:white;
+    transition:.3s;
+}
+
+/* ==========================
+   POPUPS DE ERRO
+========================== */
+
+#areaErros{
+    position:fixed;
+    inset:0;
+    z-index:100;
+    pointer-events:none;
+}
+
+.erro{
+    position:absolute;
+    left:4%;
+    width:92%;
+    padding:17px;
+    background:#171717;
+    border:1px solid #ff3434;
+    border-radius:16px;
+    box-shadow:0 15px 40px rgba(0,0,0,.9);
+    animation:aparecer .15s ease-out;
+}
+
+.erroTitulo{
+    color:#ff4444;
+    font-weight:900;
+    font-size:16px;
+    margin-bottom:7px;
+}
+
+.erroTexto{
+    color:#eee;
+    font-size:15px;
+}
+
+@keyframes aparecer{
+
+    from{
+        transform:translateY(-40px) scale(.8);
+        opacity:0;
+    }
+
+    to{
+        transform:translateY(0) scale(1);
+        opacity:1;
+    }
+
+}
+
+/* ==========================
+   ALERTA
+========================== */
+
+#alerta{
+    position:fixed;
+    inset:0;
+    z-index:300;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    background:rgba(0,0,0,.85);
+}
+
+.caixaAlerta{
+    width:100%;
+    max-width:390px;
+    padding:27px;
+    background:#191919;
+    border:1px solid #444;
+    border-radius:23px;
+    text-align:center;
+}
+
+.alertaIcone{
+    font-size:60px;
+}
+
+.caixaAlerta h2{
+    font-size:26px;
+    margin:12px 0;
+}
+
+.caixaAlerta p{
+    color:#bbb;
+    line-height:1.5;
+}
+
+.caixaAlerta button{
+    width:100%;
+    border:none;
+    padding:17px;
+    margin-top:15px;
+    border-radius:14px;
+    font-size:17px;
+    font-weight:900;
+}
+
+/* ==========================
+   TELA CRÍTICA
+========================== */
+
+#critico{
+    background:#150000;
+    text-align:center;
+    padding:80px 20px 30px;
+    overflow:hidden;
+}
+
+#critico h1{
+    color:#ff3838;
+    font-size:36px;
+}
+
+#numeroErros{
+    font-size:95px;
+    font-weight:900;
+    color:#ff3333;
+}
+
+#terminal{
+    margin:20px auto;
+    max-width:420px;
+    height:250px;
+    overflow:hidden;
+    padding:15px;
+    background:#050505;
+    border-radius:12px;
+    text-align:left;
+    font-family:monospace;
+    font-size:13px;
+    line-height:1.7;
+    color:#ff7373;
+}
+
+/* ==========================
+   BOTÃO FUJÃO
+========================== */
+
+#cancelar{
+    display:none;
+    position:fixed;
+    z-index:1000;
+    border:none;
+    padding:17px 25px;
+    border-radius:15px;
+    background:white;
+    color:black;
+    font-size:17px;
+    font-weight:900;
+}
+
+/* ==========================
+   TREMER
+========================== */
+
+@keyframes tremer{
+
+    0%{transform:translate(0,0)}
+    20%{transform:translate(-7px,5px)}
+    40%{transform:translate(7px,-5px)}
+    60%{transform:translate(-6px,-4px)}
+    80%{transform:translate(6px,5px)}
+    100%{transform:translate(0,0)}
+
+}
+
+.tremendo{
+    animation:tremer .07s infinite;
+}
+
+/* ==========================
+   TELA PRETA / MAIK
+========================== */
+
+#suspense{
+    background:black;
+    z-index:3000;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    text-align:center;
+    padding:30px;
+}
+
+#textoSuspense{
+    font-size:30px;
+    font-weight:900;
+    line-height:1.5;
+}
+
+/* ==========================
+   FINAL
+========================== */
+
+#final{
+    background:
+    radial-gradient(circle,#242424,#000 70%);
+    z-index:4000;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:30px;
+}
+
+.emojiFinal{
+    font-size:90px;
+}
+
+#final h1{
+    font-size:45px;
+    margin:10px 0;
+}
+
+#final p{
+    max-width:390px;
+    color:#bbb;
+    font-size:18px;
+    line-height:1.6;
+}
+
+.maik{
+    display:block;
+    margin-top:25px;
+    font-size:38px;
+    font-weight:900;
+    color:white;
+}
+
+#final button{
+    margin-top:30px;
+    border:none;
+    border-radius:15px;
+    padding:17px 30px;
+    background:white;
+    color:black;
+    font-weight:900;
+    font-size:17px;
+}
+
+</style>
 </head>
+
 <body>
 
-  <div class="card">
-    <h2>🚗 Extrator de Consultas Veiculares</h2>
-    
-    <input type="url" id="targetUrl" placeholder="Cole o link da consulta aqui..." />
-    <button class="btn-primary full-width" id="btnExtractLink" onclick="processarPorLink()">🚀 Puxar por Link</button>
-    
-    <div style="text-align: center; margin: 10px 0; color: #8e8e93; font-size: 12px;">— OU COLE O TEXTO ABAIXO —</div>
 
-    <textarea id="targetText" placeholder="Cole o texto copiado da consulta aqui..."></textarea>
-    
-    <div class="btn-group">
-      <button class="btn-secondary" onclick="processarPorTexto()">⚡ Extrair Texto</button>
-      <button class="btn-success" onclick="baixarExcel()">📥 Baixar Excel</button>
-      <button class="btn-danger full-width" onclick="limparTudo()">🗑️ Limpar Todos os Registros</button>
+<!-- ==========================
+     INÍCIO
+========================== -->
+
+<div id="inicio" class="tela">
+
+    <div class="iconeInicial">
+        📱
     </div>
-    
-    <div id="status"></div>
-  </div>
 
-  <div class="card">
-    <h3 style="font-size: 1rem; margin: 0 0 10px 0;">📊 Veículos Extraídos (<span id="totalCount">0</span>)</h3>
-    <div class="table-container">
-      <table id="dataTable">
-        <thead><tr id="tableHead"></tr></thead>
-        <tbody id="tableBody"></tbody>
-      </table>
+    <h1>Diagnóstico Mobile</h1>
+
+    <p>
+        Teste experimental de desempenho
+        e compatibilidade do navegador.
+        <br><br>
+        Toque abaixo para iniciar.
+    </p>
+
+    <button
+    class="botaoPrincipal"
+    onclick="iniciarTeste()">
+        INICIAR DIAGNÓSTICO
+    </button>
+
+</div>
+
+
+<!-- ==========================
+     TESTE
+========================== -->
+
+<div id="teste" class="tela">
+
+    <div class="header">
+        Diagnóstico em andamento
     </div>
-  </div>
 
-  <script>
-    let registros = [];
+    <div class="conteudo">
 
-    // Cabeçalhos que são apenas títulos de seção e não têm valor próprio
-    const SECOES = [
-      "INFORMAÇÕES DO VEÍCULO", "ESPECIFICAÇÕES TÉCNICAS", 
-      "IDENTIFICADORES DO VEÍCULO", "DADOS DO PROPRIETÁRIO", 
-      "DADOS COMPLEMENTARES", "BRASIL", "PLACA"
+        <div class="loader"></div>
+
+        <div id="porcentagem">
+            0%
+        </div>
+
+        <div id="status">
+            Preparando diagnóstico...
+        </div>
+
+        <div class="barra">
+            <div id="progresso"></div>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div id="areaErros"></div>
+
+
+<!-- ==========================
+     ALERTA
+========================== -->
+
+<div id="alerta">
+
+    <div class="caixaAlerta">
+
+        <div class="alertaIcone">
+            ⚠️
+        </div>
+
+        <h2>
+            Falha encontrada
+        </h2>
+
+        <p>
+            O diagnóstico encontrou
+            inconsistências durante o teste.
+            <br><br>
+            Uma tentativa automática de
+            correção pode ser realizada.
+        </p>
+
+        <button onclick="corrigir()">
+            TENTAR CORRIGIR
+        </button>
+
+    </div>
+
+</div>
+
+
+<!-- ==========================
+     CRÍTICO
+========================== -->
+
+<div id="critico" class="tela">
+
+    <h1>
+        ⚠️ ERROS DETECTADOS
+    </h1>
+
+    <div id="numeroErros">
+        0
+    </div>
+
+    <div>
+        falhas simuladas encontradas
+    </div>
+
+    <div id="terminal"></div>
+
+</div>
+
+
+<button id="cancelar">
+    CANCELAR
+</button>
+
+
+<!-- ==========================
+     SUSPENSE
+========================== -->
+
+<div id="suspense" class="tela">
+
+    <div id="textoSuspense">
+        Aguarde...
+    </div>
+
+</div>
+
+
+<!-- ==========================
+     FINAL
+========================== -->
+
+<div id="final" class="tela">
+
+    <div class="emojiFinal">
+        😂😂
+    </div>
+
+    <h1>
+        CAIU KKKKK!
+    </h1>
+
+    <p>
+        Achou que tinha dado problema
+        no celular? 😂
+        <br><br>
+        Relaxa.
+        <strong style="color:white">
+        Nada aconteceu com seu aparelho.
+        </strong>
+        <br><br>
+        Todos os erros eram apenas
+        animações dentro desta página.
+        <br><br>
+        Essa perturbação foi feita por:
+    </p>
+
+    <span class="maik">
+        MAIK 😈
+    </span>
+
+    <button onclick="location.reload()">
+        RECOMEÇAR 😂
+    </button>
+
+</div>
+
+
+<script>
+
+/* ==========================
+   ELEMENTOS
+========================== */
+
+const inicio =
+document.getElementById("inicio");
+
+const teste =
+document.getElementById("teste");
+
+const porcentagem =
+document.getElementById("porcentagem");
+
+const progresso =
+document.getElementById("progresso");
+
+const statusTeste =
+document.getElementById("status");
+
+const areaErros =
+document.getElementById("areaErros");
+
+const alerta =
+document.getElementById("alerta");
+
+const critico =
+document.getElementById("critico");
+
+const numeroErros =
+document.getElementById("numeroErros");
+
+const terminal =
+document.getElementById("terminal");
+
+const cancelar =
+document.getElementById("cancelar");
+
+const suspense =
+document.getElementById("suspense");
+
+const textoSuspense =
+document.getElementById("textoSuspense");
+
+const final =
+document.getElementById("final");
+
+
+let totalErros = 0;
+
+
+/* ==========================
+   MENSAGENS
+========================== */
+
+const mensagens = [
+
+"Falha inesperada durante o diagnóstico.",
+
+"Resposta inválida encontrada.",
+
+"Não foi possível concluir esta etapa.",
+
+"Erro ao tentar corrigir o erro anterior.",
+
+"Processo demorando mais que o esperado.",
+
+"Nova inconsistência detectada.",
+
+"Verificação automática falhou.",
+
+"Erro desconhecido encontrado.",
+
+"Tentativa de recuperação falhou.",
+
+"Carregando informações adicionais...",
+
+"Falha durante nova tentativa.",
+
+"Mais erros simulados encontrados.",
+
+"Diagnóstico interrompido.",
+
+"Processo reiniciado inesperadamente.",
+
+"Falha crítica de brincadeira 😂"
+
+];
+
+
+/* ==========================
+   VIBRAÇÃO
+========================== */
+
+function vibrar(padrao){
+
+    if(navigator.vibrate){
+        navigator.vibrate(padrao);
+    }
+
+}
+
+
+/* ==========================
+   CRIAR ERRO
+========================== */
+
+function criarErro(){
+
+    totalErros++;
+
+    const erro =
+    document.createElement("div");
+
+    erro.className="erro";
+
+    erro.style.top =
+    (60 + Math.random() *
+    (window.innerHeight - 180))
+    + "px";
+
+    const mensagem =
+    mensagens[
+        Math.floor(
+            Math.random()*mensagens.length
+        )
     ];
 
-    // Mapeamento das chaves de interesse do relatório
-    const CAMPOS_VEICULARES = [
-      "PLACA MERCOSUL", "PLACA ANTIGA", "MARCA / MODELO", "MUNICÍPIO",
-      "TIPO", "CATEGORIA", "COR", "COMBUSTÍVEL", "ANO FAB. / MODELO",
-      "SITUAÇÃO", "ESPÉCIE", "CARROCERIA", "EIXO", "LOTAÇÃO",
-      "POTÊNCIA", "CILINDRADAS", "PROCEDÊNCIA", "REMARCAÇÃO CHASSI",
-      "CHASSIS", "RENAVAM", "N. DO MOTOR", "NOME", "CPF/CNPJ",
-      "TIPO PESSOA", "Nº CÂMBIO", "Nº CARROCERIA", "CMT", "PBT",
-      "CMC", "EIXO TRASEIRO", "EIXO AUXILIAR", "CÓD. MUNICÍPIO",
-      "ORIGEM DA PROPRIEDADE", "DOC. PROPRIETÁRIO INDICADO", "Nº DOC. PROPRIETÁRIO INDICADO"
-    ];
+    erro.innerHTML = `
 
-    async function processarPorLink() {
-      const urlInput = document.getElementById('targetUrl').value.trim();
-      const statusDiv = document.getElementById('status');
-      const btn = document.getElementById('btnExtractLink');
+        <div class="erroTitulo">
+            ⚠️ ERRO SIMULADO #${totalErros}
+        </div>
 
-      if (!urlInput) {
-        setStatus('Por favor, cole um link antes de continuar.', 'error');
-        return;
-      }
+        <div class="erroTexto">
+            ${mensagem}
+        </div>
 
-      setStatus('Acessando o link e extraindo dados...', 'loading');
-      btn.disabled = true;
+    `;
 
-      try {
-        const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(urlInput)}`;
-        const response = await fetch(proxyUrl);
-        if (!response.ok) throw new Error();
-        
-        const data = await response.json();
-        if (!data.contents) throw new Error();
+    areaErros.appendChild(erro);
 
-        const parser = new DOMParser();
-        const doc = parser.parseFromString(data.contents, "text/html");
-        const textoExtraido = doc.body ? doc.body.innerText : data.contents;
+    setTimeout(()=>{
 
-        executarParser(textoExtraido, urlInput);
-        document.getElementById('targetUrl').value = '';
-      } catch (err) {
-        setStatus('Bloqueio no link. Se falhar, copie o texto da página e use "Extrair Texto".', 'error');
-      } finally {
-        btn.disabled = false;
-      }
-    }
+        erro.remove();
 
-    function processarPorTexto() {
-      const texto = document.getElementById('targetText').value.trim();
-      if (!texto) {
-        setStatus('Cole o texto antes de extrair.', 'error');
-        return;
-      }
-      executarParser(texto, "Texto Colado");
-      document.getElementById('targetText').value = '';
-    }
+    },1600);
 
-    function executarParser(textoBruto, origem) {
-      const linhas = textoBruto
-        .split('\n')
-        .map(l => l.trim())
-        .filter(l => l.length > 0 && !SECOES.includes(l.toUpperCase()));
+}
 
-      let dados = {};
 
-      for (let i = 0; i < linhas.length; i++) {
-        let linha = linhas[i];
-        let linhaUpper = linha.toUpperCase();
+/* ==========================
+   INICIAR
+========================== */
 
-        // Linhas estilo "Última emissão CRV: 03/12/2021"
-        if (linha.includes(':')) {
-          let partes = linha.split(':');
-          let k = partes[0].trim();
-          let v = partes.slice(1).join(':').trim();
-          if (k.length < 35 && v) {
-            dados[k] = v;
-            continue;
-          }
+function iniciarTeste(){
+
+    inicio.style.display="none";
+
+    teste.style.display="block";
+
+    vibrar([100,60,100]);
+
+    fase1();
+
+}
+
+
+/* ==========================
+   FASE 1
+========================== */
+
+function fase1(){
+
+    let valor=0;
+
+    statusTeste.innerText=
+    "Verificando navegador...";
+
+    const timer =
+    setInterval(()=>{
+
+        valor +=
+        Math.floor(Math.random()*5)+2;
+
+        if(valor >= 62){
+
+            valor=62;
+
+            clearInterval(timer);
+
+            statusTeste.innerText=
+            "Verificando estabilidade...";
+
+            setTimeout(fase2,2000);
+
         }
 
-        // Verifica se a linha atual é um dos campos conhecidos
-        let campoEncontrado = CAMPOS_VEICULARES.find(c => c === linhaUpper);
+        porcentagem.innerText=
+        valor+"%";
 
-        if (campoEncontrado && i + 1 < linhas.length) {
-          let valor = linhas[i + 1];
-          // Se o valor seguinte não for outro campo conhecido
-          if (!CAMPOS_VEICULARES.includes(valor.toUpperCase())) {
-            dados[campoEncontrado] = valor;
-            i++; // Pula o valor já consumido
-          }
+        progresso.style.width=
+        valor+"%";
+
+    },220);
+
+}
+
+
+/* ==========================
+   FASE 2
+========================== */
+
+function fase2(){
+
+    statusTeste.innerText=
+    "Uma inconsistência foi encontrada...";
+
+    criarErro();
+
+    vibrar(100);
+
+    setTimeout(criarErro,700);
+
+    setTimeout(criarErro,1400);
+
+    setTimeout(criarErro,2100);
+
+    setTimeout(()=>{
+
+        alerta.style.display="flex";
+
+        vibrar([
+            200,
+            100,
+            200
+        ]);
+
+    },3000);
+
+}
+
+
+/* ==========================
+   CORRIGIR
+========================== */
+
+function corrigir(){
+
+    alerta.style.display="none";
+
+    statusTeste.innerText=
+    "Tentando corrigir problemas...";
+
+    atualizar(70);
+
+    setTimeout(()=>{
+        atualizar(78);
+    },800);
+
+    setTimeout(()=>{
+        atualizar(86);
+    },1600);
+
+    setTimeout(()=>{
+        atualizar(94);
+    },2400);
+
+    setTimeout(()=>{
+
+        atualizar(99);
+
+        statusTeste.innerText=
+        "Finalizando diagnóstico...";
+
+    },3200);
+
+    setTimeout(fase3,5200);
+
+}
+
+
+function atualizar(valor){
+
+    porcentagem.innerText=
+    valor+"%";
+
+    progresso.style.width=
+    valor+"%";
+
+}
+
+
+/* ==========================
+   FASE 3
+   TRAVOU EM 99%
+========================== */
+
+function fase3(){
+
+    statusTeste.innerText=
+    "99% — aguardando resposta...";
+
+    vibrar([
+        100,60,
+        100,60,
+        200
+    ]);
+
+    for(let i=0;i<12;i++){
+
+        setTimeout(()=>{
+
+            criarErro();
+
+        },i*250);
+
+    }
+
+    document.body.classList.add(
+        "tremendo"
+    );
+
+    setTimeout(()=>{
+
+        document.body.classList.remove(
+            "tremendo"
+        );
+
+        fase4();
+
+    },3500);
+
+}
+
+
+/* ==========================
+   FASE 4
+   CONTADOR DE ERROS
+========================== */
+
+function fase4(){
+
+    teste.style.display="none";
+
+    areaErros.innerHTML="";
+
+    critico.style.display="block";
+
+    let numero=0;
+
+    const timer =
+    setInterval(()=>{
+
+        numero +=
+        Math.floor(Math.random()*7)+2;
+
+        numeroErros.innerText=
+        numero;
+
+        const codigo =
+        Math.floor(
+            1000+
+            Math.random()*8999
+        );
+
+        terminal.innerHTML +=
+        "ERRO_SIM_"+codigo+
+        " .... FALHOU<br>";
+
+        terminal.scrollTop =
+        terminal.scrollHeight;
+
+        vibrar(35);
+
+        if(numero >= 89){
+
+            clearInterval(timer);
+
+            setTimeout(
+                faseCancelar,
+                1800
+            );
+
         }
-      }
 
-      // Capturas adicionais via Regex para segurança
-      const regexPlacaMercosul = textoBruto.match(/\b[A-Z]{3}[0-9][A-Z0-9][0-9]{2}\b/g);
-      if (regexPlacaMercosul && !dados["PLACA MERCOSUL"]) dados["PLACA MERCOSUL"] = regexPlacaMercosul[0];
+    },150);
 
-      const regexCpf = textoBruto.match(/\b\d{3}\.?\d{3}\.?\d{3}-?\d{2}\b/g);
-      if (regexCpf && !dados["CPF/CNPJ"]) dados["CPF/CNPJ"] = regexCpf[0];
+}
 
-      if (Object.keys(dados).length > 0) {
-        dados["Origem"] = origem;
-        registros.push(dados);
-        renderTabela();
-        setStatus(`Veículo (${dados["PLACA MERCOSUL"] || dados["PLACA ANTIGA"] || "Extraído"}) adicionado com sucesso!`, 'success');
-      } else {
-        setStatus('Não foi possível identificar os dados veiculares no conteúdo.', 'error');
-      }
-    }
 
-    function setStatus(msg, tipo) {
-      const statusDiv = document.getElementById('status');
-      statusDiv.className = 'status-' + tipo;
-      statusDiv.innerText = msg;
-    }
+/* ==========================
+   BOTÃO CANCELAR
+========================== */
 
-    function renderTabela() {
-      document.getElementById('totalCount').innerText = registros.length;
-      if (registros.length === 0) {
-        document.getElementById('tableHead').innerHTML = '';
-        document.getElementById('tableBody').innerHTML = '';
-        return;
-      }
+function faseCancelar(){
 
-      const headers = Array.from(new Set(registros.flatMap(r => Object.keys(r))));
-      let thead = '';
-      headers.forEach(h => thead += `<th>${h}</th>`);
-      document.getElementById('tableHead').innerHTML = thead;
+    cancelar.style.display=
+    "block";
 
-      let tbody = '';
-      registros.forEach(r => {
-        tbody += '<tr>';
-        headers.forEach(h => tbody += `<td>${r[h] || '-'}</td>`);
-        tbody += '</tr>';
-      });
-      document.getElementById('tableBody').innerHTML = tbody;
-    }
+    moverCancelar();
 
-    function baixarExcel() {
-      if (registros.length === 0) return alert('Nenhum registro para exportar.');
-      const ws = XLSX.utils.json_to_sheet(registros);
-      const wb = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(wb, ws, "Consultas_Veiculares");
-      XLSX.writeFile(wb, "consultas_veiculares.xlsx");
-    }
+    cancelar.addEventListener(
+        "touchstart",
+        moverCancelar
+    );
 
-    function limparTudo() {
-      registros = [];
-      renderTabela();
-      document.getElementById('status').innerText = '';
-    }
-  </script>
+    cancelar.addEventListener(
+        "mouseover",
+        moverCancelar
+    );
+
+    cancelar.addEventListener(
+        "click",
+        moverCancelar
+    );
+
+    setTimeout(()=>{
+
+        cancelar.innerText=
+        "QUASE 😂";
+
+    },2000);
+
+    setTimeout(()=>{
+
+        cancelar.innerText=
+        "NÃO ADIANTA KKK";
+
+    },4000);
+
+    setTimeout(()=>{
+
+        cancelar.innerText=
+        "DESISTE 😂";
+
+    },6000);
+
+    setTimeout(
+        ultimaTentativa,
+        8000
+    );
+
+}
+
+
+function moverCancelar(){
+
+    const largura =
+    window.innerWidth -
+    cancelar.offsetWidth - 20;
+
+    const altura =
+    window.innerHeight -
+    cancelar.offsetHeight - 40;
+
+    cancelar.style.left =
+    Math.max(
+        10,
+        Math.random()*largura
+    )+"px";
+
+    cancelar.style.top =
+    Math.max(
+        70,
+        Math.random()*altura
+    )+"px";
+
+    vibrar(30);
+
+}
+
+
+/* ==========================
+   ÚLTIMA TENTATIVA
+========================== */
+
+function ultimaTentativa(){
+
+    cancelar.style.display="none";
+
+    critico.style.display="none";
+
+    suspense.style.display="flex";
+
+    textoSuspense.innerHTML=
+    "Tentando corrigir os erros...";
+
+    setTimeout(()=>{
+
+        textoSuspense.innerHTML=
+        "Tentativa 1...<br><br>❌ FALHOU";
+
+        vibrar(150);
+
+    },1500);
+
+
+    setTimeout(()=>{
+
+        textoSuspense.innerHTML=
+        "Tentativa 2...<br><br>❌ FALHOU";
+
+        vibrar(150);
+
+    },3200);
+
+
+    setTimeout(()=>{
+
+        textoSuspense.innerHTML=
+        "Tentativa 3...";
+
+    },5000);
+
+
+    setTimeout(()=>{
+
+        textoSuspense.innerHTML=
+        "⚠️ RESULTADO ENCONTRADO";
+
+        vibrar([
+            200,
+            100,
+            200
+        ]);
+
+    },6500);
+
+
+    setTimeout(
+        faseMaik,
+        8000
+    );
+
+}
+
+
+/* ==========================
+   REVELAÇÃO MAIK
+========================== */
+
+function faseMaik(){
+
+    textoSuspense.innerHTML=
+    "SEU CELULAR FOI...";
+
+    setTimeout(()=>{
+
+        textoSuspense.innerHTML=
+        "😈";
+
+    },1800);
+
+
+    setTimeout(()=>{
+
+        textoSuspense.innerHTML=
+        `
+        <div style="
+        font-size:20px;
+        color:#888;
+        margin-bottom:15px;
+        ">
+        PERTURBADO POR
+        </div>
+
+        <div style="
+        font-size:60px;
+        font-weight:900;
+        ">
+        MAIK 😈
+        </div>
+        `;
+
+        vibrar([
+            200,
+            80,
+            200,
+            80,
+            300
+        ]);
+
+    },3000);
+
+
+    setTimeout(
+        mostrarFinal,
+        6000
+    );
+
+}
+
+
+/* ==========================
+   FINAL
+========================== */
+
+function mostrarFinal(){
+
+    suspense.style.display="none";
+
+    final.style.display="flex";
+
+}
+
+</script>
+
 </body>
 </html>
