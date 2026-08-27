@@ -2,1189 +2,1508 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 
-<meta name="viewport"
-content="width=device-width,
-initial-scale=1,
-maximum-scale=1,
-user-scalable=no,
-viewport-fit=cover">
-
-<meta name="theme-color" content="#000000">
-
-<title>Diagnóstico Mobile</title>
+<title>Lucas Despachante - Relatório Veicular</title>
 
 <style>
+*{box-sizing:border-box}
 
-*{
-    box-sizing:border-box;
-    -webkit-tap-highlight-color:transparent;
-    user-select:none;
-}
-
-html,body{
+body{
     margin:0;
-    width:100%;
-    height:100%;
-    overflow:hidden;
-    background:#000;
-    color:white;
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+    background:#eef2f6;
+    color:#111827;
 }
 
-.tela{
-    position:fixed;
-    inset:0;
-    display:none;
+header{
+    background:#0b1220;
+    color:#fff;
+    padding:24px 16px;
 }
 
-/* ==========================
-   TELA INICIAL
-========================== */
-
-#inicio{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:30px;
-    background:
-    radial-gradient(circle at center,#202020,#050505 70%);
+.head{
+    max-width:1000px;
+    margin:auto;
 }
 
-.iconeInicial{
-    width:100px;
-    height:100px;
-    border-radius:28px;
+header h1{
+    margin:0;
+    font-size:23px;
+}
+
+header p{
+    margin:5px 0 0;
+    color:#94a3b8;
+    font-size:13px;
+}
+
+main{
+    max-width:1000px;
+    margin:auto;
+    padding:15px;
+}
+
+.card{
     background:white;
-    color:black;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:50px;
-    margin-bottom:25px;
+    padding:18px;
+    border-radius:15px;
+    margin-bottom:15px;
+    box-shadow:0 4px 18px rgba(0,0,0,.06);
 }
 
-#inicio h1{
-    font-size:32px;
+h2{
+    font-size:17px;
     margin:0 0 12px;
 }
 
-#inicio p{
-    color:#aaa;
-    font-size:17px;
-    line-height:1.6;
-    max-width:380px;
-}
-
-.botaoPrincipal{
+textarea{
     width:100%;
-    max-width:390px;
-    padding:20px;
-    border:none;
-    border-radius:18px;
-    background:white;
-    color:black;
-    font-size:19px;
-    font-weight:900;
-    margin-top:25px;
+    min-height:360px;
+    border:1px solid #cbd5e1;
+    border-radius:10px;
+    padding:13px;
+    font-size:14px;
+    resize:vertical;
 }
 
-/* ==========================
-   TESTE
-========================== */
-
-#teste{
-    background:#080808;
-    padding-top:env(safe-area-inset-top);
+button{
+    border:0;
+    border-radius:10px;
+    padding:14px 16px;
+    font-weight:800;
+    font-size:14px;
+    cursor:pointer;
 }
 
-.header{
-    height:65px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    border-bottom:1px solid #252525;
-    font-weight:700;
+.blue{
+    background:#2563eb;
+    color:#fff;
 }
 
-.conteudo{
-    padding:30px 22px;
-    text-align:center;
-}
-
-.loader{
-    width:85px;
-    height:85px;
-    margin:30px auto;
-    border:8px solid #252525;
-    border-top-color:white;
-    border-radius:50%;
-    animation:girar .7s linear infinite;
-}
-
-@keyframes girar{
-    to{
-        transform:rotate(360deg);
-    }
-}
-
-#porcentagem{
-    font-size:65px;
-    font-weight:900;
-}
-
-#status{
-    margin-top:15px;
-    min-height:55px;
-    color:#aaa;
-    font-size:17px;
-}
-
-.barra{
-    width:100%;
-    height:14px;
-    background:#242424;
-    border-radius:30px;
-    overflow:hidden;
-    margin-top:25px;
-}
-
-#progresso{
-    height:100%;
-    width:0%;
-    background:white;
-    transition:.3s;
-}
-
-/* ==========================
-   POPUPS DE ERRO
-========================== */
-
-#areaErros{
-    position:fixed;
-    inset:0;
-    z-index:100;
-    pointer-events:none;
-}
-
-.erro{
-    position:absolute;
-    left:4%;
-    width:92%;
-    padding:17px;
-    background:#171717;
-    border:1px solid #ff3434;
-    border-radius:16px;
-    box-shadow:0 15px 40px rgba(0,0,0,.9);
-    animation:aparecer .15s ease-out;
-}
-
-.erroTitulo{
-    color:#ff4444;
-    font-weight:900;
-    font-size:16px;
-    margin-bottom:7px;
-}
-
-.erroTexto{
-    color:#eee;
-    font-size:15px;
-}
-
-@keyframes aparecer{
-
-    from{
-        transform:translateY(-40px) scale(.8);
-        opacity:0;
-    }
-
-    to{
-        transform:translateY(0) scale(1);
-        opacity:1;
-    }
-
-}
-
-/* ==========================
-   ALERTA
-========================== */
-
-#alerta{
-    position:fixed;
-    inset:0;
-    z-index:300;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    padding:22px;
-    background:rgba(0,0,0,.85);
-}
-
-.caixaAlerta{
-    width:100%;
-    max-width:390px;
-    padding:27px;
-    background:#191919;
-    border:1px solid #444;
-    border-radius:23px;
-    text-align:center;
-}
-
-.alertaIcone{
-    font-size:60px;
-}
-
-.caixaAlerta h2{
-    font-size:26px;
-    margin:12px 0;
-}
-
-.caixaAlerta p{
-    color:#bbb;
-    line-height:1.5;
-}
-
-.caixaAlerta button{
-    width:100%;
-    border:none;
-    padding:17px;
-    margin-top:15px;
-    border-radius:14px;
-    font-size:17px;
-    font-weight:900;
-}
-
-/* ==========================
-   TELA CRÍTICA
-========================== */
-
-#critico{
-    background:#150000;
-    text-align:center;
-    padding:80px 20px 30px;
-    overflow:hidden;
-}
-
-#critico h1{
-    color:#ff3838;
-    font-size:36px;
-}
-
-#numeroErros{
-    font-size:95px;
-    font-weight:900;
-    color:#ff3333;
-}
-
-#terminal{
-    margin:20px auto;
-    max-width:420px;
-    height:250px;
-    overflow:hidden;
-    padding:15px;
-    background:#050505;
-    border-radius:12px;
-    text-align:left;
-    font-family:monospace;
-    font-size:13px;
-    line-height:1.7;
-    color:#ff7373;
-}
-
-/* ==========================
-   BOTÃO FUJÃO
-========================== */
-
-#cancelar{
-    display:none;
-    position:fixed;
-    z-index:1000;
-    border:none;
-    padding:17px 25px;
-    border-radius:15px;
-    background:white;
-    color:black;
-    font-size:17px;
-    font-weight:900;
-}
-
-/* ==========================
-   TREMER
-========================== */
-
-@keyframes tremer{
-
-    0%{transform:translate(0,0)}
-    20%{transform:translate(-7px,5px)}
-    40%{transform:translate(7px,-5px)}
-    60%{transform:translate(-6px,-4px)}
-    80%{transform:translate(6px,5px)}
-    100%{transform:translate(0,0)}
-
-}
-
-.tremendo{
-    animation:tremer .07s infinite;
-}
-
-/* ==========================
-   TELA PRETA / MAIK
-========================== */
-
-#suspense{
-    background:black;
-    z-index:3000;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    text-align:center;
-    padding:30px;
-}
-
-#textoSuspense{
-    font-size:30px;
-    font-weight:900;
-    line-height:1.5;
-}
-
-/* ==========================
-   FINAL
-========================== */
-
-#final{
-    background:
-    radial-gradient(circle,#242424,#000 70%);
-    z-index:4000;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:30px;
-}
-
-.emojiFinal{
-    font-size:90px;
-}
-
-#final h1{
-    font-size:45px;
-    margin:10px 0;
-}
-
-#final p{
-    max-width:390px;
-    color:#bbb;
-    font-size:18px;
-    line-height:1.6;
-}
-
-.maik{
-    display:block;
-    margin-top:25px;
-    font-size:38px;
-    font-weight:900;
+.green{
+    background:#15803d;
     color:white;
 }
 
-#final button{
-    margin-top:30px;
-    border:none;
-    border-radius:15px;
-    padding:17px 30px;
-    background:white;
-    color:black;
-    font-weight:900;
-    font-size:17px;
+.dark{
+    background:#111827;
+    color:white;
 }
 
+.gray{
+    background:#e2e8f0;
+    color:#111827;
+}
+
+.buttons{
+    display:flex;
+    gap:10px;
+    margin-top:12px;
+}
+
+.buttons button{
+    flex:1;
+}
+
+/* UPLOAD */
+
+.upload{
+    border:2px dashed #94a3b8;
+    border-radius:13px;
+    padding:24px 15px;
+    text-align:center;
+    background:#f8fafc;
+}
+
+.upload strong{
+    display:block;
+    margin-bottom:5px;
+}
+
+.upload p{
+    font-size:12px;
+    color:#64748b;
+}
+
+.upload label{
+    display:inline-block;
+    margin-top:10px;
+    background:#2563eb;
+    color:#fff;
+    padding:12px 18px;
+    border-radius:9px;
+    font-weight:800;
+    cursor:pointer;
+}
+
+.upload input{
+    display:none;
+}
+
+#contador{
+    margin-top:12px;
+    font-size:13px;
+    font-weight:800;
+}
+
+/* FOTOS */
+
+.previewGrid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:10px;
+    margin-top:15px;
+}
+
+.preview{
+    position:relative;
+    background:#e2e8f0;
+    border-radius:10px;
+    overflow:hidden;
+}
+
+.preview img{
+    width:100%;
+    height:170px;
+    object-fit:cover;
+    display:block;
+}
+
+.preview span{
+    display:block;
+    padding:7px;
+    font-size:11px;
+    font-weight:700;
+    background:white;
+}
+
+.remove{
+    position:absolute;
+    top:6px;
+    right:6px;
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    padding:0;
+    background:#dc2626;
+    color:white;
+}
+
+/* RELATORIO */
+
+#relatorio{
+    display:none;
+}
+
+.report{
+    background:white;
+    padding:30px;
+}
+
+.reportHeader{
+    border-bottom:4px solid #111827;
+    padding-bottom:16px;
+    margin-bottom:20px;
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.brand h1{
+    font-size:23px;
+    margin:0;
+}
+
+.brand strong{
+    font-size:12px;
+    color:#475569;
+}
+
+.reportInfo{
+    text-align:right;
+    font-size:11px;
+    line-height:1.5;
+}
+
+.tag{
+    display:inline-block;
+    margin-top:7px;
+    background:#e2e8f0;
+    padding:5px 8px;
+    border-radius:5px;
+    font-size:9px;
+    font-weight:900;
+}
+
+.section{
+    margin-top:20px;
+}
+
+.sectionTitle{
+    background:#111827;
+    color:#fff;
+    padding:9px 10px;
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.4px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+td{
+    border:1px solid #d1d5db;
+    padding:8px;
+    font-size:11px;
+}
+
+td.label{
+    width:23%;
+    background:#f8fafc;
+    font-weight:800;
+}
+
+.alerta{
+    background:#fff7ed;
+    border:1px solid #fdba74;
+    padding:13px;
+    font-size:11px;
+    line-height:1.6;
+    white-space:pre-wrap;
+}
+
+.okBox{
+    background:#f0fdf4;
+    border:1px solid #86efac;
+    padding:13px;
+    font-size:11px;
+    line-height:1.6;
+}
+
+/* FOTOS RELATORIO */
+
+.reportPhotos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:12px;
+}
+
+.reportPhoto{
+    border:1px solid #d1d5db;
+    padding:5px;
+    break-inside:avoid;
+}
+
+.reportPhoto img{
+    width:100%;
+    height:270px;
+    object-fit:cover;
+    display:block;
+}
+
+.reportPhoto div{
+    padding:6px 3px 2px;
+    font-size:10px;
+    font-weight:800;
+}
+
+/* RODAPE */
+
+.footer{
+    margin-top:30px;
+    padding-top:14px;
+    border-top:1px solid #d1d5db;
+    text-align:center;
+    font-size:9px;
+    color:#64748b;
+    line-height:1.5;
+}
+
+.notice{
+    margin-top:18px;
+    border:1px solid #f59e0b;
+    background:#fffbeb;
+    padding:11px;
+    font-size:9px;
+    line-height:1.5;
+}
+
+@media(max-width:650px){
+
+    .previewGrid{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .preview img{
+        height:130px;
+    }
+
+    .buttons{
+        flex-direction:column;
+    }
+
+    .report{
+        padding:15px;
+    }
+
+    .reportHeader{
+        flex-direction:column;
+    }
+
+    .reportInfo{
+        text-align:left;
+    }
+
+}
+
+@media print{
+
+    body{
+        background:white;
+    }
+
+    header,
+    #entrada,
+    .noPrint{
+        display:none!important;
+    }
+
+    main{
+        max-width:none;
+        margin:0;
+        padding:0;
+    }
+
+    #relatorio{
+        display:block!important;
+    }
+
+    .report{
+        padding:0;
+    }
+
+    .reportPhoto{
+        break-inside:avoid;
+    }
+
+    .section{
+        break-inside:avoid;
+    }
+
+}
 </style>
 </head>
 
 <body>
 
+<header>
+<div class="head">
+    <h1>LUCAS DESPACHANTE</h1>
+    <p>Documentalista • Relatório e Registro Veicular</p>
+</div>
+</header>
 
-<!-- ==========================
-     INÍCIO
-========================== -->
+<main>
 
-<div id="inicio" class="tela">
+<div id="entrada">
 
-    <div class="iconeInicial">
-        📱
-    </div>
+<div class="card">
 
-    <h1>Diagnóstico Mobile</h1>
+<h2>📋 Cole a consulta veicular</h2>
 
-    <p>
-        Teste experimental de desempenho
-        e compatibilidade do navegador.
-        <br><br>
-        Toque abaixo para iniciar.
-    </p>
+<p style="font-size:12px;color:#64748b;line-height:1.5">
+Cole a consulta completa. O sistema localizará automaticamente placa,
+chassi, RENAVAM, proprietário, características, restrições e documentação.
+</p>
 
-    <button
-    class="botaoPrincipal"
-    onclick="iniciarTeste()">
-        INICIAR DIAGNÓSTICO
-    </button>
+<textarea id="consulta" placeholder="Cole aqui a consulta veicular completa..."></textarea>
 
 </div>
 
 
-<!-- ==========================
-     TESTE
-========================== -->
+<div class="card">
 
-<div id="teste" class="tela">
+<h2>📸 Fotografias do veículo</h2>
 
-    <div class="header">
-        Diagnóstico em andamento
-    </div>
+<div class="upload">
 
-    <div class="conteudo">
+<strong>Selecione todas as imagens recebidas do cliente</strong>
 
-        <div class="loader"></div>
+<p>
+Você pode selecionar várias fotografias de uma vez.
+</p>
 
-        <div id="porcentagem">
-            0%
-        </div>
+<label>
+📁 Selecionar imagens
+<input
+    type="file"
+    id="arquivos"
+    accept="image/*"
+    multiple
+    onchange="selecionarFotos(event)"
+>
+</label>
 
-        <div id="status">
-            Preparando diagnóstico...
-        </div>
+<div id="contador">
+0 imagens selecionadas
+</div>
 
-        <div class="barra">
-            <div id="progresso"></div>
-        </div>
+</div>
 
-    </div>
+<div class="previewGrid" id="preview"></div>
 
 </div>
 
 
-<div id="areaErros"></div>
+<div class="card">
 
+<div class="buttons">
 
-<!-- ==========================
-     ALERTA
-========================== -->
-
-<div id="alerta">
-
-    <div class="caixaAlerta">
-
-        <div class="alertaIcone">
-            ⚠️
-        </div>
-
-        <h2>
-            Falha encontrada
-        </h2>
-
-        <p>
-            O diagnóstico encontrou
-            inconsistências durante o teste.
-            <br><br>
-            Uma tentativa automática de
-            correção pode ser realizada.
-        </p>
-
-        <button onclick="corrigir()">
-            TENTAR CORRIGIR
-        </button>
-
-    </div>
-
-</div>
-
-
-<!-- ==========================
-     CRÍTICO
-========================== -->
-
-<div id="critico" class="tela">
-
-    <h1>
-        ⚠️ ERROS DETECTADOS
-    </h1>
-
-    <div id="numeroErros">
-        0
-    </div>
-
-    <div>
-        falhas simuladas encontradas
-    </div>
-
-    <div id="terminal"></div>
-
-</div>
-
-
-<button id="cancelar">
-    CANCELAR
+<button class="green" onclick="gerarRelatorio()">
+✓ Gerar relatório completo
 </button>
 
+<button class="gray" onclick="limparTudo()">
+Limpar
+</button>
 
-<!-- ==========================
-     SUSPENSE
-========================== -->
+</div>
 
-<div id="suspense" class="tela">
-
-    <div id="textoSuspense">
-        Aguarde...
-    </div>
+</div>
 
 </div>
 
 
-<!-- ==========================
-     FINAL
-========================== -->
+<!-- RELATORIO -->
 
-<div id="final" class="tela">
+<div id="relatorio">
 
-    <div class="emojiFinal">
-        😂😂
-    </div>
+<div class="report">
 
-    <h1>
-        CAIU KKKKK!
-    </h1>
+<div class="reportHeader">
 
-    <p>
-        Achou que tinha dado problema
-        no celular? 😂
-        <br><br>
-        Relaxa.
-        <strong style="color:white">
-        Nada aconteceu com seu aparelho.
-        </strong>
-        <br><br>
-        Todos os erros eram apenas
-        animações dentro desta página.
-        <br><br>
-        Essa perturbação foi feita por:
-    </p>
+<div class="brand">
 
-    <span class="maik">
-        MAIK 😈
-    </span>
+<h1>LUCAS DESPACHANTE</h1>
 
-    <button onclick="location.reload()">
-        RECOMEÇAR 😂
-    </button>
+<strong>DOCUMENTALISTA</strong>
+
+<br>
+
+<span class="tag">
+RELATÓRIO PARTICULAR DE INFORMAÇÕES VEICULARES
+</span>
 
 </div>
+
+<div class="reportInfo">
+
+<strong id="numeroRelatorio"></strong>
+
+<br>
+
+<span id="dataRelatorio"></span>
+
+<br>
+
+<span id="placaTopo"></span>
+
+</div>
+
+</div>
+
+
+<div class="section">
+
+<div class="sectionTitle">
+IDENTIFICAÇÃO PRINCIPAL
+</div>
+
+<table>
+
+<tr>
+<td class="label">Placa Mercosul</td>
+<td id="rPlaca"></td>
+
+<td class="label">Placa anterior</td>
+<td id="rPlacaAntiga"></td>
+</tr>
+
+<tr>
+<td class="label">Marca / Modelo</td>
+<td colspan="3" id="rModelo"></td>
+</tr>
+
+<tr>
+<td class="label">Chassi</td>
+<td colspan="3" id="rChassi"></td>
+</tr>
+
+<tr>
+<td class="label">RENAVAM</td>
+<td id="rRenavam"></td>
+
+<td class="label">Nº Motor</td>
+<td id="rMotor"></td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="section">
+
+<div class="sectionTitle">
+DADOS DO VEÍCULO
+</div>
+
+<table>
+
+<tr>
+<td class="label">Município</td>
+<td id="rMunicipio"></td>
+
+<td class="label">Categoria</td>
+<td id="rCategoria"></td>
+</tr>
+
+<tr>
+<td class="label">Tipo</td>
+<td id="rTipo"></td>
+
+<td class="label">Cor</td>
+<td id="rCor"></td>
+</tr>
+
+<tr>
+<td class="label">Combustível</td>
+<td id="rCombustivel"></td>
+
+<td class="label">Ano</td>
+<td id="rAno"></td>
+</tr>
+
+<tr>
+<td class="label">Situação</td>
+<td colspan="3" id="rSituacao"></td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="section">
+
+<div class="sectionTitle">
+PROPRIETÁRIO
+</div>
+
+<table>
+
+<tr>
+<td class="label">Nome</td>
+<td colspan="3" id="rNome"></td>
+</tr>
+
+<tr>
+<td class="label">CPF/CNPJ</td>
+<td id="rCpf"></td>
+
+<td class="label">Tipo</td>
+<td id="rPessoa"></td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="section">
+
+<div class="sectionTitle">
+ESPECIFICAÇÕES
+</div>
+
+<table>
+
+<tr>
+<td class="label">Espécie</td>
+<td id="rEspecie"></td>
+
+<td class="label">Lotação</td>
+<td id="rLotacao"></td>
+</tr>
+
+<tr>
+<td class="label">Potência</td>
+<td id="rPotencia"></td>
+
+<td class="label">Cilindradas</td>
+<td id="rCilindradas"></td>
+</tr>
+
+<tr>
+<td class="label">Procedência</td>
+<td id="rProcedencia"></td>
+
+<td class="label">Chassi</td>
+<td id="rRemarcacao"></td>
+</tr>
+
+<tr>
+<td class="label">CMT</td>
+<td id="rCmt"></td>
+
+<td class="label">PBT</td>
+<td id="rPbt"></td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="section">
+
+<div class="sectionTitle">
+RESTRIÇÕES / APONTAMENTOS
+</div>
+
+<table>
+
+<tr>
+<td class="label">Roubo/Furto</td>
+<td id="rRoubo"></td>
+
+<td class="label">RENAJUD</td>
+<td id="rRenajud"></td>
+</tr>
+
+<tr>
+<td class="label">Multa RENAINF</td>
+<td id="rRenainf"></td>
+
+<td class="label">Leilão</td>
+<td id="rLeilao"></td>
+</tr>
+
+<tr>
+<td class="label">Comunicação Venda</td>
+<td id="rComunicacao"></td>
+
+<td class="label">Pendência Emissão</td>
+<td id="rPendencia"></td>
+</tr>
+
+<tr>
+<td class="label">Restrição 1</td>
+<td colspan="3" id="rRestricao1"></td>
+</tr>
+
+<tr>
+<td class="label">Restrição 2</td>
+<td colspan="3" id="rRestricao2"></td>
+</tr>
+
+<tr>
+<td class="label">Restrição 3</td>
+<td colspan="3" id="rRestricao3"></td>
+</tr>
+
+<tr>
+<td class="label">Restrição 4</td>
+<td colspan="3" id="rRestricao4"></td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="section">
+
+<div class="sectionTitle">
+DOCUMENTAÇÃO
+</div>
+
+<table>
+
+<tr>
+<td class="label">Emissão CRV</td>
+<td id="rCrv"></td>
+
+<td class="label">Emissão CRLV</td>
+<td id="rCrlv"></td>
+</tr>
+
+<tr>
+<td class="label">Licenciamento</td>
+<td id="rLicenciamento"></td>
+
+<td class="label">Vencimento</td>
+<td id="rVencimento"></td>
+</tr>
+
+<tr>
+<td class="label">Serviço consultado</td>
+<td colspan="3" id="rServico"></td>
+</tr>
+
+</table>
+
+</div>
+
+
+<div class="section">
+
+<div class="sectionTitle">
+OBSERVAÇÕES DA CONSULTA
+</div>
+
+<div class="alerta" id="rObservacao"></div>
+
+</div>
+
+
+<div class="section" id="secaoFotos">
+
+<div class="sectionTitle">
+REGISTRO FOTOGRÁFICO DO VEÍCULO
+</div>
+
+<br>
+
+<div class="reportPhotos" id="fotosRelatorio"></div>
+
+</div>
+
+
+<div class="notice">
+
+<strong>INFORMAÇÃO:</strong>
+Este documento organiza informações fornecidas ao sistema e o registro
+fotográfico correspondente. Não substitui laudo de vistoria, certificação,
+consulta ou documento emitido por DETRAN, SENATRAN, ECV ou outra entidade
+oficial. Os dados devem ser conferidos com as respectivas fontes oficiais
+antes de qualquer procedimento administrativo.
+
+</div>
+
+
+<div class="footer">
+
+<strong>LUCAS DESPACHANTE — DOCUMENTALISTA</strong><br>
+
+Serviços e regularização documental veicular.<br>
+
+Relatório gerado eletronicamente.
+
+</div>
+
+
+<div class="buttons noPrint">
+
+<button class="dark" onclick="window.print()">
+📄 Imprimir / Salvar PDF
+</button>
+
+<button class="blue" onclick="editar()">
+← Voltar
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+</main>
 
 
 <script>
 
-/* ==========================
-   ELEMENTOS
-========================== */
+/* =========================
+   FOTOS
+========================= */
 
-const inicio =
-document.getElementById("inicio");
-
-const teste =
-document.getElementById("teste");
-
-const porcentagem =
-document.getElementById("porcentagem");
-
-const progresso =
-document.getElementById("progresso");
-
-const statusTeste =
-document.getElementById("status");
-
-const areaErros =
-document.getElementById("areaErros");
-
-const alerta =
-document.getElementById("alerta");
-
-const critico =
-document.getElementById("critico");
-
-const numeroErros =
-document.getElementById("numeroErros");
-
-const terminal =
-document.getElementById("terminal");
-
-const cancelar =
-document.getElementById("cancelar");
-
-const suspense =
-document.getElementById("suspense");
-
-const textoSuspense =
-document.getElementById("textoSuspense");
-
-const final =
-document.getElementById("final");
+let fotos = [];
 
 
-let totalErros = 0;
+function selecionarFotos(event){
 
+    const arquivos = Array.from(event.target.files);
 
-/* ==========================
-   MENSAGENS
-========================== */
+    arquivos.forEach(arquivo => {
 
-const mensagens = [
+        if(!arquivo.type.startsWith("image/")) return;
 
-"Falha inesperada durante o diagnóstico.",
+        const reader = new FileReader();
 
-"Resposta inválida encontrada.",
+        reader.onload = e => {
 
-"Não foi possível concluir esta etapa.",
+            comprimirImagem(e.target.result, imagem => {
 
-"Erro ao tentar corrigir o erro anterior.",
+                fotos.push(imagem);
 
-"Processo demorando mais que o esperado.",
+                atualizarPreview();
 
-"Nova inconsistência detectada.",
+            });
 
-"Verificação automática falhou.",
+        };
 
-"Erro desconhecido encontrado.",
+        reader.readAsDataURL(arquivo);
 
-"Tentativa de recuperação falhou.",
+    });
 
-"Carregando informações adicionais...",
-
-"Falha durante nova tentativa.",
-
-"Mais erros simulados encontrados.",
-
-"Diagnóstico interrompido.",
-
-"Processo reiniciado inesperadamente.",
-
-"Falha crítica de brincadeira 😂"
-
-];
-
-
-/* ==========================
-   VIBRAÇÃO
-========================== */
-
-function vibrar(padrao){
-
-    if(navigator.vibrate){
-        navigator.vibrate(padrao);
-    }
+    event.target.value = "";
 
 }
 
 
-/* ==========================
-   CRIAR ERRO
-========================== */
+function comprimirImagem(src, callback){
 
-function criarErro(){
+    const img = new Image();
 
-    totalErros++;
+    img.onload = function(){
 
-    const erro =
-    document.createElement("div");
+        const max = 1600;
 
-    erro.className="erro";
+        let largura = img.width;
+        let altura = img.height;
 
-    erro.style.top =
-    (60 + Math.random() *
-    (window.innerHeight - 180))
-    + "px";
+        if(largura > max || altura > max){
 
-    const mensagem =
-    mensagens[
-        Math.floor(
-            Math.random()*mensagens.length
-        )
-    ];
+            const escala = Math.min(
+                max / largura,
+                max / altura
+            );
 
-    erro.innerHTML = `
-
-        <div class="erroTitulo">
-            ⚠️ ERRO SIMULADO #${totalErros}
-        </div>
-
-        <div class="erroTexto">
-            ${mensagem}
-        </div>
-
-    `;
-
-    areaErros.appendChild(erro);
-
-    setTimeout(()=>{
-
-        erro.remove();
-
-    },1600);
-
-}
-
-
-/* ==========================
-   INICIAR
-========================== */
-
-function iniciarTeste(){
-
-    inicio.style.display="none";
-
-    teste.style.display="block";
-
-    vibrar([100,60,100]);
-
-    fase1();
-
-}
-
-
-/* ==========================
-   FASE 1
-========================== */
-
-function fase1(){
-
-    let valor=0;
-
-    statusTeste.innerText=
-    "Verificando navegador...";
-
-    const timer =
-    setInterval(()=>{
-
-        valor +=
-        Math.floor(Math.random()*5)+2;
-
-        if(valor >= 62){
-
-            valor=62;
-
-            clearInterval(timer);
-
-            statusTeste.innerText=
-            "Verificando estabilidade...";
-
-            setTimeout(fase2,2000);
+            largura *= escala;
+            altura *= escala;
 
         }
 
-        porcentagem.innerText=
-        valor+"%";
+        const canvas = document.createElement("canvas");
 
-        progresso.style.width=
-        valor+"%";
+        canvas.width = largura;
+        canvas.height = altura;
 
-    },220);
+        const ctx = canvas.getContext("2d");
 
-}
+        ctx.drawImage(
+            img,
+            0,
+            0,
+            largura,
+            altura
+        );
 
+        callback(
+            canvas.toDataURL(
+                "image/jpeg",
+                .80
+            )
+        );
 
-/* ==========================
-   FASE 2
-========================== */
+    };
 
-function fase2(){
-
-    statusTeste.innerText=
-    "Uma inconsistência foi encontrada...";
-
-    criarErro();
-
-    vibrar(100);
-
-    setTimeout(criarErro,700);
-
-    setTimeout(criarErro,1400);
-
-    setTimeout(criarErro,2100);
-
-    setTimeout(()=>{
-
-        alerta.style.display="flex";
-
-        vibrar([
-            200,
-            100,
-            200
-        ]);
-
-    },3000);
+    img.src = src;
 
 }
 
 
-/* ==========================
-   CORRIGIR
-========================== */
+function atualizarPreview(){
 
-function corrigir(){
+    const area =
+        document.getElementById("preview");
 
-    alerta.style.display="none";
+    area.innerHTML = "";
 
-    statusTeste.innerText=
-    "Tentando corrigir problemas...";
+    fotos.forEach((foto,index)=>{
 
-    atualizar(70);
+        area.innerHTML += `
 
-    setTimeout(()=>{
-        atualizar(78);
-    },800);
+        <div class="preview">
 
-    setTimeout(()=>{
-        atualizar(86);
-    },1600);
+            <button
+                class="remove"
+                onclick="removerFoto(${index})">
+                ×
+            </button>
 
-    setTimeout(()=>{
-        atualizar(94);
-    },2400);
+            <img src="${foto}">
 
-    setTimeout(()=>{
+            <span>
+                Fotografia ${String(index+1).padStart(2,"0")}
+            </span>
 
-        atualizar(99);
+        </div>
 
-        statusTeste.innerText=
-        "Finalizando diagnóstico...";
+        `;
 
-    },3200);
-
-    setTimeout(fase3,5200);
-
-}
+    });
 
 
-function atualizar(valor){
-
-    porcentagem.innerText=
-    valor+"%";
-
-    progresso.style.width=
-    valor+"%";
+    document.getElementById("contador").textContent =
+        fotos.length +
+        (fotos.length === 1
+        ? " imagem selecionada"
+        : " imagens selecionadas");
 
 }
 
 
-/* ==========================
-   FASE 3
-   TRAVOU EM 99%
-========================== */
+function removerFoto(index){
 
-function fase3(){
+    fotos.splice(index,1);
 
-    statusTeste.innerText=
-    "99% — aguardando resposta...";
+    atualizarPreview();
 
-    vibrar([
-        100,60,
-        100,60,
-        200
-    ]);
+}
 
-    for(let i=0;i<12;i++){
 
-        setTimeout(()=>{
+/* =========================
+   LEITOR DA CONSULTA
+========================= */
 
-            criarErro();
+function limparTexto(texto){
 
-        },i*250);
+    return texto
+        .replace(/\r/g,"")
+        .replace(/\u00A0/g," ")
+        .trim();
+
+}
+
+
+function campo(nome){
+
+    const texto =
+        limparTexto(
+            document.getElementById("consulta").value
+        );
+
+    const linhas = texto.split("\n");
+
+    const nomeNormalizado =
+        nome.toLowerCase()
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g,"")
+            .trim();
+
+
+    for(let linha of linhas){
+
+        let semEmoji =
+            linha
+            .replace(/^[^A-Za-zÀ-ÿ0-9ºª]+/,"")
+            .trim();
+
+        const pos = semEmoji.indexOf(":");
+
+        if(pos === -1) continue;
+
+
+        const chave =
+            semEmoji.substring(0,pos)
+                .trim()
+                .toLowerCase()
+                .normalize("NFD")
+                .replace(/[\u0300-\u036f]/g,"");
+
+
+        const valor =
+            semEmoji.substring(pos+1).trim();
+
+
+        if(chave === nomeNormalizado){
+
+            return valor || "Não informado";
+
+        }
 
     }
 
-    document.body.classList.add(
-        "tremendo"
-    );
-
-    setTimeout(()=>{
-
-        document.body.classList.remove(
-            "tremendo"
-        );
-
-        fase4();
-
-    },3500);
+    return "Não informado";
 
 }
 
 
-/* ==========================
-   FASE 4
-   CONTADOR DE ERROS
-========================== */
+function observacaoConsulta(){
 
-function fase4(){
+    const texto =
+        document.getElementById("consulta").value;
 
-    teste.style.display="none";
+    const marcador =
+        "⚠️ OBSERVAÇÃO IMPORTANTE";
 
-    areaErros.innerHTML="";
+    const inicio =
+        texto.indexOf(marcador);
 
-    critico.style.display="block";
+    if(inicio === -1){
 
-    let numero=0;
+        return gerarObservacaoAutomatica();
 
-    const timer =
-    setInterval(()=>{
+    }
 
-        numero +=
-        Math.floor(Math.random()*7)+2;
 
-        numeroErros.innerText=
-        numero;
-
-        const codigo =
-        Math.floor(
-            1000+
-            Math.random()*8999
+    let parte =
+        texto.substring(
+            inicio + marcador.length
         );
 
-        terminal.innerHTML +=
-        "ERRO_SIM_"+codigo+
-        " .... FALHOU<br>";
 
-        terminal.scrollTop =
-        terminal.scrollHeight;
+    const fim =
+        parte.indexOf(
+            "LUCAS DESPACHANTE"
+        );
 
-        vibrar(35);
 
-        if(numero >= 89){
+    if(fim !== -1){
 
-            clearInterval(timer);
+        parte =
+            parte.substring(0,fim);
 
-            setTimeout(
-                faseCancelar,
-                1800
+    }
+
+
+    parte =
+        parte
+        .replace(/━+/g,"")
+        .trim();
+
+
+    if(!parte){
+
+        return gerarObservacaoAutomatica();
+
+    }
+
+    return parte;
+
+}
+
+
+/* =========================
+   OBSERVAÇÃO AUTOMÁTICA
+========================= */
+
+function gerarObservacaoAutomatica(){
+
+    let alertas = [];
+
+
+    if(campo("Roubo/Furto").toUpperCase() === "SIM"){
+
+        alertas.push(
+            "Consta apontamento de roubo/furto na consulta apresentada."
+        );
+
+    }
+
+
+    if(campo("RENAJUD").toUpperCase() === "SIM"){
+
+        alertas.push(
+            "Consta apontamento RENAJUD."
+        );
+
+    }
+
+
+    if(campo("Multa RENAINF").toUpperCase() === "SIM"){
+
+        alertas.push(
+            "Consta MULTA RENAINF."
+        );
+
+    }
+
+
+    if(campo("Leilão").toUpperCase() === "SIM"){
+
+        alertas.push(
+            "Consta apontamento relacionado a leilão."
+        );
+
+    }
+
+
+    [
+        "Restrição 1",
+        "Restrição 2",
+        "Restrição 3",
+        "Restrição 4"
+
+    ].forEach(item=>{
+
+        const valor =
+            campo(item);
+
+        if(
+            valor !== "Não informado" &&
+            !valor.toUpperCase().includes("SEM RESTRIÇÃO")
+        ){
+
+            alertas.push(
+                item + ": " + valor + "."
             );
 
         }
 
-    },150);
+    });
+
+
+    const lic =
+        campo("Ano Licenciamento");
+
+
+    if(lic !== "Não informado"){
+
+        alertas.push(
+            "Último licenciamento informado: " +
+            lic + "."
+        );
+
+    }
+
+
+    if(alertas.length === 0){
+
+        return "Nenhum apontamento adicional foi identificado automaticamente no texto fornecido.";
+
+    }
+
+
+    return alertas.join("\n\n");
 
 }
 
 
-/* ==========================
-   BOTÃO CANCELAR
-========================== */
+/* =========================
+   PREENCHIMENTO
+========================= */
 
-function faseCancelar(){
+function set(id,valor){
 
-    cancelar.style.display=
-    "block";
-
-    moverCancelar();
-
-    cancelar.addEventListener(
-        "touchstart",
-        moverCancelar
-    );
-
-    cancelar.addEventListener(
-        "mouseover",
-        moverCancelar
-    );
-
-    cancelar.addEventListener(
-        "click",
-        moverCancelar
-    );
-
-    setTimeout(()=>{
-
-        cancelar.innerText=
-        "QUASE 😂";
-
-    },2000);
-
-    setTimeout(()=>{
-
-        cancelar.innerText=
-        "NÃO ADIANTA KKK";
-
-    },4000);
-
-    setTimeout(()=>{
-
-        cancelar.innerText=
-        "DESISTE 😂";
-
-    },6000);
-
-    setTimeout(
-        ultimaTentativa,
-        8000
-    );
+    document.getElementById(id).textContent =
+        valor || "Não informado";
 
 }
 
 
-function moverCancelar(){
+function gerarRelatorio(){
 
-    const largura =
-    window.innerWidth -
-    cancelar.offsetWidth - 20;
-
-    const altura =
-    window.innerHeight -
-    cancelar.offsetHeight - 40;
-
-    cancelar.style.left =
-    Math.max(
-        10,
-        Math.random()*largura
-    )+"px";
-
-    cancelar.style.top =
-    Math.max(
-        70,
-        Math.random()*altura
-    )+"px";
-
-    vibrar(30);
-
-}
+    const consulta =
+        document.getElementById("consulta")
+            .value.trim();
 
 
-/* ==========================
-   ÚLTIMA TENTATIVA
-========================== */
+    if(!consulta){
 
-function ultimaTentativa(){
+        alert(
+            "Cole primeiro a consulta veicular."
+        );
 
-    cancelar.style.display="none";
+        return;
 
-    critico.style.display="none";
-
-    suspense.style.display="flex";
-
-    textoSuspense.innerHTML=
-    "Tentando corrigir os erros...";
-
-    setTimeout(()=>{
-
-        textoSuspense.innerHTML=
-        "Tentativa 1...<br><br>❌ FALHOU";
-
-        vibrar(150);
-
-    },1500);
+    }
 
 
-    setTimeout(()=>{
+    /* IDENTIFICAÇÃO */
 
-        textoSuspense.innerHTML=
-        "Tentativa 2...<br><br>❌ FALHOU";
+    set("rPlaca",campo("Placa Mercosul"));
 
-        vibrar(150);
+    set("rPlacaAntiga",campo("Placa antiga"));
 
-    },3200);
+    set("rModelo",campo("Marca/Modelo"));
 
+    set("rChassi",campo("Chassi"));
 
-    setTimeout(()=>{
+    set("rRenavam",campo("RENAVAM"));
 
-        textoSuspense.innerHTML=
-        "Tentativa 3...";
-
-    },5000);
+    set("rMotor",campo("Nº do Motor"));
 
 
-    setTimeout(()=>{
+    /* VEÍCULO */
 
-        textoSuspense.innerHTML=
-        "⚠️ RESULTADO ENCONTRADO";
+    set("rMunicipio",campo("Município"));
 
-        vibrar([
-            200,
-            100,
-            200
-        ]);
+    set("rCategoria",campo("Categoria"));
 
-    },6500);
+    set("rTipo",campo("Tipo"));
 
+    set("rCor",campo("Cor"));
 
-    setTimeout(
-        faseMaik,
-        8000
+    set("rCombustivel",campo("Combustível"));
+
+    set(
+        "rAno",
+        campo("Ano Fabricação/Modelo")
     );
 
-}
+    set("rSituacao",campo("Situação"));
 
 
-/* ==========================
-   REVELAÇÃO MAIK
-========================== */
+    /* PROPRIETÁRIO */
 
-function faseMaik(){
+    set("rNome",campo("Nome"));
 
-    textoSuspense.innerHTML=
-    "SEU CELULAR FOI...";
+    set("rCpf",campo("CPF/CNPJ"));
 
-    setTimeout(()=>{
-
-        textoSuspense.innerHTML=
-        "😈";
-
-    },1800);
+    set(
+        "rPessoa",
+        campo("Tipo de Pessoa")
+    );
 
 
-    setTimeout(()=>{
+    /* ESPECIFICAÇÕES */
 
-        textoSuspense.innerHTML=
-        `
-        <div style="
-        font-size:20px;
-        color:#888;
-        margin-bottom:15px;
-        ">
-        PERTURBADO POR
+    set("rEspecie",campo("Espécie"));
+
+    set("rLotacao",campo("Lotação"));
+
+    set("rPotencia",campo("Potência"));
+
+    set(
+        "rCilindradas",
+        campo("Cilindradas")
+    );
+
+    set(
+        "rProcedencia",
+        campo("Procedência")
+    );
+
+    set(
+        "rRemarcacao",
+        campo("Remarcação do Chassi")
+    );
+
+    set("rCmt",campo("CMT"));
+
+    set("rPbt",campo("PBT"));
+
+
+    /* RESTRIÇÕES */
+
+    set("rRoubo",campo("Roubo/Furto"));
+
+    set("rRenajud",campo("RENAJUD"));
+
+    set(
+        "rRenainf",
+        campo("Multa RENAINF")
+    );
+
+    set("rLeilao",campo("Leilão"));
+
+    set(
+        "rComunicacao",
+        campo("Comunicação de Venda")
+    );
+
+    set(
+        "rPendencia",
+        campo("Pendência de Emissão")
+    );
+
+    set(
+        "rRestricao1",
+        campo("Restrição 1")
+    );
+
+    set(
+        "rRestricao2",
+        campo("Restrição 2")
+    );
+
+    set(
+        "rRestricao3",
+        campo("Restrição 3")
+    );
+
+    set(
+        "rRestricao4",
+        campo("Restrição 4")
+    );
+
+
+    /* DOCUMENTAÇÃO */
+
+    set(
+        "rCrv",
+        campo("Data Emissão CRV")
+    );
+
+    set(
+        "rCrlv",
+        campo("Data Emissão CRLV")
+    );
+
+    set(
+        "rLicenciamento",
+        campo("Ano Licenciamento")
+    );
+
+    set(
+        "rVencimento",
+        campo("Vencimento do Documento")
+    );
+
+    set(
+        "rServico",
+        campo("Serviço Consultado")
+    );
+
+
+    /* OBSERVAÇÃO */
+
+    set(
+        "rObservacao",
+        observacaoConsulta()
+    );
+
+
+    /* CABEÇALHO */
+
+    const agora =
+        new Date();
+
+
+    const codigo =
+        "LV-" +
+        agora.getFullYear() +
+        String(
+            agora.getMonth()+1
+        ).padStart(2,"0") +
+        String(
+            agora.getDate()
+        ).padStart(2,"0") +
+        "-" +
+        Math.floor(
+            1000 +
+            Math.random()*9000
+        );
+
+
+    set(
+        "numeroRelatorio",
+        "RELATÓRIO Nº " + codigo
+    );
+
+
+    set(
+        "dataRelatorio",
+        agora.toLocaleString("pt-BR")
+    );
+
+
+    set(
+        "placaTopo",
+        "PLACA: " +
+        campo("Placa Mercosul")
+    );
+
+
+    /* FOTOS */
+
+    const areaFotos =
+        document.getElementById(
+            "fotosRelatorio"
+        );
+
+
+    areaFotos.innerHTML = "";
+
+
+    fotos.forEach((foto,index)=>{
+
+        areaFotos.innerHTML += `
+
+        <div class="reportPhoto">
+
+            <img src="${foto}">
+
+            <div>
+                REGISTRO FOTOGRÁFICO
+                ${String(index+1).padStart(2,"0")}
+            </div>
+
         </div>
 
-        <div style="
-        font-size:60px;
-        font-weight:900;
-        ">
-        MAIK 😈
-        </div>
         `;
 
-        vibrar([
-            200,
-            80,
-            200,
-            80,
-            300
-        ]);
-
-    },3000);
+    });
 
 
-    setTimeout(
-        mostrarFinal,
-        6000
-    );
+    document.getElementById(
+        "secaoFotos"
+    ).style.display =
+        fotos.length
+        ? "block"
+        : "none";
+
+
+    document.getElementById(
+        "entrada"
+    ).style.display = "none";
+
+
+    document.getElementById(
+        "relatorio"
+    ).style.display = "block";
+
+
+    window.scrollTo(0,0);
 
 }
 
 
-/* ==========================
-   FINAL
-========================== */
+/* =========================
+   CONTROLES
+========================= */
 
-function mostrarFinal(){
+function editar(){
 
-    suspense.style.display="none";
+    document.getElementById(
+        "relatorio"
+    ).style.display = "none";
 
-    final.style.display="flex";
+
+    document.getElementById(
+        "entrada"
+    ).style.display = "block";
+
+
+    window.scrollTo(0,0);
+
+}
+
+
+function limparTudo(){
+
+    if(
+        !confirm(
+            "Deseja apagar a consulta e todas as imagens?"
+        )
+    ) return;
+
+
+    document.getElementById(
+        "consulta"
+    ).value = "";
+
+
+    fotos = [];
+
+
+    atualizarPreview();
 
 }
 
