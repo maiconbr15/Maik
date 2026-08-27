@@ -3,372 +3,972 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1220">
 
-<title>Lucas Despachante - Relatório Veicular</title>
+<title>Lucas Despachante | Relatório Veicular</title>
 
 <style>
-*{box-sizing:border-box}
+/* =========================================================
+   CONFIGURAÇÕES GERAIS
+========================================================= */
+
+*{
+    box-sizing:border-box;
+}
+
+html{
+    scroll-behavior:smooth;
+}
 
 body{
     margin:0;
-    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
     background:#eef2f6;
-    color:#111827;
+    color:#0f172a;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;
 }
 
-header{
-    background:#0b1220;
-    color:#fff;
-    padding:24px 16px;
+button,
+input,
+textarea{
+    font-family:inherit;
 }
 
-.head{
-    max-width:1000px;
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none !important;
+}
+
+
+/* =========================================================
+   CABEÇALHO DO SISTEMA
+========================================================= */
+
+.app-header{
+    background:
+        radial-gradient(circle at top right,#1e3a5f 0,transparent 40%),
+        linear-gradient(135deg,#07101e,#111827);
+
+    color:white;
+    padding:22px 16px 26px;
+}
+
+.app-header-inner{
+    max-width:1050px;
     margin:auto;
+
+    display:flex;
+    align-items:center;
+    gap:14px;
 }
 
-header h1{
+.app-logo{
+    width:62px;
+    height:62px;
+
+    background:white;
+    border-radius:15px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+    flex-shrink:0;
+
+    box-shadow:0 8px 25px rgba(0,0,0,.2);
+}
+
+.app-logo img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    padding:5px;
+}
+
+.logo-placeholder{
+    font-weight:900;
+    font-size:18px;
+    color:#0f172a;
+}
+
+.app-title{
+    flex:1;
+}
+
+.app-title h1{
     margin:0;
-    font-size:23px;
+    font-size:22px;
+    font-weight:900;
+    letter-spacing:.3px;
 }
 
-header p{
+.app-title p{
     margin:5px 0 0;
-    color:#94a3b8;
-    font-size:13px;
+    color:#cbd5e1;
+    font-size:12px;
+    font-weight:600;
 }
+
+.app-badge{
+    display:inline-block;
+    margin-top:7px;
+
+    background:rgba(255,255,255,.1);
+    border:1px solid rgba(255,255,255,.15);
+
+    border-radius:50px;
+    padding:5px 9px;
+
+    font-size:9px;
+    letter-spacing:1px;
+    font-weight:800;
+}
+
+
+/* =========================================================
+   CONTEÚDO
+========================================================= */
 
 main{
-    max-width:1000px;
+    max-width:1050px;
     margin:auto;
-    padding:15px;
+    padding:16px 14px 50px;
 }
 
 .card{
     background:white;
-    padding:18px;
-    border-radius:15px;
+    border-radius:17px;
+
     margin-bottom:15px;
-    box-shadow:0 4px 18px rgba(0,0,0,.06);
+    padding:19px;
+
+    box-shadow:
+        0 2px 5px rgba(15,23,42,.03),
+        0 10px 30px rgba(15,23,42,.06);
+
+    border:1px solid #e8edf3;
 }
 
-h2{
-    font-size:17px;
-    margin:0 0 12px;
+.card-title{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:6px;
 }
 
-textarea{
-    width:100%;
-    min-height:360px;
-    border:1px solid #cbd5e1;
+.card-icon{
+    width:35px;
+    height:35px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    background:#eff6ff;
+    color:#1d4ed8;
+
     border-radius:10px;
-    padding:13px;
-    font-size:14px;
-    resize:vertical;
+    font-size:17px;
 }
 
-button{
+.card h2{
+    margin:0;
+    font-size:16px;
+}
+
+.description{
+    margin:7px 0 15px;
+    color:#64748b;
+    font-size:12px;
+    line-height:1.55;
+}
+
+
+/* =========================================================
+   LOGO
+========================================================= */
+
+.logo-upload-area{
+    display:flex;
+    align-items:center;
+    gap:17px;
+
+    background:#f8fafc;
+    border:1px solid #e2e8f0;
+    border-radius:14px;
+
+    padding:14px;
+}
+
+.logo-preview{
+    width:100px;
+    height:100px;
+    min-width:100px;
+
+    background:white;
+
+    border:2px dashed #cbd5e1;
+    border-radius:13px;
+
+    display:flex;
+    align-items:center;
+    justify-content:center;
+
+    overflow:hidden;
+}
+
+.logo-preview img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    padding:6px;
+}
+
+.logo-preview span{
+    color:#94a3b8;
+    font-size:11px;
+    font-weight:900;
+}
+
+.logo-info{
+    flex:1;
+}
+
+.logo-info strong{
+    display:block;
+    font-size:14px;
+}
+
+.logo-info small{
+    display:block;
+    margin-top:4px;
+
+    color:#64748b;
+    font-size:11px;
+    line-height:1.4;
+}
+
+
+/* =========================================================
+   BOTÕES
+========================================================= */
+
+.btn{
     border:0;
     border-radius:10px;
-    padding:14px 16px;
+
+    padding:12px 15px;
+
+    font-size:12px;
     font-weight:800;
-    font-size:14px;
-    cursor:pointer;
+
+    transition:.15s;
 }
 
-.blue{
+.btn:active{
+    transform:scale(.98);
+}
+
+.btn-primary{
     background:#2563eb;
-    color:#fff;
+    color:white;
 }
 
-.green{
+.btn-success{
     background:#15803d;
     color:white;
 }
 
-.dark{
+.btn-dark{
     background:#111827;
     color:white;
 }
 
-.gray{
+.btn-light{
     background:#e2e8f0;
-    color:#111827;
+    color:#334155;
 }
 
-.buttons{
+.btn-danger{
+    background:#fee2e2;
+    color:#b91c1c;
+}
+
+.logo-actions{
     display:flex;
-    gap:10px;
-    margin-top:12px;
+    flex-wrap:wrap;
+    gap:7px;
+
+    margin-top:11px;
 }
 
-.buttons button{
-    flex:1;
-}
+.file-button{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
 
-/* UPLOAD */
-
-.upload{
-    border:2px dashed #94a3b8;
-    border-radius:13px;
-    padding:24px 15px;
-    text-align:center;
-    background:#f8fafc;
-}
-
-.upload strong{
-    display:block;
-    margin-bottom:5px;
-}
-
-.upload p{
-    font-size:12px;
-    color:#64748b;
-}
-
-.upload label{
-    display:inline-block;
-    margin-top:10px;
     background:#2563eb;
-    color:#fff;
-    padding:12px 18px;
+    color:white;
+
     border-radius:9px;
+
+    padding:11px 14px;
+
+    font-size:12px;
     font-weight:800;
+
     cursor:pointer;
 }
 
-.upload input{
+.file-button input{
     display:none;
 }
 
-#contador{
-    margin-top:12px;
-    font-size:13px;
-    font-weight:800;
-}
 
-/* FOTOS */
+/* =========================================================
+   CONSULTA
+========================================================= */
 
-.previewGrid{
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    gap:10px;
-    margin-top:15px;
-}
-
-.preview{
-    position:relative;
-    background:#e2e8f0;
-    border-radius:10px;
-    overflow:hidden;
-}
-
-.preview img{
+textarea{
     width:100%;
-    height:170px;
-    object-fit:cover;
-    display:block;
+    min-height:380px;
+
+    padding:14px;
+
+    border:1px solid #cbd5e1;
+    border-radius:12px;
+
+    background:#fbfdff;
+
+    outline:none;
+
+    font-size:14px;
+    line-height:1.55;
+
+    resize:vertical;
 }
 
-.preview span{
-    display:block;
-    padding:7px;
-    font-size:11px;
-    font-weight:700;
-    background:white;
+textarea:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,.08);
 }
 
-.remove{
-    position:absolute;
-    top:6px;
-    right:6px;
-    width:30px;
-    height:30px;
-    border-radius:50%;
-    padding:0;
-    background:#dc2626;
-    color:white;
-}
+.consulta-status{
+    margin-top:10px;
 
-/* RELATORIO */
-
-#relatorio{
-    display:none;
-}
-
-.report{
-    background:white;
-    padding:30px;
-}
-
-.reportHeader{
-    border-bottom:4px solid #111827;
-    padding-bottom:16px;
-    margin-bottom:20px;
-    display:flex;
-    justify-content:space-between;
-    gap:20px;
-}
-
-.brand h1{
-    font-size:23px;
-    margin:0;
-}
-
-.brand strong{
-    font-size:12px;
-    color:#475569;
-}
-
-.reportInfo{
-    text-align:right;
-    font-size:11px;
-    line-height:1.5;
-}
-
-.tag{
-    display:inline-block;
-    margin-top:7px;
-    background:#e2e8f0;
-    padding:5px 8px;
-    border-radius:5px;
-    font-size:9px;
-    font-weight:900;
-}
-
-.section{
-    margin-top:20px;
-}
-
-.sectionTitle{
-    background:#111827;
-    color:#fff;
-    padding:9px 10px;
-    font-size:12px;
-    font-weight:900;
-    letter-spacing:.4px;
-}
-
-table{
-    width:100%;
-    border-collapse:collapse;
-}
-
-td{
-    border:1px solid #d1d5db;
-    padding:8px;
-    font-size:11px;
-}
-
-td.label{
-    width:23%;
     background:#f8fafc;
-    font-weight:800;
-}
+    border-radius:9px;
 
-.alerta{
-    background:#fff7ed;
-    border:1px solid #fdba74;
-    padding:13px;
+    padding:10px;
+
     font-size:11px;
-    line-height:1.6;
-    white-space:pre-wrap;
+    color:#64748b;
 }
 
-.okBox{
-    background:#f0fdf4;
-    border:1px solid #86efac;
-    padding:13px;
-    font-size:11px;
-    line-height:1.6;
+
+/* =========================================================
+   FOTOS
+========================================================= */
+
+.upload-box{
+    border:2px dashed #94a3b8;
+    border-radius:14px;
+
+    padding:25px 15px;
+
+    background:#f8fafc;
+
+    text-align:center;
 }
 
-/* FOTOS RELATORIO */
-
-.reportPhotos{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-
-.reportPhoto{
-    border:1px solid #d1d5db;
-    padding:5px;
-    break-inside:avoid;
-}
-
-.reportPhoto img{
-    width:100%;
-    height:270px;
-    object-fit:cover;
+.upload-box strong{
     display:block;
+    font-size:14px;
 }
 
-.reportPhoto div{
-    padding:6px 3px 2px;
+.upload-box p{
+    margin:5px 0;
+    color:#64748b;
+    font-size:11px;
+}
+
+.counter{
+    display:inline-block;
+
+    margin-top:12px;
+
+    background:#e2e8f0;
+
+    padding:6px 10px;
+
+    border-radius:50px;
+
     font-size:10px;
     font-weight:800;
 }
 
-/* RODAPE */
+.preview-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
 
-.footer{
-    margin-top:30px;
-    padding-top:14px;
-    border-top:1px solid #d1d5db;
-    text-align:center;
+    gap:10px;
+
+    margin-top:15px;
+}
+
+.photo-preview{
+    position:relative;
+
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+
+    overflow:hidden;
+
+    background:#f8fafc;
+}
+
+.photo-preview img{
+    display:block;
+
+    width:100%;
+    height:180px;
+
+    object-fit:cover;
+}
+
+.photo-info{
+    padding:8px 9px;
+
+    background:white;
+
+    font-size:10px;
+    font-weight:800;
+}
+
+.photo-remove{
+    position:absolute;
+    top:7px;
+    right:7px;
+
+    width:31px;
+    height:31px;
+
+    padding:0;
+
+    border:0;
+    border-radius:50%;
+
+    background:rgba(185,28,28,.94);
+    color:white;
+
+    font-size:18px;
+    font-weight:700;
+
+    box-shadow:0 3px 8px rgba(0,0,0,.2);
+}
+
+
+/* =========================================================
+   BOTÕES PRINCIPAIS
+========================================================= */
+
+.main-actions{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:10px;
+}
+
+.main-actions button{
+    min-height:50px;
+}
+
+
+/* =========================================================
+   RELATÓRIO
+========================================================= */
+
+#reportScreen{
+    display:none;
+}
+
+.report-paper{
+    position:relative;
+
+    background:white;
+
+    max-width:900px;
+    margin:auto;
+
+    padding:35px;
+
+    border-radius:5px;
+
+    box-shadow:0 10px 40px rgba(15,23,42,.08);
+
+    overflow:hidden;
+
+    isolation:isolate;
+}
+
+.report-content{
+    position:relative;
+    z-index:2;
+}
+
+
+/* MARCA D'ÁGUA */
+
+.report-watermark{
+    position:absolute;
+
+    z-index:1;
+
+    top:50%;
+    left:50%;
+
+    width:68%;
+    max-width:550px;
+
+    transform:
+        translate(-50%,-50%)
+        rotate(-25deg);
+
+    opacity:.035;
+
+    pointer-events:none;
+    user-select:none;
+
+    display:none;
+}
+
+.report-watermark img{
+    width:100%;
+    height:auto;
+    display:block;
+}
+
+
+/* CABEÇALHO RELATÓRIO */
+
+.report-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+
+    gap:20px;
+
+    border-bottom:4px solid #0f172a;
+
+    padding-bottom:17px;
+    margin-bottom:22px;
+}
+
+.report-brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+}
+
+.report-logo{
+    width:70px;
+    height:70px;
+
+    object-fit:contain;
+
+    display:none;
+}
+
+.report-brand-text strong{
+    display:block;
+
+    font-size:20px;
+    font-weight:950;
+    letter-spacing:.5px;
+}
+
+.report-brand-text span{
+    display:block;
+
+    margin-top:3px;
+
+    color:#475569;
+
     font-size:9px;
+    font-weight:900;
+    letter-spacing:2px;
+}
+
+.report-meta{
+    text-align:right;
+
+    font-size:9px;
+    line-height:1.65;
+
+    color:#475569;
+}
+
+.report-meta strong{
+    color:#0f172a;
+}
+
+
+/* TÍTULO */
+
+.vehicle-hero{
+    background:#f8fafc;
+
+    border:1px solid #e2e8f0;
+    border-radius:12px;
+
+    padding:18px;
+
+    margin-bottom:20px;
+}
+
+.vehicle-hero small{
+    display:block;
+
     color:#64748b;
-    line-height:1.5;
+
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:1.5px;
 }
 
-.notice{
-    margin-top:18px;
-    border:1px solid #f59e0b;
-    background:#fffbeb;
-    padding:11px;
+.vehicle-hero h1{
+    margin:5px 0 3px;
+
+    font-size:24px;
+    line-height:1.2;
+}
+
+.vehicle-hero p{
+    margin:0;
+
+    color:#475569;
+
+    font-size:11px;
+    font-weight:700;
+}
+
+
+/* SEÇÕES */
+
+.report-section{
+    margin-top:19px;
+}
+
+.report-section-title{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+
+    background:#0f172a;
+    color:white;
+
+    padding:9px 11px;
+
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.7px;
+}
+
+.report-table{
+    width:100%;
+
+    border-collapse:collapse;
+}
+
+.report-table td{
+    border:1px solid #dbe1e8;
+
+    padding:8px;
+
+    font-size:10px;
+}
+
+.report-table .field{
+    width:22%;
+
+    background:#f8fafc;
+
+    color:#475569;
+
     font-size:9px;
-    line-height:1.5;
+    font-weight:900;
 }
 
-@media(max-width:650px){
+.report-table .value{
+    font-weight:700;
+}
 
-    .previewGrid{
+
+/* RESTRIÇÕES */
+
+.restriction-box{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+
+    gap:7px;
+
+    margin-top:8px;
+}
+
+.restriction{
+    border:1px solid #e2e8f0;
+    border-radius:8px;
+
+    padding:9px;
+
+    background:#f8fafc;
+}
+
+.restriction small{
+    display:block;
+
+    color:#64748b;
+
+    font-size:7px;
+    font-weight:900;
+}
+
+.restriction strong{
+    display:block;
+
+    margin-top:3px;
+
+    font-size:9px;
+}
+
+.restriction.warning{
+    background:#fff7ed;
+    border-color:#fdba74;
+}
+
+.restriction.danger{
+    background:#fef2f2;
+    border-color:#fca5a5;
+}
+
+.restriction.good{
+    background:#f0fdf4;
+    border-color:#86efac;
+}
+
+
+/* OBSERVAÇÃO */
+
+.report-observation{
+    border:1px solid #fdba74;
+    background:#fff7ed;
+
+    border-radius:9px;
+
+    padding:13px;
+
+    white-space:pre-wrap;
+
+    font-size:10px;
+    line-height:1.6;
+}
+
+
+/* FOTOS DO RELATÓRIO */
+
+.report-photos{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+
+    gap:11px;
+
+    margin-top:10px;
+}
+
+.report-photo{
+    border:1px solid #d1d5db;
+
+    padding:5px;
+
+    background:white;
+
+    break-inside:avoid;
+    page-break-inside:avoid;
+}
+
+.report-photo img{
+    display:block;
+
+    width:100%;
+    height:270px;
+
+    object-fit:cover;
+}
+
+.report-photo-label{
+    padding:7px 3px 3px;
+
+    font-size:8px;
+    font-weight:900;
+    letter-spacing:.5px;
+}
+
+
+/* AVISO */
+
+.legal-notice{
+    margin-top:25px;
+
+    padding:12px;
+
+    border:1px solid #f59e0b;
+    border-radius:8px;
+
+    background:#fffbeb;
+
+    font-size:8px;
+    line-height:1.55;
+
+    color:#78350f;
+}
+
+
+/* RODAPÉ */
+
+.report-footer{
+    margin-top:28px;
+
+    padding-top:14px;
+
+    border-top:1px solid #d1d5db;
+
+    text-align:center;
+
+    color:#64748b;
+
+    font-size:8px;
+    line-height:1.6;
+}
+
+.report-footer strong{
+    color:#0f172a;
+    font-size:9px;
+}
+
+
+/* AÇÕES RELATÓRIO */
+
+.report-actions{
+    display:flex;
+    gap:10px;
+
+    max-width:900px;
+    margin:15px auto 40px;
+}
+
+.report-actions button{
+    flex:1;
+    min-height:48px;
+}
+
+
+/* =========================================================
+   RESPONSIVO
+========================================================= */
+
+@media(max-width:700px){
+
+    .app-logo{
+        width:54px;
+        height:54px;
+    }
+
+    .app-title h1{
+        font-size:18px;
+    }
+
+    .logo-upload-area{
+        align-items:flex-start;
+    }
+
+    .logo-preview{
+        width:75px;
+        height:75px;
+        min-width:75px;
+    }
+
+    .preview-grid{
         grid-template-columns:1fr 1fr;
     }
 
-    .preview img{
-        height:130px;
+    .photo-preview img{
+        height:135px;
     }
 
-    .buttons{
+    .main-actions{
+        grid-template-columns:1fr;
+    }
+
+    .report-paper{
+        padding:17px;
+    }
+
+    .report-header{
+        align-items:flex-start;
+    }
+
+    .report-logo{
+        width:52px;
+        height:52px;
+    }
+
+    .report-brand-text strong{
+        font-size:15px;
+    }
+
+    .vehicle-hero h1{
+        font-size:19px;
+    }
+
+    .restriction-box{
+        grid-template-columns:1fr 1fr;
+    }
+
+    .report-photo img{
+        height:180px;
+    }
+
+    .report-actions{
         flex-direction:column;
+        padding:0 14px;
     }
 
-    .report{
-        padding:15px;
-    }
+}
 
-    .reportHeader{
-        flex-direction:column;
-    }
 
-    .reportInfo{
-        text-align:left;
-    }
+/* =========================================================
+   IMPRESSÃO / PDF
+========================================================= */
 
+@page{
+    size:A4;
+    margin:12mm;
 }
 
 @media print{
 
     body{
         background:white;
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
     }
 
-    header,
-    #entrada,
-    .noPrint{
-        display:none!important;
+    .app-header,
+    #inputScreen,
+    .report-actions{
+        display:none !important;
     }
 
     main{
@@ -377,448 +977,964 @@ td.label{
         padding:0;
     }
 
-    #relatorio{
-        display:block!important;
+    #reportScreen{
+        display:block !important;
     }
 
-    .report{
+    .report-paper{
+        width:100%;
+        max-width:none;
+
+        margin:0;
         padding:0;
+
+        border-radius:0;
+
+        box-shadow:none;
+
+        overflow:visible;
     }
 
-    .reportPhoto{
-        break-inside:avoid;
+    .report-watermark{
+        position:fixed;
+
+        display:block;
+
+        top:50%;
+        left:50%;
+
+        width:65%;
+
+        opacity:.035;
     }
 
-    .section{
+    .report-section{
         break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    .report-photo{
+        break-inside:avoid;
+        page-break-inside:avoid;
+    }
+
+    .report-photo img{
+        height:240px;
     }
 
 }
 </style>
 </head>
 
+
 <body>
 
-<header>
-<div class="head">
-    <h1>LUCAS DESPACHANTE</h1>
-    <p>Documentalista • Relatório e Registro Veicular</p>
-</div>
+<!-- ======================================================
+     CABEÇALHO DO SISTEMA
+====================================================== -->
+
+<header class="app-header">
+
+    <div class="app-header-inner">
+
+        <div class="app-logo" id="appLogo">
+
+            <span class="logo-placeholder">
+                LD
+            </span>
+
+        </div>
+
+        <div class="app-title">
+
+            <h1>
+                LUCAS DESPACHANTE
+            </h1>
+
+            <p>
+                Documentalista • Sistema de Relatório Veicular
+            </p>
+
+            <span class="app-badge">
+                REGISTRO VEICULAR
+            </span>
+
+        </div>
+
+    </div>
+
 </header>
+
 
 <main>
 
-<div id="entrada">
+<!-- ======================================================
+     TELA DE ENTRADA
+====================================================== -->
+
+<div id="inputScreen">
+
+
+<!-- LOGO -->
 
 <div class="card">
 
-<h2>📋 Cole a consulta veicular</h2>
+    <div class="card-title">
 
-<p style="font-size:12px;color:#64748b;line-height:1.5">
-Cole a consulta completa. O sistema localizará automaticamente placa,
-chassi, RENAVAM, proprietário, características, restrições e documentação.
-</p>
+        <div class="card-icon">
+            🏢
+        </div>
 
-<textarea id="consulta" placeholder="Cole aqui a consulta veicular completa..."></textarea>
+        <h2>
+            Identidade visual
+        </h2>
+
+    </div>
+
+    <p class="description">
+        Selecione sua logo. Ela será salva neste navegador e usada
+        automaticamente no cabeçalho e como marca-d'água do relatório.
+    </p>
+
+
+    <div class="logo-upload-area">
+
+        <div
+            class="logo-preview"
+            id="logoPreview"
+        >
+            <span>LOGO</span>
+        </div>
+
+
+        <div class="logo-info">
+
+            <strong>
+                Lucas Despachante
+            </strong>
+
+            <small>
+                PNG com fundo transparente oferece o melhor resultado.
+            </small>
+
+
+            <div class="logo-actions">
+
+                <label class="file-button">
+
+                    📁 Selecionar logo
+
+                    <input
+                        id="logoInput"
+                        type="file"
+                        accept="image/png,image/jpeg,image/webp"
+                        onchange="carregarLogo(event)"
+                    >
+
+                </label>
+
+
+                <button
+                    type="button"
+                    class="btn btn-danger"
+                    onclick="removerLogo()"
+                >
+                    Remover
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
+
+<!-- CONSULTA -->
 
 <div class="card">
 
-<h2>📸 Fotografias do veículo</h2>
+    <div class="card-title">
 
-<div class="upload">
+        <div class="card-icon">
+            📋
+        </div>
 
-<strong>Selecione todas as imagens recebidas do cliente</strong>
+        <h2>
+            Consulta veicular
+        </h2>
 
-<p>
-Você pode selecionar várias fotografias de uma vez.
-</p>
+    </div>
 
-<label>
-📁 Selecionar imagens
-<input
-    type="file"
-    id="arquivos"
-    accept="image/*"
-    multiple
-    onchange="selecionarFotos(event)"
->
-</label>
+    <p class="description">
+        Cole a consulta completa. O sistema identifica automaticamente
+        os campos e monta o relatório.
+    </p>
 
-<div id="contador">
-0 imagens selecionadas
+
+    <textarea
+        id="consulta"
+        placeholder="Cole aqui a consulta veicular completa..."
+        oninput="analisarConsultaRapida()"
+    ></textarea>
+
+
+    <div
+        class="consulta-status"
+        id="consultaStatus"
+    >
+        Aguardando consulta...
+    </div>
+
 </div>
 
-</div>
 
-<div class="previewGrid" id="preview"></div>
-
-</div>
-
+<!-- FOTOS -->
 
 <div class="card">
 
-<div class="buttons">
+    <div class="card-title">
 
-<button class="green" onclick="gerarRelatorio()">
-✓ Gerar relatório completo
-</button>
+        <div class="card-icon">
+            📸
+        </div>
 
-<button class="gray" onclick="limparTudo()">
-Limpar
-</button>
+        <h2>
+            Fotografias do veículo
+        </h2>
+
+    </div>
+
+    <p class="description">
+        Selecione as imagens recebidas do cliente. Você pode escolher
+        várias fotografias de uma única vez.
+    </p>
+
+
+    <div class="upload-box">
+
+        <strong>
+            Registro fotográfico
+        </strong>
+
+        <p>
+            JPG, PNG, HEIC convertido pelo navegador ou WEBP
+        </p>
+
+
+        <label class="file-button">
+
+            📁 Selecionar imagens
+
+            <input
+                id="photoInput"
+                type="file"
+                accept="image/*"
+                multiple
+                onchange="selecionarFotos(event)"
+            >
+
+        </label>
+
+
+        <br>
+
+
+        <span
+            class="counter"
+            id="photoCounter"
+        >
+            0 imagens
+        </span>
+
+    </div>
+
+
+    <div
+        class="preview-grid"
+        id="photoPreview"
+    ></div>
+
+</div>
+
+
+<!-- GERAR -->
+
+<div class="card">
+
+    <div class="main-actions">
+
+        <button
+            type="button"
+            class="btn btn-success"
+            onclick="gerarRelatorio()"
+        >
+            ✓ GERAR RELATÓRIO COMPLETO
+        </button>
+
+
+        <button
+            type="button"
+            class="btn btn-light"
+            onclick="limparConsulta()"
+        >
+            Limpar consulta
+        </button>
+
+    </div>
 
 </div>
 
 </div>
 
+
+<!-- ======================================================
+     RELATÓRIO
+====================================================== -->
+
+<div id="reportScreen">
+
+
+<div class="report-paper">
+
+
+    <!-- MARCA D'ÁGUA -->
+
+    <div
+        class="report-watermark"
+        id="reportWatermark"
+    >
+
+        <img
+            id="watermarkImage"
+            alt=""
+        >
+
+    </div>
+
+
+    <div class="report-content">
+
+
+        <!-- CABEÇALHO -->
+
+        <div class="report-header">
+
+
+            <div class="report-brand">
+
+                <img
+                    id="reportLogo"
+                    class="report-logo"
+                    alt="Lucas Despachante"
+                >
+
+
+                <div class="report-brand-text">
+
+                    <strong>
+                        LUCAS DESPACHANTE
+                    </strong>
+
+                    <span>
+                        DOCUMENTALISTA
+                    </span>
+
+                </div>
+
+            </div>
+
+
+            <div class="report-meta">
+
+                <strong id="reportNumber"></strong>
+
+                <br>
+
+                <span id="reportDate"></span>
+
+                <br>
+
+                <span id="reportPlate"></span>
+
+            </div>
+
+        </div>
+
+
+        <!-- DESTAQUE -->
+
+        <div class="vehicle-hero">
+
+            <small>
+                RELATÓRIO PARTICULAR DE INFORMAÇÕES VEICULARES
+            </small>
+
+            <h1 id="heroPlate">
+                -
+            </h1>
+
+            <p id="heroVehicle">
+                -
+            </p>
+
+        </div>
+
+
+        <!-- IDENTIFICAÇÃO -->
+
+        <div class="report-section">
+
+            <div class="report-section-title">
+                IDENTIFICAÇÃO DO VEÍCULO
+            </div>
+
+
+            <table class="report-table">
+
+                <tr>
+
+                    <td class="field">
+                        Placa Mercosul
+                    </td>
+
+                    <td class="value" id="rPlaca"></td>
+
+                    <td class="field">
+                        Placa antiga
+                    </td>
+
+                    <td class="value" id="rPlacaAntiga"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        Marca / Modelo
+                    </td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rModelo"
+                    ></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        Chassi
+                    </td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rChassi"
+                    ></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        RENAVAM
+                    </td>
+
+                    <td class="value" id="rRenavam"></td>
+
+                    <td class="field">
+                        Nº Motor
+                    </td>
+
+                    <td class="value" id="rMotor"></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- DADOS -->
+
+        <div class="report-section">
+
+            <div class="report-section-title">
+                INFORMAÇÕES DO VEÍCULO
+            </div>
+
+
+            <table class="report-table">
+
+                <tr>
+
+                    <td class="field">Município</td>
+                    <td class="value" id="rMunicipio"></td>
+
+                    <td class="field">Tipo</td>
+                    <td class="value" id="rTipo"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">Categoria</td>
+                    <td class="value" id="rCategoria"></td>
+
+                    <td class="field">Cor</td>
+                    <td class="value" id="rCor"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">Combustível</td>
+                    <td class="value" id="rCombustivel"></td>
+
+                    <td class="field">Ano</td>
+                    <td class="value" id="rAno"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">Situação</td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rSituacao"
+                    ></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- PROPRIETÁRIO -->
+
+        <div class="report-section">
+
+            <div class="report-section-title">
+                PROPRIETÁRIO
+            </div>
+
+
+            <table class="report-table">
+
+                <tr>
+
+                    <td class="field">
+                        Nome
+                    </td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rNome"
+                    ></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        CPF/CNPJ
+                    </td>
+
+                    <td class="value" id="rCpf"></td>
+
+                    <td class="field">
+                        Tipo
+                    </td>
+
+                    <td class="value" id="rPessoa"></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- ESPECIFICAÇÕES -->
+
+        <div class="report-section">
+
+            <div class="report-section-title">
+                ESPECIFICAÇÕES
+            </div>
+
+
+            <table class="report-table">
+
+                <tr>
+
+                    <td class="field">Espécie</td>
+                    <td class="value" id="rEspecie"></td>
+
+                    <td class="field">Lotação</td>
+                    <td class="value" id="rLotacao"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">Potência</td>
+                    <td class="value" id="rPotencia"></td>
+
+                    <td class="field">Cilindradas</td>
+                    <td class="value" id="rCilindradas"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">Procedência</td>
+                    <td class="value" id="rProcedencia"></td>
+
+                    <td class="field">Remarcação Chassi</td>
+                    <td class="value" id="rRemarcacao"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">CMT</td>
+                    <td class="value" id="rCmt"></td>
+
+                    <td class="field">PBT</td>
+                    <td class="value" id="rPbt"></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- RESTRIÇÕES -->
+
+        <div class="report-section">
+
+            <div class="report-section-title">
+                RESTRIÇÕES / APONTAMENTOS
+            </div>
+
+
+            <div class="restriction-box">
+
+                <div class="restriction" id="boxRoubo">
+
+                    <small>
+                        ROUBO/FURTO
+                    </small>
+
+                    <strong id="rRoubo"></strong>
+
+                </div>
+
+
+                <div class="restriction" id="boxRenajud">
+
+                    <small>
+                        RENAJUD
+                    </small>
+
+                    <strong id="rRenajud"></strong>
+
+                </div>
+
+
+                <div class="restriction" id="boxRenainf">
+
+                    <small>
+                        MULTA RENAINF
+                    </small>
+
+                    <strong id="rRenainf"></strong>
+
+                </div>
+
+
+                <div class="restriction" id="boxLeilao">
+
+                    <small>
+                        LEILÃO
+                    </small>
+
+                    <strong id="rLeilao"></strong>
+
+                </div>
+
+            </div>
+
+
+            <table
+                class="report-table"
+                style="margin-top:8px"
+            >
+
+                <tr>
+
+                    <td class="field">
+                        Comunicação Venda
+                    </td>
+
+                    <td class="value" id="rComunicacao"></td>
+
+                    <td class="field">
+                        Pendência Emissão
+                    </td>
+
+                    <td class="value" id="rPendencia"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        Restrição 1
+                    </td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rRestricao1"
+                    ></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        Restrição 2
+                    </td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rRestricao2"
+                    ></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        Restrição 3
+                    </td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rRestricao3"
+                    ></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        Restrição 4
+                    </td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rRestricao4"
+                    ></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- DOCUMENTAÇÃO -->
+
+        <div class="report-section">
+
+            <div class="report-section-title">
+                DOCUMENTAÇÃO
+            </div>
+
+
+            <table class="report-table">
+
+                <tr>
+
+                    <td class="field">
+                        Emissão CRV
+                    </td>
+
+                    <td class="value" id="rCrv"></td>
+
+                    <td class="field">
+                        Emissão CRLV
+                    </td>
+
+                    <td class="value" id="rCrlv"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        Licenciamento
+                    </td>
+
+                    <td class="value" id="rLicenciamento"></td>
+
+                    <td class="field">
+                        Vencimento
+                    </td>
+
+                    <td class="value" id="rVencimento"></td>
+
+                </tr>
+
+
+                <tr>
+
+                    <td class="field">
+                        Serviço Consultado
+                    </td>
+
+                    <td
+                        class="value"
+                        colspan="3"
+                        id="rServico"
+                    ></td>
+
+                </tr>
+
+            </table>
+
+        </div>
+
+
+        <!-- OBSERVAÇÕES -->
+
+        <div class="report-section">
+
+            <div class="report-section-title">
+                OBSERVAÇÕES
+            </div>
+
+            <div
+                class="report-observation"
+                id="rObservacao"
+            ></div>
+
+        </div>
+
+
+        <!-- FOTOS -->
+
+        <div
+            class="report-section"
+            id="photoReportSection"
+        >
+
+            <div class="report-section-title">
+                REGISTRO FOTOGRÁFICO DO VEÍCULO
+            </div>
+
+
+            <div
+                class="report-photos"
+                id="reportPhotos"
+            ></div>
+
+        </div>
+
+
+        <!-- AVISO -->
+
+        <div class="legal-notice">
+
+            <strong>IMPORTANTE:</strong>
+
+            Este documento corresponde a um relatório particular
+            organizado a partir das informações fornecidas ao sistema
+            e das fotografias selecionadas pelo usuário.
+
+            Não substitui consulta, laudo, vistoria, certificação ou
+            documento oficial emitido por DETRAN, SENATRAN, ECV ou
+            outra entidade competente. Os dados devem ser conferidos
+            nas respectivas fontes oficiais antes de procedimentos
+            administrativos.
+
+        </div>
+
+
+        <!-- RODAPÉ -->
+
+        <div class="report-footer">
+
+            <strong>
+                LUCAS DESPACHANTE — DOCUMENTALISTA
+            </strong>
+
+            <br>
+
+            Serviços e regularização documental veicular.
+
+            <br>
+
+            Relatório gerado eletronicamente.
+
+        </div>
+
+
+    </div>
+
 </div>
 
 
-<!-- RELATORIO -->
+<div class="report-actions">
 
-<div id="relatorio">
+    <button
+        type="button"
+        class="btn btn-dark"
+        onclick="window.print()"
+    >
+        📄 IMPRIMIR / SALVAR PDF
+    </button>
 
-<div class="report">
 
-<div class="reportHeader">
-
-<div class="brand">
-
-<h1>LUCAS DESPACHANTE</h1>
-
-<strong>DOCUMENTALISTA</strong>
-
-<br>
-
-<span class="tag">
-RELATÓRIO PARTICULAR DE INFORMAÇÕES VEICULARES
-</span>
-
-</div>
-
-<div class="reportInfo">
-
-<strong id="numeroRelatorio"></strong>
-
-<br>
-
-<span id="dataRelatorio"></span>
-
-<br>
-
-<span id="placaTopo"></span>
+    <button
+        type="button"
+        class="btn btn-primary"
+        onclick="voltarEditar()"
+    >
+        ← EDITAR
+    </button>
 
 </div>
 
-</div>
-
-
-<div class="section">
-
-<div class="sectionTitle">
-IDENTIFICAÇÃO PRINCIPAL
-</div>
-
-<table>
-
-<tr>
-<td class="label">Placa Mercosul</td>
-<td id="rPlaca"></td>
-
-<td class="label">Placa anterior</td>
-<td id="rPlacaAntiga"></td>
-</tr>
-
-<tr>
-<td class="label">Marca / Modelo</td>
-<td colspan="3" id="rModelo"></td>
-</tr>
-
-<tr>
-<td class="label">Chassi</td>
-<td colspan="3" id="rChassi"></td>
-</tr>
-
-<tr>
-<td class="label">RENAVAM</td>
-<td id="rRenavam"></td>
-
-<td class="label">Nº Motor</td>
-<td id="rMotor"></td>
-</tr>
-
-</table>
-
-</div>
-
-
-<div class="section">
-
-<div class="sectionTitle">
-DADOS DO VEÍCULO
-</div>
-
-<table>
-
-<tr>
-<td class="label">Município</td>
-<td id="rMunicipio"></td>
-
-<td class="label">Categoria</td>
-<td id="rCategoria"></td>
-</tr>
-
-<tr>
-<td class="label">Tipo</td>
-<td id="rTipo"></td>
-
-<td class="label">Cor</td>
-<td id="rCor"></td>
-</tr>
-
-<tr>
-<td class="label">Combustível</td>
-<td id="rCombustivel"></td>
-
-<td class="label">Ano</td>
-<td id="rAno"></td>
-</tr>
-
-<tr>
-<td class="label">Situação</td>
-<td colspan="3" id="rSituacao"></td>
-</tr>
-
-</table>
-
-</div>
-
-
-<div class="section">
-
-<div class="sectionTitle">
-PROPRIETÁRIO
-</div>
-
-<table>
-
-<tr>
-<td class="label">Nome</td>
-<td colspan="3" id="rNome"></td>
-</tr>
-
-<tr>
-<td class="label">CPF/CNPJ</td>
-<td id="rCpf"></td>
-
-<td class="label">Tipo</td>
-<td id="rPessoa"></td>
-</tr>
-
-</table>
-
-</div>
-
-
-<div class="section">
-
-<div class="sectionTitle">
-ESPECIFICAÇÕES
-</div>
-
-<table>
-
-<tr>
-<td class="label">Espécie</td>
-<td id="rEspecie"></td>
-
-<td class="label">Lotação</td>
-<td id="rLotacao"></td>
-</tr>
-
-<tr>
-<td class="label">Potência</td>
-<td id="rPotencia"></td>
-
-<td class="label">Cilindradas</td>
-<td id="rCilindradas"></td>
-</tr>
-
-<tr>
-<td class="label">Procedência</td>
-<td id="rProcedencia"></td>
-
-<td class="label">Chassi</td>
-<td id="rRemarcacao"></td>
-</tr>
-
-<tr>
-<td class="label">CMT</td>
-<td id="rCmt"></td>
-
-<td class="label">PBT</td>
-<td id="rPbt"></td>
-</tr>
-
-</table>
-
-</div>
-
-
-<div class="section">
-
-<div class="sectionTitle">
-RESTRIÇÕES / APONTAMENTOS
-</div>
-
-<table>
-
-<tr>
-<td class="label">Roubo/Furto</td>
-<td id="rRoubo"></td>
-
-<td class="label">RENAJUD</td>
-<td id="rRenajud"></td>
-</tr>
-
-<tr>
-<td class="label">Multa RENAINF</td>
-<td id="rRenainf"></td>
-
-<td class="label">Leilão</td>
-<td id="rLeilao"></td>
-</tr>
-
-<tr>
-<td class="label">Comunicação Venda</td>
-<td id="rComunicacao"></td>
-
-<td class="label">Pendência Emissão</td>
-<td id="rPendencia"></td>
-</tr>
-
-<tr>
-<td class="label">Restrição 1</td>
-<td colspan="3" id="rRestricao1"></td>
-</tr>
-
-<tr>
-<td class="label">Restrição 2</td>
-<td colspan="3" id="rRestricao2"></td>
-</tr>
-
-<tr>
-<td class="label">Restrição 3</td>
-<td colspan="3" id="rRestricao3"></td>
-</tr>
-
-<tr>
-<td class="label">Restrição 4</td>
-<td colspan="3" id="rRestricao4"></td>
-</tr>
-
-</table>
-
-</div>
-
-
-<div class="section">
-
-<div class="sectionTitle">
-DOCUMENTAÇÃO
-</div>
-
-<table>
-
-<tr>
-<td class="label">Emissão CRV</td>
-<td id="rCrv"></td>
-
-<td class="label">Emissão CRLV</td>
-<td id="rCrlv"></td>
-</tr>
-
-<tr>
-<td class="label">Licenciamento</td>
-<td id="rLicenciamento"></td>
-
-<td class="label">Vencimento</td>
-<td id="rVencimento"></td>
-</tr>
-
-<tr>
-<td class="label">Serviço consultado</td>
-<td colspan="3" id="rServico"></td>
-</tr>
-
-</table>
-
-</div>
-
-
-<div class="section">
-
-<div class="sectionTitle">
-OBSERVAÇÕES DA CONSULTA
-</div>
-
-<div class="alerta" id="rObservacao"></div>
-
-</div>
-
-
-<div class="section" id="secaoFotos">
-
-<div class="sectionTitle">
-REGISTRO FOTOGRÁFICO DO VEÍCULO
-</div>
-
-<br>
-
-<div class="reportPhotos" id="fotosRelatorio"></div>
-
-</div>
-
-
-<div class="notice">
-
-<strong>INFORMAÇÃO:</strong>
-Este documento organiza informações fornecidas ao sistema e o registro
-fotográfico correspondente. Não substitui laudo de vistoria, certificação,
-consulta ou documento emitido por DETRAN, SENATRAN, ECV ou outra entidade
-oficial. Os dados devem ser conferidos com as respectivas fontes oficiais
-antes de qualquer procedimento administrativo.
-
-</div>
-
-
-<div class="footer">
-
-<strong>LUCAS DESPACHANTE — DOCUMENTALISTA</strong><br>
-
-Serviços e regularização documental veicular.<br>
-
-Relatório gerado eletronicamente.
-
-</div>
-
-
-<div class="buttons noPrint">
-
-<button class="dark" onclick="window.print()">
-📄 Imprimir / Salvar PDF
-</button>
-
-<button class="blue" onclick="editar()">
-← Voltar
-</button>
-
-</div>
-
-</div>
 
 </div>
 
@@ -827,81 +1943,418 @@ Relatório gerado eletronicamente.
 
 <script>
 
-/* =========================
-   FOTOS
-========================= */
+/* =========================================================
+   VARIÁVEIS
+========================================================= */
 
+let logoDespachante = "";
 let fotos = [];
 
 
-function selecionarFotos(event){
+/* =========================================================
+   LOGO
+========================================================= */
 
-    const arquivos = Array.from(event.target.files);
+function carregarLogo(event){
 
-    arquivos.forEach(arquivo => {
+    const arquivo = event.target.files[0];
 
-        if(!arquivo.type.startsWith("image/")) return;
+    if(!arquivo){
+        return;
+    }
 
-        const reader = new FileReader();
+    if(!arquivo.type.startsWith("image/")){
 
-        reader.onload = e => {
+        alert("Selecione uma imagem válida.");
 
-            comprimirImagem(e.target.result, imagem => {
+        return;
+    }
 
-                fotos.push(imagem);
 
-                atualizarPreview();
+    const reader = new FileReader();
 
-            });
+
+    reader.onload = function(e){
+
+        const img = new Image();
+
+
+        img.onload = function(){
+
+            const max = 1000;
+
+            let largura = img.width;
+            let altura = img.height;
+
+
+            if(
+                largura > max ||
+                altura > max
+            ){
+
+                const escala = Math.min(
+                    max / largura,
+                    max / altura
+                );
+
+                largura *= escala;
+                altura *= escala;
+
+            }
+
+
+            const canvas =
+                document.createElement("canvas");
+
+
+            canvas.width = largura;
+            canvas.height = altura;
+
+
+            const ctx =
+                canvas.getContext("2d");
+
+
+            ctx.clearRect(
+                0,
+                0,
+                largura,
+                altura
+            );
+
+
+            ctx.drawImage(
+                img,
+                0,
+                0,
+                largura,
+                altura
+            );
+
+
+            logoDespachante =
+                canvas.toDataURL(
+                    "image/png"
+                );
+
+
+            try{
+
+                localStorage.setItem(
+                    "lucasDespachanteLogo",
+                    logoDespachante
+                );
+
+            }catch(e){
+
+                console.log(
+                    "Não foi possível salvar a logo."
+                );
+
+            }
+
+
+            atualizarLogo();
 
         };
 
-        reader.readAsDataURL(arquivo);
+
+        img.src = e.target.result;
+
+    };
+
+
+    reader.readAsDataURL(arquivo);
+
+}
+
+
+function atualizarLogo(){
+
+    if(!logoDespachante){
+        return;
+    }
+
+
+    document.getElementById(
+        "logoPreview"
+    ).innerHTML = `
+
+        <img
+            src="${logoDespachante}"
+            alt="Logo"
+        >
+
+    `;
+
+
+    document.getElementById(
+        "appLogo"
+    ).innerHTML = `
+
+        <img
+            src="${logoDespachante}"
+            alt="Lucas Despachante"
+        >
+
+    `;
+
+
+    const reportLogo =
+        document.getElementById(
+            "reportLogo"
+        );
+
+
+    reportLogo.src =
+        logoDespachante;
+
+
+    reportLogo.style.display =
+        "block";
+
+
+    const watermark =
+        document.getElementById(
+            "reportWatermark"
+        );
+
+
+    const watermarkImage =
+        document.getElementById(
+            "watermarkImage"
+        );
+
+
+    watermarkImage.src =
+        logoDespachante;
+
+
+    watermark.style.display =
+        "block";
+
+}
+
+
+function removerLogo(){
+
+    if(
+        !confirm(
+            "Deseja remover a logo salva?"
+        )
+    ){
+        return;
+    }
+
+
+    logoDespachante = "";
+
+
+    try{
+
+        localStorage.removeItem(
+            "lucasDespachanteLogo"
+        );
+
+    }catch(e){}
+
+
+    document.getElementById(
+        "logoInput"
+    ).value = "";
+
+
+    document.getElementById(
+        "logoPreview"
+    ).innerHTML = `
+
+        <span>
+            LOGO
+        </span>
+
+    `;
+
+
+    document.getElementById(
+        "appLogo"
+    ).innerHTML = `
+
+        <span class="logo-placeholder">
+            LD
+        </span>
+
+    `;
+
+
+    const reportLogo =
+        document.getElementById(
+            "reportLogo"
+        );
+
+
+    reportLogo.removeAttribute("src");
+
+    reportLogo.style.display =
+        "none";
+
+
+    document.getElementById(
+        "watermarkImage"
+    ).removeAttribute("src");
+
+
+    document.getElementById(
+        "reportWatermark"
+    ).style.display =
+        "none";
+
+}
+
+
+/* =========================================================
+   CARREGAR LOGO SALVA
+========================================================= */
+
+function carregarLogoSalva(){
+
+    try{
+
+        const salva =
+            localStorage.getItem(
+                "lucasDespachanteLogo"
+            );
+
+
+        if(salva){
+
+            logoDespachante = salva;
+
+            atualizarLogo();
+
+        }
+
+    }catch(e){}
+
+}
+
+
+/* =========================================================
+   FOTOS
+========================================================= */
+
+function selecionarFotos(event){
+
+    const arquivos =
+        Array.from(
+            event.target.files
+        );
+
+
+    arquivos.forEach(arquivo=>{
+
+        if(
+            !arquivo.type.startsWith("image/")
+        ){
+            return;
+        }
+
+
+        const reader =
+            new FileReader();
+
+
+        reader.onload = function(e){
+
+            comprimirFoto(
+                e.target.result,
+                function(imagem){
+
+                    fotos.push(imagem);
+
+                    atualizarFotos();
+
+                }
+            );
+
+        };
+
+
+        reader.readAsDataURL(
+            arquivo
+        );
 
     });
+
 
     event.target.value = "";
 
 }
 
 
-function comprimirImagem(src, callback){
+function comprimirFoto(src,callback){
 
-    const img = new Image();
+    const img =
+        new Image();
+
 
     img.onload = function(){
 
         const max = 1600;
 
-        let largura = img.width;
-        let altura = img.height;
 
-        if(largura > max || altura > max){
+        let largura =
+            img.width;
 
-            const escala = Math.min(
-                max / largura,
-                max / altura
-            );
+
+        let altura =
+            img.height;
+
+
+        if(
+            largura > max ||
+            altura > max
+        ){
+
+            const escala =
+                Math.min(
+                    max / largura,
+                    max / altura
+                );
+
 
             largura *= escala;
+
             altura *= escala;
 
         }
 
-        const canvas = document.createElement("canvas");
 
-        canvas.width = largura;
-        canvas.height = altura;
+        const canvas =
+            document.createElement(
+                "canvas"
+            );
 
-        const ctx = canvas.getContext("2d");
+
+        canvas.width =
+            Math.round(largura);
+
+
+        canvas.height =
+            Math.round(altura);
+
+
+        const ctx =
+            canvas.getContext("2d");
+
 
         ctx.drawImage(
             img,
             0,
             0,
-            largura,
-            altura
+            canvas.width,
+            canvas.height
         );
+
 
         callback(
             canvas.toDataURL(
@@ -912,222 +2365,474 @@ function comprimirImagem(src, callback){
 
     };
 
+
     img.src = src;
 
 }
 
 
-function atualizarPreview(){
+function atualizarFotos(){
 
     const area =
-        document.getElementById("preview");
+        document.getElementById(
+            "photoPreview"
+        );
+
 
     area.innerHTML = "";
 
-    fotos.forEach((foto,index)=>{
 
-        area.innerHTML += `
+    fotos.forEach(
+        (foto,index)=>{
 
-        <div class="preview">
+            area.innerHTML += `
 
-            <button
-                class="remove"
-                onclick="removerFoto(${index})">
-                ×
-            </button>
+            <div class="photo-preview">
 
-            <img src="${foto}">
+                <button
+                    class="photo-remove"
+                    type="button"
+                    onclick="removerFoto(${index})"
+                >
+                    ×
+                </button>
 
-            <span>
-                Fotografia ${String(index+1).padStart(2,"0")}
-            </span>
+                <img
+                    src="${foto}"
+                    alt="Fotografia do veículo"
+                >
 
-        </div>
+                <div class="photo-info">
 
-        `;
+                    FOTO
+                    ${String(index+1).padStart(2,"0")}
 
-    });
+                </div>
+
+            </div>
+
+            `;
+
+        }
+    );
 
 
-    document.getElementById("contador").textContent =
+    document.getElementById(
+        "photoCounter"
+    ).textContent =
+
         fotos.length +
-        (fotos.length === 1
-        ? " imagem selecionada"
-        : " imagens selecionadas");
+        (
+            fotos.length === 1
+            ? " imagem"
+            : " imagens"
+        );
 
 }
 
 
 function removerFoto(index){
 
-    fotos.splice(index,1);
+    fotos.splice(
+        index,
+        1
+    );
 
-    atualizarPreview();
+
+    atualizarFotos();
 
 }
 
 
-/* =========================
-   LEITOR DA CONSULTA
-========================= */
+/* =========================================================
+   NORMALIZAÇÃO
+========================================================= */
 
-function limparTexto(texto){
+function normalizar(texto){
 
-    return texto
-        .replace(/\r/g,"")
-        .replace(/\u00A0/g," ")
+    return String(texto || "")
+        .normalize("NFD")
+        .replace(
+            /[\u0300-\u036f]/g,
+            ""
+        )
+        .toLowerCase()
         .trim();
 
 }
 
 
+/* =========================================================
+   EXTRAIR CAMPO DA CONSULTA
+========================================================= */
+
 function campo(nome){
 
     const texto =
-        limparTexto(
-            document.getElementById("consulta").value
-        );
-
-    const linhas = texto.split("\n");
-
-    const nomeNormalizado =
-        nome.toLowerCase()
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g,"")
-            .trim();
+        document.getElementById(
+            "consulta"
+        ).value;
 
 
-    for(let linha of linhas){
+    const linhas =
+        texto
+        .replace(/\r/g,"")
+        .split("\n");
 
-        let semEmoji =
+
+    const procurado =
+        normalizar(nome);
+
+
+    for(
+        let linha of linhas
+    ){
+
+        linha =
+            linha.trim();
+
+
+        if(!linha){
+            continue;
+        }
+
+
+        const pos =
+            linha.indexOf(":");
+
+
+        if(pos === -1){
+            continue;
+        }
+
+
+        let chave =
             linha
-            .replace(/^[^A-Za-zÀ-ÿ0-9ºª]+/,"")
+            .substring(
+                0,
+                pos
+            )
             .trim();
 
-        const pos = semEmoji.indexOf(":");
 
-        if(pos === -1) continue;
-
-
-        const chave =
-            semEmoji.substring(0,pos)
-                .trim()
-                .toLowerCase()
-                .normalize("NFD")
-                .replace(/[\u0300-\u036f]/g,"");
+        chave =
+            chave.replace(
+                /^[^A-Za-zÀ-ÿ0-9ºª]+/,
+                ""
+            );
 
 
         const valor =
-            semEmoji.substring(pos+1).trim();
+            linha
+            .substring(
+                pos + 1
+            )
+            .trim();
 
 
-        if(chave === nomeNormalizado){
+        if(
+            normalizar(chave)
+            === procurado
+        ){
 
-            return valor || "Não informado";
+            return (
+                valor ||
+                "Não informado"
+            );
 
         }
 
     }
+
 
     return "Não informado";
 
 }
 
 
-function observacaoConsulta(){
+/* =========================================================
+   STATUS CONSULTA
+========================================================= */
+
+function analisarConsultaRapida(){
 
     const texto =
-        document.getElementById("consulta").value;
-
-    const marcador =
-        "⚠️ OBSERVAÇÃO IMPORTANTE";
-
-    const inicio =
-        texto.indexOf(marcador);
-
-    if(inicio === -1){
-
-        return gerarObservacaoAutomatica();
-
-    }
+        document.getElementById(
+            "consulta"
+        ).value.trim();
 
 
-    let parte =
-        texto.substring(
-            inicio + marcador.length
+    const status =
+        document.getElementById(
+            "consultaStatus"
         );
 
 
-    const fim =
-        parte.indexOf(
-            "LUCAS DESPACHANTE"
-        );
+    if(!texto){
 
+        status.textContent =
+            "Aguardando consulta...";
 
-    if(fim !== -1){
-
-        parte =
-            parte.substring(0,fim);
+        return;
 
     }
 
 
-    parte =
-        parte
-        .replace(/━+/g,"")
-        .trim();
+    const placa =
+        campo("Placa Mercosul");
 
 
-    if(!parte){
+    const modelo =
+        campo("Marca/Modelo");
 
-        return gerarObservacaoAutomatica();
 
+    const renavam =
+        campo("RENAVAM");
+
+
+    let encontrados = 0;
+
+
+    if(
+        placa !==
+        "Não informado"
+    ){
+        encontrados++;
     }
 
-    return parte;
+
+    if(
+        modelo !==
+        "Não informado"
+    ){
+        encontrados++;
+    }
+
+
+    if(
+        renavam !==
+        "Não informado"
+    ){
+        encontrados++;
+    }
+
+
+    if(encontrados >= 2){
+
+        status.innerHTML =
+
+            "✓ Consulta reconhecida • " +
+            "<strong>" +
+            placa +
+            "</strong> • " +
+            modelo;
+
+    }else{
+
+        status.textContent =
+            "Consulta adicionada. Alguns campos podem precisar de conferência.";
+
+    }
 
 }
 
 
-/* =========================
+/* =========================================================
+   OBSERVAÇÃO DA CONSULTA
+========================================================= */
+
+function extrairObservacao(){
+
+    const texto =
+        document.getElementById(
+            "consulta"
+        ).value;
+
+
+    const normal =
+        normalizar(texto);
+
+
+    const marcador =
+        normalizar(
+            "OBSERVAÇÃO IMPORTANTE"
+        );
+
+
+    const posNormal =
+        normal.indexOf(
+            marcador
+        );
+
+
+    if(posNormal === -1){
+
+        return gerarObservacao();
+
+    }
+
+
+    /*
+       Como a normalização pode alterar índices,
+       procuramos a linha original.
+    */
+
+    const linhas =
+        texto.split("\n");
+
+
+    let coletando =
+        false;
+
+
+    let resultado =
+        [];
+
+
+    for(
+        let linha of linhas
+    ){
+
+        if(
+            normalizar(linha)
+            .includes(
+                "observacao importante"
+            )
+        ){
+
+            coletando = true;
+
+            continue;
+
+        }
+
+
+        if(coletando){
+
+            if(
+                normalizar(linha)
+                .includes(
+                    "lucas despachante"
+                )
+            ){
+
+                break;
+
+            }
+
+
+            if(
+                linha
+                .replace(/━/g,"")
+                .trim()
+                === ""
+            ){
+
+                continue;
+
+            }
+
+
+            resultado.push(
+                linha.trim()
+            );
+
+        }
+
+    }
+
+
+    if(
+        resultado.length === 0
+    ){
+
+        return gerarObservacao();
+
+    }
+
+
+    return resultado.join(
+        "\n\n"
+    );
+
+}
+
+
+/* =========================================================
    OBSERVAÇÃO AUTOMÁTICA
-========================= */
+========================================================= */
 
-function gerarObservacaoAutomatica(){
+function gerarObservacao(){
 
-    let alertas = [];
+    let itens = [];
 
 
-    if(campo("Roubo/Furto").toUpperCase() === "SIM"){
+    const roubo =
+        campo(
+            "Roubo/Furto"
+        );
 
-        alertas.push(
+
+    const renajud =
+        campo(
+            "RENAJUD"
+        );
+
+
+    const renainf =
+        campo(
+            "Multa RENAINF"
+        );
+
+
+    const leilao =
+        campo(
+            "Leilão"
+        );
+
+
+    if(
+        normalizar(roubo)
+        === "sim"
+    ){
+
+        itens.push(
             "Consta apontamento de roubo/furto na consulta apresentada."
         );
 
     }
 
 
-    if(campo("RENAJUD").toUpperCase() === "SIM"){
+    if(
+        normalizar(renajud)
+        === "sim"
+    ){
 
-        alertas.push(
+        itens.push(
             "Consta apontamento RENAJUD."
         );
 
     }
 
 
-    if(campo("Multa RENAINF").toUpperCase() === "SIM"){
+    if(
+        normalizar(renainf)
+        === "sim"
+    ){
 
-        alertas.push(
+        itens.push(
             "Consta MULTA RENAINF."
         );
 
     }
 
 
-    if(campo("Leilão").toUpperCase() === "SIM"){
+    if(
+        normalizar(leilao)
+        === "sim"
+    ){
 
-        alertas.push(
+        itens.push(
             "Consta apontamento relacionado a leilão."
         );
 
@@ -1140,18 +2845,27 @@ function gerarObservacaoAutomatica(){
         "Restrição 3",
         "Restrição 4"
 
-    ].forEach(item=>{
+    ].forEach(nome=>{
 
         const valor =
-            campo(item);
+            campo(nome);
+
 
         if(
-            valor !== "Não informado" &&
-            !valor.toUpperCase().includes("SEM RESTRIÇÃO")
+            valor !==
+            "Não informado"
+            &&
+            !normalizar(valor)
+            .includes(
+                "sem restricao"
+            )
         ){
 
-            alertas.push(
-                item + ": " + valor + "."
+            itens.push(
+                nome +
+                ": " +
+                valor +
+                "."
             );
 
         }
@@ -1160,54 +2874,127 @@ function gerarObservacaoAutomatica(){
 
 
     const lic =
-        campo("Ano Licenciamento");
+        campo(
+            "Ano Licenciamento"
+        );
 
 
-    if(lic !== "Não informado"){
+    if(
+        lic !==
+        "Não informado"
+    ){
 
-        alertas.push(
-            "Último licenciamento informado: " +
-            lic + "."
+        itens.push(
+            "Último licenciamento informado na consulta: " +
+            lic +
+            "."
         );
 
     }
 
 
-    if(alertas.length === 0){
+    if(
+        itens.length === 0
+    ){
 
-        return "Nenhum apontamento adicional foi identificado automaticamente no texto fornecido.";
+        return (
+            "Não foram identificados apontamentos adicionais automaticamente no texto fornecido. Recomenda-se conferir os dados apresentados com a fonte da consulta."
+        );
 
     }
 
 
-    return alertas.join("\n\n");
+    return itens.join(
+        "\n\n"
+    );
 
 }
 
 
-/* =========================
-   PREENCHIMENTO
-========================= */
+/* =========================================================
+   PREENCHER ELEMENTO
+========================================================= */
 
-function set(id,valor){
+function preencher(id,valor){
 
-    document.getElementById(id).textContent =
-        valor || "Não informado";
+    document.getElementById(
+        id
+    ).textContent =
+        valor ||
+        "Não informado";
 
 }
 
+
+/* =========================================================
+   COR DAS RESTRIÇÕES
+========================================================= */
+
+function estilizarRestricao(
+    boxId,
+    valor
+){
+
+    const box =
+        document.getElementById(
+            boxId
+        );
+
+
+    box.classList.remove(
+        "good",
+        "warning",
+        "danger"
+    );
+
+
+    const v =
+        normalizar(valor);
+
+
+    if(
+        v === "nao"
+        ||
+        v.includes(
+            "sem restricao"
+        )
+    ){
+
+        box.classList.add(
+            "good"
+        );
+
+    }
+
+    else if(
+        v === "sim"
+    ){
+
+        box.classList.add(
+            "warning"
+        );
+
+    }
+
+}
+
+
+/* =========================================================
+   GERAR RELATÓRIO
+========================================================= */
 
 function gerarRelatorio(){
 
     const consulta =
-        document.getElementById("consulta")
-            .value.trim();
+        document.getElementById(
+            "consulta"
+        ).value.trim();
 
 
     if(!consulta){
 
         alert(
-            "Cole primeiro a consulta veicular."
+            "Cole a consulta veicular antes de gerar o relatório."
         );
 
         return;
@@ -1217,282 +3004,564 @@ function gerarRelatorio(){
 
     /* IDENTIFICAÇÃO */
 
-    set("rPlaca",campo("Placa Mercosul"));
+    const placa =
+        campo(
+            "Placa Mercosul"
+        );
 
-    set("rPlacaAntiga",campo("Placa antiga"));
 
-    set("rModelo",campo("Marca/Modelo"));
+    const modelo =
+        campo(
+            "Marca/Modelo"
+        );
 
-    set("rChassi",campo("Chassi"));
 
-    set("rRenavam",campo("RENAVAM"));
+    preencher(
+        "rPlaca",
+        placa
+    );
 
-    set("rMotor",campo("Nº do Motor"));
+
+    preencher(
+        "rPlacaAntiga",
+        campo(
+            "Placa antiga"
+        )
+    );
+
+
+    preencher(
+        "rModelo",
+        modelo
+    );
+
+
+    preencher(
+        "rChassi",
+        campo(
+            "Chassi"
+        )
+    );
+
+
+    preencher(
+        "rRenavam",
+        campo(
+            "RENAVAM"
+        )
+    );
+
+
+    preencher(
+        "rMotor",
+        campo(
+            "Nº do Motor"
+        )
+    );
 
 
     /* VEÍCULO */
 
-    set("rMunicipio",campo("Município"));
-
-    set("rCategoria",campo("Categoria"));
-
-    set("rTipo",campo("Tipo"));
-
-    set("rCor",campo("Cor"));
-
-    set("rCombustivel",campo("Combustível"));
-
-    set(
-        "rAno",
-        campo("Ano Fabricação/Modelo")
+    preencher(
+        "rMunicipio",
+        campo(
+            "Município"
+        )
     );
 
-    set("rSituacao",campo("Situação"));
+
+    preencher(
+        "rTipo",
+        campo(
+            "Tipo"
+        )
+    );
+
+
+    preencher(
+        "rCategoria",
+        campo(
+            "Categoria"
+        )
+    );
+
+
+    preencher(
+        "rCor",
+        campo(
+            "Cor"
+        )
+    );
+
+
+    preencher(
+        "rCombustivel",
+        campo(
+            "Combustível"
+        )
+    );
+
+
+    preencher(
+        "rAno",
+        campo(
+            "Ano Fabricação/Modelo"
+        )
+    );
+
+
+    preencher(
+        "rSituacao",
+        campo(
+            "Situação"
+        )
+    );
 
 
     /* PROPRIETÁRIO */
 
-    set("rNome",campo("Nome"));
+    preencher(
+        "rNome",
+        campo(
+            "Nome"
+        )
+    );
 
-    set("rCpf",campo("CPF/CNPJ"));
 
-    set(
+    preencher(
+        "rCpf",
+        campo(
+            "CPF/CNPJ"
+        )
+    );
+
+
+    preencher(
         "rPessoa",
-        campo("Tipo de Pessoa")
+        campo(
+            "Tipo de Pessoa"
+        )
     );
 
 
     /* ESPECIFICAÇÕES */
 
-    set("rEspecie",campo("Espécie"));
+    preencher(
+        "rEspecie",
+        campo(
+            "Espécie"
+        )
+    );
 
-    set("rLotacao",campo("Lotação"));
 
-    set("rPotencia",campo("Potência"));
+    preencher(
+        "rLotacao",
+        campo(
+            "Lotação"
+        )
+    );
 
-    set(
+
+    preencher(
+        "rPotencia",
+        campo(
+            "Potência"
+        )
+    );
+
+
+    preencher(
         "rCilindradas",
-        campo("Cilindradas")
+        campo(
+            "Cilindradas"
+        )
     );
 
-    set(
+
+    preencher(
         "rProcedencia",
-        campo("Procedência")
+        campo(
+            "Procedência"
+        )
     );
 
-    set(
+
+    preencher(
         "rRemarcacao",
-        campo("Remarcação do Chassi")
+        campo(
+            "Remarcação do Chassi"
+        )
     );
 
-    set("rCmt",campo("CMT"));
 
-    set("rPbt",campo("PBT"));
+    preencher(
+        "rCmt",
+        campo(
+            "CMT"
+        )
+    );
+
+
+    preencher(
+        "rPbt",
+        campo(
+            "PBT"
+        )
+    );
 
 
     /* RESTRIÇÕES */
 
-    set("rRoubo",campo("Roubo/Furto"));
+    const roubo =
+        campo(
+            "Roubo/Furto"
+        );
 
-    set("rRenajud",campo("RENAJUD"));
 
-    set(
+    const renajud =
+        campo(
+            "RENAJUD"
+        );
+
+
+    const renainf =
+        campo(
+            "Multa RENAINF"
+        );
+
+
+    const leilao =
+        campo(
+            "Leilão"
+        );
+
+
+    preencher(
+        "rRoubo",
+        roubo
+    );
+
+
+    preencher(
+        "rRenajud",
+        renajud
+    );
+
+
+    preencher(
         "rRenainf",
-        campo("Multa RENAINF")
+        renainf
     );
 
-    set("rLeilao",campo("Leilão"));
 
-    set(
+    preencher(
+        "rLeilao",
+        leilao
+    );
+
+
+    estilizarRestricao(
+        "boxRoubo",
+        roubo
+    );
+
+
+    estilizarRestricao(
+        "boxRenajud",
+        renajud
+    );
+
+
+    estilizarRestricao(
+        "boxRenainf",
+        renainf
+    );
+
+
+    estilizarRestricao(
+        "boxLeilao",
+        leilao
+    );
+
+
+    preencher(
         "rComunicacao",
-        campo("Comunicação de Venda")
+        campo(
+            "Comunicação de Venda"
+        )
     );
 
-    set(
+
+    preencher(
         "rPendencia",
-        campo("Pendência de Emissão")
+        campo(
+            "Pendência de Emissão"
+        )
     );
 
-    set(
+
+    preencher(
         "rRestricao1",
-        campo("Restrição 1")
+        campo(
+            "Restrição 1"
+        )
     );
 
-    set(
+
+    preencher(
         "rRestricao2",
-        campo("Restrição 2")
+        campo(
+            "Restrição 2"
+        )
     );
 
-    set(
+
+    preencher(
         "rRestricao3",
-        campo("Restrição 3")
+        campo(
+            "Restrição 3"
+        )
     );
 
-    set(
+
+    preencher(
         "rRestricao4",
-        campo("Restrição 4")
+        campo(
+            "Restrição 4"
+        )
     );
 
 
     /* DOCUMENTAÇÃO */
 
-    set(
+    preencher(
         "rCrv",
-        campo("Data Emissão CRV")
+        campo(
+            "Data Emissão CRV"
+        )
     );
 
-    set(
+
+    preencher(
         "rCrlv",
-        campo("Data Emissão CRLV")
+        campo(
+            "Data Emissão CRLV"
+        )
     );
 
-    set(
+
+    preencher(
         "rLicenciamento",
-        campo("Ano Licenciamento")
+        campo(
+            "Ano Licenciamento"
+        )
     );
 
-    set(
+
+    preencher(
         "rVencimento",
-        campo("Vencimento do Documento")
+        campo(
+            "Vencimento do Documento"
+        )
     );
 
-    set(
+
+    preencher(
         "rServico",
-        campo("Serviço Consultado")
+        campo(
+            "Serviço Consultado"
+        )
     );
 
 
     /* OBSERVAÇÃO */
 
-    set(
+    preencher(
         "rObservacao",
-        observacaoConsulta()
+        extrairObservacao()
     );
 
 
-    /* CABEÇALHO */
+    /* DESTAQUE */
+
+    preencher(
+        "heroPlate",
+        placa
+    );
+
+
+    preencher(
+        "heroVehicle",
+        modelo
+    );
+
+
+    /* DATA / NÚMERO */
 
     const agora =
         new Date();
 
 
-    const codigo =
+    const numero =
+
         "LV-" +
+
         agora.getFullYear() +
+
         String(
             agora.getMonth()+1
-        ).padStart(2,"0") +
+        ).padStart(
+            2,
+            "0"
+        ) +
+
         String(
             agora.getDate()
-        ).padStart(2,"0") +
+        ).padStart(
+            2,
+            "0"
+        ) +
+
         "-" +
+
         Math.floor(
             1000 +
             Math.random()*9000
         );
 
 
-    set(
-        "numeroRelatorio",
-        "RELATÓRIO Nº " + codigo
+    preencher(
+        "reportNumber",
+        "RELATÓRIO Nº " +
+        numero
     );
 
 
-    set(
-        "dataRelatorio",
-        agora.toLocaleString("pt-BR")
+    preencher(
+        "reportDate",
+        agora.toLocaleString(
+            "pt-BR"
+        )
     );
 
 
-    set(
-        "placaTopo",
+    preencher(
+        "reportPlate",
         "PLACA: " +
-        campo("Placa Mercosul")
+        placa
     );
 
 
     /* FOTOS */
 
-    const areaFotos =
+    const area =
         document.getElementById(
-            "fotosRelatorio"
+            "reportPhotos"
         );
 
 
-    areaFotos.innerHTML = "";
+    area.innerHTML = "";
 
 
-    fotos.forEach((foto,index)=>{
+    fotos.forEach(
+        (foto,index)=>{
 
-        areaFotos.innerHTML += `
+            area.innerHTML += `
 
-        <div class="reportPhoto">
+            <div class="report-photo">
 
-            <img src="${foto}">
+                <img
+                    src="${foto}"
+                    alt="Registro fotográfico"
+                >
 
-            <div>
-                REGISTRO FOTOGRÁFICO
-                ${String(index+1).padStart(2,"0")}
+                <div class="report-photo-label">
+
+                    REGISTRO FOTOGRÁFICO
+                    ${String(index+1).padStart(2,"0")}
+
+                </div>
+
             </div>
 
-        </div>
+            `;
 
-        `;
-
-    });
+        }
+    );
 
 
     document.getElementById(
-        "secaoFotos"
+        "photoReportSection"
     ).style.display =
+
         fotos.length
         ? "block"
         : "none";
 
 
-    document.getElementById(
-        "entrada"
-    ).style.display = "none";
-
+    /* TROCAR TELA */
 
     document.getElementById(
-        "relatorio"
-    ).style.display = "block";
+        "inputScreen"
+    ).style.display =
+        "none";
 
 
-    window.scrollTo(0,0);
+    document.getElementById(
+        "reportScreen"
+    ).style.display =
+        "block";
+
+
+    window.scrollTo(
+        0,
+        0
+    );
 
 }
 
 
-/* =========================
-   CONTROLES
-========================= */
+/* =========================================================
+   VOLTAR
+========================================================= */
 
-function editar(){
-
-    document.getElementById(
-        "relatorio"
-    ).style.display = "none";
-
+function voltarEditar(){
 
     document.getElementById(
-        "entrada"
-    ).style.display = "block";
+        "reportScreen"
+    ).style.display =
+        "none";
 
 
-    window.scrollTo(0,0);
+    document.getElementById(
+        "inputScreen"
+    ).style.display =
+        "block";
+
+
+    window.scrollTo(
+        0,
+        0
+    );
 
 }
 
 
-function limparTudo(){
+/* =========================================================
+   LIMPAR
+========================================================= */
+
+function limparConsulta(){
 
     if(
         !confirm(
-            "Deseja apagar a consulta e todas as imagens?"
+            "Deseja limpar a consulta e as fotografias? A logo permanecerá salva."
         )
-    ) return;
+    ){
+
+        return;
+
+    }
 
 
     document.getElementById(
@@ -1500,12 +3569,34 @@ function limparTudo(){
     ).value = "";
 
 
+    document.getElementById(
+        "consultaStatus"
+    ).textContent =
+        "Aguardando consulta...";
+
+
     fotos = [];
 
 
-    atualizarPreview();
+    atualizarFotos();
 
 }
+
+
+/* =========================================================
+   INICIALIZAÇÃO
+========================================================= */
+
+document.addEventListener(
+    "DOMContentLoaded",
+    function(){
+
+        carregarLogoSalva();
+
+        atualizarFotos();
+
+    }
+);
 
 </script>
 
