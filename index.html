@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Uma mensagem muito importante 👀❤️</title>
+
+<title>Tem um segredo aqui... 🔐❤️</title>
 
 <style>
 * {
@@ -13,411 +14,185 @@
 body {
     margin: 0;
     min-height: 100vh;
-    font-family: Arial, Helvetica, sans-serif;
-    background: linear-gradient(135deg, #ff758c, #ff7eb3, #8e44ad);
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #ff4d6d, #7b2cbf);
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: white;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
-.container {
-    width: 92%;
-    max-width: 850px;
-    margin: auto;
-    padding: 30px 0 60px;
-    text-align: center;
-}
-
-.card {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(15px);
-    border: 1px solid rgba(255,255,255,0.3);
-    border-radius: 30px;
+.box {
+    width: 90%;
+    max-width: 420px;
     padding: 35px 25px;
-    margin: 25px 0;
-    box-shadow: 0 15px 50px rgba(0,0,0,.25);
+    text-align: center;
+    border-radius: 30px;
+    background: rgba(255,255,255,.15);
+    backdrop-filter: blur(15px);
+    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+}
+
+.lock {
+    font-size: 90px;
+    animation: flutuar 2s infinite;
 }
 
 h1 {
-    font-size: clamp(35px, 8vw, 65px);
-    margin-bottom: 10px;
-    animation: pulse 1.8s infinite;
-}
-
-h2 {
     font-size: 30px;
 }
 
 p {
-    font-size: 19px;
-    line-height: 1.7;
+    font-size: 17px;
+    line-height: 1.6;
 }
 
-.emoji {
-    font-size: 60px;
-    display: inline-block;
-    animation: bounce 1.5s infinite;
-}
-
-.heart {
-    position: fixed;
-    top: -50px;
-    font-size: 25px;
-    animation: fall linear forwards;
-    pointer-events: none;
+input {
+    width: 100%;
+    padding: 16px;
+    border: none;
+    border-radius: 15px;
+    outline: none;
+    text-align: center;
+    font-size: 20px;
+    margin: 15px 0;
 }
 
 button {
     border: none;
-    padding: 17px 30px;
-    border-radius: 50px;
+    padding: 15px 30px;
+    border-radius: 30px;
+    background: white;
+    color: #d6336c;
     font-size: 18px;
     font-weight: bold;
     cursor: pointer;
-    margin: 10px;
-    transition: .3s;
 }
 
-#sim {
-    background: #fff;
-    color: #ff4081;
+button:hover {
+    transform: scale(1.08);
 }
 
-#sim:hover {
-    transform: scale(1.12);
-}
-
-#nao {
-    background: #222;
-    color: white;
-    position: relative;
+.erro {
+    color: #ffd6e0;
+    min-height: 25px;
 }
 
 .hidden {
     display: none;
 }
 
-.reveal {
-    animation: aparecer 1s ease;
+.unlocked {
+    animation: desbloquear 1s forwards;
 }
 
-.lista {
-    text-align: left;
-    max-width: 600px;
-    margin: auto;
+.heart {
+    position: fixed;
+    top: -30px;
+    animation: cair linear forwards;
 }
 
-.lista div {
-    background: rgba(255,255,255,.12);
-    padding: 14px;
-    margin: 10px 0;
-    border-radius: 15px;
-    font-size: 18px;
+@keyframes flutuar {
+    50% {
+        transform: translateY(-12px) rotate(5deg);
+    }
 }
 
-.progress {
-    width: 100%;
-    height: 18px;
-    background: rgba(255,255,255,.25);
-    border-radius: 20px;
-    overflow: hidden;
+@keyframes desbloquear {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.2) rotate(3deg);
+    }
+    100% {
+        transform: scale(0);
+        opacity: 0;
+    }
 }
 
-.bar {
-    width: 97%;
-    height: 100%;
-    background: white;
-    border-radius: 20px;
-    animation: carregar 2s ease;
-}
-
-.big {
-    font-size: 35px;
-    font-weight: bold;
-}
-
-footer {
-    opacity: .8;
-    margin-top: 40px;
-}
-
-@keyframes pulse {
-    50% { transform: scale(1.08); }
-}
-
-@keyframes bounce {
-    0%,100% { transform: translateY(0) rotate(0); }
-    50% { transform: translateY(-20px) rotate(8deg); }
-}
-
-@keyframes fall {
+@keyframes cair {
     to {
         transform: translateY(110vh) rotate(360deg);
     }
-}
-
-@keyframes aparecer {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes carregar {
-    from { width: 0; }
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
+<div class="box" id="cadeado">
 
-    <div class="card">
-        <div class="emoji">👀</div>
+    <div class="lock" id="lock">🔐</div>
 
-        <h1>EI, VOCÊ! ❤️</h1>
+    <h1>Tem um segredo aqui... 👀</h1>
 
-        <p>
-            Sim, você mesmo(a).<br>
-            Para de fingir que não viu. 😂
-        </p>
+    <p>
+        Mas antes de entrar você precisa descobrir
+        a <b>palavra-chave</b>. 🤫
+    </p>
 
-        <p>
-            Eu tenho uma coisa MUITO importante para te contar...
-        </p>
+    <p>
+        Dica: começa com <b>M</b>... 😏
+    </p>
 
-        <button onclick="mostrarMensagem()">
-            CLIQUE AQUI 👇
-        </button>
-    </div>
+    <input
+        type="password"
+        id="senha"
+        placeholder="Digite a palavra-chave"
+        onkeydown="if(event.key==='Enter') verificar()"
+    >
 
-    <div id="mensagem" class="card hidden">
+    <button onclick="verificar()">
+        🔓 DESBLOQUEAR
+    </button>
 
-        <div class="emoji">🚨</div>
-
-        <h2>COMUNICADO OFICIAL 🚨</h2>
-
-        <p>
-            Após uma reunião extremamente séria entre meu cérebro,
-            meu coração e minha falta de vergonha na cara...
-        </p>
-
-        <p class="big">
-            chegamos a uma conclusão. 😳❤️
-        </p>
-
-        <p>
-            Você anda ocupando espaço demais nos meus pensamentos.
-            E olha que meu cérebro nem tem tanto espaço assim. 🤡
-        </p>
-
-    </div>
-
-    <div class="card">
-
-        <h2>📋 Relatório oficial sobre você</h2>
-
-        <div class="lista">
-
-            <div>❤️ Bonito(a): <b>99,9%</b></div>
-
-            <div>😂 Engraçado(a): <b>suspeitosamente alto</b></div>
-
-            <div>👀 Capacidade de chamar minha atenção: <b>ABSURDA</b></div>
-
-            <div>🧠 Capacidade de ficar na minha cabeça: <b>24 horas</b></div>
-
-            <div>😳 Capacidade de me deixar sem saber o que falar: <b>1000%</b></div>
-
-            <div>💘 Perigo de eu me apaixonar: <b>CRÍTICO</b></div>
-
-        </div>
-
-    </div>
-
-    <div class="card">
-
-        <h2>🧪 Resultado do experimento</h2>
-
-        <p>
-            Fiz um teste científico para descobrir o quanto
-            você mexe comigo.
-        </p>
-
-        <p>
-            O resultado foi...
-        </p>
-
-        <div class="progress">
-            <div class="bar"></div>
-        </div>
-
-        <h2>97% 😳❤️</h2>
-
-        <p>
-            Os outros 3% são só eu tentando manter a dignidade. 😂
-        </p>
-
-    </div>
-
-    <div class="card">
-
-        <div class="emoji">🧠</div>
-
-        <h2>O problema é o seguinte...</h2>
-
-        <p>
-            Eu tento pensar em outras coisas.
-        </p>
-
-        <p>
-            Trabalho? Você aparece. 😐<br>
-            Música? Lembro de você. 🎵<br>
-            Dormir? Você aparece no pensamento. 🌙<br>
-            Mexer no celular? Lá estou eu querendo falar com você. 📱
-        </p>
-
-        <p>
-            Basicamente meu cérebro decidiu abrir uma filial sua
-            dentro da minha cabeça. 🤡
-        </p>
-
-    </div>
-
-    <div class="card">
-
-        <h2>⚠️ Atenção!</h2>
-
-        <p>
-            Este site contém níveis perigosamente altos de:
-        </p>
-
-        <p>
-            ❤️ carinho<br>
-            😳 vergonha<br>
-            😂 palhaçada<br>
-            👀 interesse<br>
-            💘 possibilidade de paixão
-        </p>
-
-        <p>
-            Caso você esteja sorrindo agora...
-        </p>
-
-        <h2>PEGUEI. 😂</h2>
-
-    </div>
-
-    <div class="card">
-
-        <div class="emoji">🥺</div>
-
-        <h2>Agora falando sério...</h2>
-
-        <p>
-            No meio de toda essa brincadeira,
-            existe uma coisa que é verdade.
-        </p>
-
-        <p>
-            Eu gosto da sua companhia.
-            Gosto de conversar com você.
-            Gosto quando você aparece.
-            E, sinceramente...
-        </p>
-
-        <p class="big">
-            você é uma pessoa muito especial pra mim. ❤️
-        </p>
-
-    </div>
-
-    <div class="card">
-
-        <h2>💌 Então eu tenho uma pergunta...</h2>
-
-        <p>
-            Você aceita continuar fazendo parte
-            dos meus pensamentos?
-        </p>
-
-        <p>
-            Prometo tentar não ser muito emocionado(a). 😂
-        </p>
-
-        <p>
-            <b>Mas não prometo conseguir. 😳❤️</b>
-        </p>
-
-        <button id="sim" onclick="aceitou()">
-            SIM ❤️
-        </button>
-
-        <button id="nao" onmouseover="fugir()">
-            NÃO 😭
-        </button>
-
-        <div id="resposta" class="hidden reveal">
-
-            <h1>AAAAAA 😭❤️</h1>
-
-            <p>
-                EU SABIA!!! 😂
-            </p>
-
-            <p>
-                Tá oficialmente proibido(a) de sair da minha vida agora.
-                Assinado: meu coração. ❤️
-            </p>
-
-            <div class="emoji">🥰💖✨</div>
-
-        </div>
-
-    </div>
-
-    <footer>
-        Feito com 50% de coragem, 30% de vergonha e 20% de loucura. 😂❤️
-    </footer>
+    <p class="erro" id="erro"></p>
 
 </div>
 
 <script>
 
-function mostrarMensagem() {
+function verificar() {
 
-    document.getElementById("mensagem").classList.remove("hidden");
+    const senha = document
+        .getElementById("senha")
+        .value
+        .trim()
+        .toLowerCase();
 
-    document.getElementById("mensagem")
-        .scrollIntoView({behavior:"smooth"});
+    const erro = document.getElementById("erro");
+    const cadeado = document.getElementById("cadeado");
+    const lock = document.getElementById("lock");
 
-}
+    if (senha === "maik") {
 
-function aceitou() {
+        lock.innerHTML = "🔓";
 
-    document.getElementById("resposta")
-        .classList.remove("hidden");
+        cadeado.classList.add("unlocked");
 
-    for(let i=0;i<40;i++) {
-        criarCoracao();
+        for (let i = 0; i < 50; i++) {
+            criarCoracao();
+        }
+
+        setTimeout(() => {
+
+            // COLOQUE AQUI O LINK DA PÁGINA PRINCIPAL
+            window.location.href = "principal.html";
+
+        }, 900);
+
+    } else {
+
+        lock.innerHTML = "🔒";
+
+        erro.innerHTML =
+            "❌ Senha errada! Você não vai desistir tão fácil, né? 😂❤️";
+
+        document.getElementById("senha").value = "";
+
     }
-
-}
-
-function fugir() {
-
-    const botao = document.getElementById("nao");
-
-    const x = Math.random() * 250 - 125;
-    const y = Math.random() * 150 - 75;
-
-    botao.style.transform =
-        `translate(${x}px, ${y}px)`;
-
 }
 
 function criarCoracao() {
@@ -426,16 +201,22 @@ function criarCoracao() {
 
     heart.className = "heart";
 
-    const emojis = ["❤️","💖","💕","💘","💗","🥰","😍","✨"];
+    const emojis = [
+        "❤️","💖","💕","💘",
+        "💗","🥰","😍","✨"
+    ];
 
     heart.innerHTML =
-        emojis[Math.floor(Math.random()*emojis.length)];
+        emojis[Math.floor(Math.random() * emojis.length)];
 
     heart.style.left =
-        Math.random()*100 + "vw";
+        Math.random() * 100 + "vw";
+
+    heart.style.fontSize =
+        (15 + Math.random() * 25) + "px";
 
     heart.style.animationDuration =
-        (Math.random()*3+2) + "s";
+        (2 + Math.random() * 3) + "s";
 
     document.body.appendChild(heart);
 
@@ -443,10 +224,6 @@ function criarCoracao() {
         heart.remove();
     }, 5000);
 }
-
-setInterval(() => {
-    criarCoracao();
-}, 700);
 
 </script>
 
