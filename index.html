@@ -4,226 +4,911 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tem um segredo aqui... 🔐❤️</title>
+<title>Uma coisa pra você ❤️</title>
 
 <style>
-* {
-    box-sizing: border-box;
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
-body {
-    margin: 0;
-    min-height: 100vh;
-    font-family: Arial, sans-serif;
-    background: linear-gradient(135deg, #ff4d6d, #7b2cbf);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: white;
-    overflow: hidden;
+html{
+    scroll-behavior:smooth;
 }
 
-.box {
-    width: 90%;
-    max-width: 420px;
-    padding: 35px 25px;
-    text-align: center;
-    border-radius: 30px;
-    background: rgba(255,255,255,.15);
-    backdrop-filter: blur(15px);
-    box-shadow: 0 20px 60px rgba(0,0,0,.3);
+body{
+    font-family:Arial,Helvetica,sans-serif;
+    color:white;
+    background:#08010d;
+    overflow-x:hidden;
 }
 
-.lock {
-    font-size: 90px;
-    animation: flutuar 2s infinite;
+/* FUNDO */
+
+.background{
+    position:fixed;
+    inset:0;
+    z-index:-2;
+    background:
+        radial-gradient(circle at 20% 20%,#ff3974 0%,transparent 30%),
+        radial-gradient(circle at 80% 30%,#7b2cff 0%,transparent 30%),
+        radial-gradient(circle at 50% 90%,#ff0055 0%,transparent 35%),
+        #08010d;
 }
 
-h1 {
-    font-size: 30px;
+.stars{
+    position:fixed;
+    inset:0;
+    z-index:-1;
+    pointer-events:none;
 }
 
-p {
-    font-size: 17px;
-    line-height: 1.6;
+/* TELA DO CADEADO */
+
+#lockScreen{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:25px;
 }
 
-input {
-    width: 100%;
-    padding: 16px;
-    border: none;
-    border-radius: 15px;
-    outline: none;
-    text-align: center;
-    font-size: 20px;
-    margin: 15px 0;
+.lockBox{
+    width:100%;
+    max-width:450px;
+    text-align:center;
+    padding:40px 25px;
+    border-radius:30px;
+    background:rgba(255,255,255,.09);
+    border:1px solid rgba(255,255,255,.2);
+    backdrop-filter:blur(20px);
+    box-shadow:0 25px 80px rgba(0,0,0,.5);
 }
 
-button {
-    border: none;
-    padding: 15px 30px;
-    border-radius: 30px;
-    background: white;
-    color: #d6336c;
-    font-size: 18px;
-    font-weight: bold;
-    cursor: pointer;
+.lockEmoji{
+    font-size:95px;
+    display:block;
+    animation:float 2s infinite;
 }
 
-button:hover {
-    transform: scale(1.08);
+.lockBox h1{
+    font-size:34px;
+    margin:15px 0;
 }
 
-.erro {
-    color: #ffd6e0;
-    min-height: 25px;
+.lockBox p{
+    line-height:1.7;
+    opacity:.9;
 }
 
-.hidden {
-    display: none;
+input{
+    width:100%;
+    margin:20px 0 12px;
+    padding:17px;
+    border:none;
+    outline:none;
+    border-radius:15px;
+    text-align:center;
+    font-size:18px;
+    background:white;
 }
 
-.unlocked {
-    animation: desbloquear 1s forwards;
+.mainButton{
+    border:none;
+    padding:16px 30px;
+    border-radius:50px;
+    font-size:17px;
+    font-weight:bold;
+    cursor:pointer;
+    background:white;
+    color:#d4145a;
+    transition:.3s;
 }
 
-.heart {
-    position: fixed;
-    top: -30px;
-    animation: cair linear forwards;
+.mainButton:hover{
+    transform:scale(1.08);
 }
 
-@keyframes flutuar {
-    50% {
-        transform: translateY(-12px) rotate(5deg);
+#error{
+    min-height:25px;
+    margin-top:12px;
+    color:#ffb3c6;
+}
+
+.shake{
+    animation:shake .4s;
+}
+
+/* SITE */
+
+#site{
+    display:none;
+}
+
+section{
+    min-height:100vh;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:70px 20px;
+}
+
+.container{
+    width:100%;
+    max-width:850px;
+    text-align:center;
+}
+
+.card{
+    padding:40px 25px;
+    border-radius:30px;
+    background:rgba(255,255,255,.08);
+    border:1px solid rgba(255,255,255,.15);
+    backdrop-filter:blur(15px);
+    box-shadow:0 20px 70px rgba(0,0,0,.3);
+}
+
+.emojiBig{
+    font-size:75px;
+    animation:float 2s infinite;
+    display:inline-block;
+}
+
+h1{
+    font-size:clamp(38px,8vw,70px);
+    margin:20px 0;
+}
+
+h2{
+    font-size:clamp(28px,6vw,45px);
+    margin-bottom:20px;
+}
+
+p{
+    font-size:19px;
+    line-height:1.8;
+}
+
+.highlight{
+    font-size:28px;
+    font-weight:bold;
+    margin:25px 0;
+}
+
+/* DIGITAÇÃO */
+
+.typing{
+    border-right:3px solid white;
+    white-space:nowrap;
+    overflow:hidden;
+    margin:auto;
+    width:0;
+    animation:
+        typing 4s steps(35,end) forwards,
+        blink .7s infinite;
+}
+
+/* LISTA */
+
+.list{
+    margin-top:25px;
+    text-align:left;
+}
+
+.item{
+    padding:18px;
+    margin:12px 0;
+    border-radius:18px;
+    background:rgba(255,255,255,.08);
+    transition:.3s;
+}
+
+.item:hover{
+    transform:translateX(8px);
+    background:rgba(255,255,255,.15);
+}
+
+/* BARRA */
+
+.progress{
+    height:22px;
+    background:rgba(255,255,255,.15);
+    border-radius:30px;
+    overflow:hidden;
+    margin:25px 0;
+}
+
+.progressBar{
+    height:100%;
+    width:0;
+    background:white;
+    border-radius:30px;
+    animation:progress 2.5s forwards;
+}
+
+/* BOTÕES */
+
+.buttons{
+    margin-top:30px;
+    min-height:100px;
+    position:relative;
+}
+
+.yes{
+    background:#ff477e;
+    color:white;
+    border:none;
+    padding:18px 35px;
+    border-radius:50px;
+    font-size:19px;
+    font-weight:bold;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(255,0,90,.4);
+}
+
+.no{
+    background:#222;
+    color:white;
+    border:none;
+    padding:18px 30px;
+    border-radius:50px;
+    font-size:17px;
+    cursor:pointer;
+    position:relative;
+}
+
+/* FINAL */
+
+#final{
+    display:none;
+    margin-top:35px;
+    animation:appear 1s;
+}
+
+.finalHeart{
+    font-size:100px;
+    animation:heartbeat 1s infinite;
+}
+
+.signature{
+    margin-top:30px;
+    font-size:20px;
+    opacity:.8;
+}
+
+/* CORAÇÕES */
+
+.heart{
+    position:fixed;
+    top:-50px;
+    pointer-events:none;
+    z-index:20;
+    animation:fall linear forwards;
+}
+
+/* ANIMAÇÕES */
+
+@keyframes float{
+    50%{
+        transform:translateY(-15px) rotate(5deg);
     }
 }
 
-@keyframes desbloquear {
-    0% {
-        transform: scale(1);
+@keyframes shake{
+    25%{transform:translateX(-10px);}
+    50%{transform:translateX(10px);}
+    75%{transform:translateX(-10px);}
+}
+
+@keyframes typing{
+    from{width:0;}
+    to{width:100%;}
+}
+
+@keyframes blink{
+    50%{border-color:transparent;}
+}
+
+@keyframes progress{
+    to{width:97%;}
+}
+
+@keyframes appear{
+    from{
+        opacity:0;
+        transform:translateY(30px);
     }
-    50% {
-        transform: scale(1.2) rotate(3deg);
-    }
-    100% {
-        transform: scale(0);
-        opacity: 0;
+    to{
+        opacity:1;
+        transform:translateY(0);
     }
 }
 
-@keyframes cair {
-    to {
-        transform: translateY(110vh) rotate(360deg);
+@keyframes heartbeat{
+    50%{
+        transform:scale(1.2);
     }
 }
+
+@keyframes fall{
+    to{
+        transform:
+            translateY(110vh)
+            rotate(360deg);
+        opacity:0;
+    }
+}
+
 </style>
 </head>
 
 <body>
 
-<div class="box" id="cadeado">
+<div class="background"></div>
+<div class="stars" id="stars"></div>
 
-    <div class="lock" id="lock">🔐</div>
+<!-- ========================= -->
+<!-- TELA DE SENHA -->
+<!-- ========================= -->
 
-    <h1>Tem um segredo aqui... 👀</h1>
+<div id="lockScreen">
 
-    <p>
-        Mas antes de entrar você precisa descobrir
-        a <b>palavra-chave</b>. 🤫
-    </p>
+    <div class="lockBox" id="lockBox">
 
-    <p>
-        Dica: começa com <b>M</b>... 😏
-    </p>
+        <span class="lockEmoji" id="lockEmoji">🔐</span>
 
-    <input
-        type="password"
-        id="senha"
-        placeholder="Digite a palavra-chave"
-        onkeydown="if(event.key==='Enter') verificar()"
-    >
+        <h1>Área Restrita 👀</h1>
 
-    <button onclick="verificar()">
-        🔓 DESBLOQUEAR
-    </button>
+        <p>
+            Existe uma coisa aqui que foi feita
+            especialmente para você. ❤️
+        </p>
 
-    <p class="erro" id="erro"></p>
+        <br>
+
+        <p>
+            Mas antes você precisa descobrir
+            a <b>palavra-chave</b>. 🤫
+        </p>
+
+        <p>
+            Dica: é um nome. 😏
+        </p>
+
+        <input
+            id="password"
+            type="password"
+            placeholder="Digite a palavra-chave"
+            autocomplete="off"
+            onkeydown="if(event.key==='Enter') unlock()"
+        >
+
+        <button class="mainButton" onclick="unlock()">
+            🔓 DESBLOQUEAR
+        </button>
+
+        <div id="error"></div>
+
+    </div>
 
 </div>
 
+
+<!-- ========================= -->
+<!-- SITE PRINCIPAL -->
+<!-- ========================= -->
+
+<div id="site">
+
+<!-- INTRO -->
+
+<section>
+
+<div class="container">
+
+<div class="card">
+
+<span class="emojiBig">👀</span>
+
+<h1>Oi, você... ❤️</h1>
+
+<p class="typing">
+> Tenho uma coisa pra te contar...
+</p>
+
+<br>
+
+<p>
+Se você chegou até aqui,
+é porque conseguiu passar pelo
+primeiro desafio. 😂
+</p>
+
+<p>
+Agora não adianta voltar.
+Você já entrou. 😌
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- RELATÓRIO -->
+
+<section>
+
+<div class="container">
+
+<div class="card">
+
+<span class="emojiBig">📋</span>
+
+<h2>RELATÓRIO OFICIAL</h2>
+
+<p>
+Após uma investigação extremamente séria,
+cientistas chegaram aos seguintes resultados:
+</p>
+
+<div class="list">
+
+<div class="item">
+❤️ <b>Charme:</b> 99,9%
+</div>
+
+<div class="item">
+👀 <b>Poder de chamar atenção:</b> absurdo
+</div>
+
+<div class="item">
+😂 <b>Chance de me fazer rir:</b> altíssima
+</div>
+
+<div class="item">
+😳 <b>Chance de me deixar sem graça:</b> 100%
+</div>
+
+<div class="item">
+🧠 <b>Espaço ocupado na minha cabeça:</b> preocupante
+</div>
+
+<div class="item">
+💘 <b>Perigo de eu gostar:</b> CRÍTICO
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- INVESTIGAÇÃO -->
+
+<section>
+
+<div class="container">
+
+<div class="card">
+
+<span class="emojiBig">🕵️</span>
+
+<h2>Investigação secreta</h2>
+
+<p>
+Foram realizadas diversas análises
+para entender o motivo de você
+ser tão interessante.
+</p>
+
+<br>
+
+<p>
+Resultado:
+</p>
+
+<p class="highlight">
+❌ Nenhuma explicação encontrada.
+</p>
+
+<p>
+Os especialistas desistiram. 😂
+</p>
+
+<p>
+Segundo eles, provavelmente é
+culpa desse seu jeito. 👀❤️
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PORCENTAGEM -->
+
+<section>
+
+<div class="container">
+
+<div class="card">
+
+<span class="emojiBig">🧪</span>
+
+<h2>Teste científico</h2>
+
+<p>
+Foi realizado um teste para descobrir
+quanto você mexe comigo.
+</p>
+
+<div class="progress">
+<div class="progressBar"></div>
+</div>
+
+<h2>97% ❤️</h2>
+
+<p>
+Os outros 3% são apenas minha tentativa
+de manter a dignidade. 🤡
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- CONFISSÃO -->
+
+<section>
+
+<div class="container">
+
+<div class="card">
+
+<span class="emojiBig">🥺</span>
+
+<h2>Agora falando sério...</h2>
+
+<p>
+No meio de toda essa palhaçada,
+tem uma coisa que é verdade.
+</p>
+
+<br>
+
+<p>
+Eu gosto de conversar com você.
+<br>
+Gosto quando você aparece.
+<br>
+Gosto da sua companhia.
+<br>
+Gosto do seu jeito.
+</p>
+
+<br>
+
+<p class="highlight">
+E você acabou se tornando
+uma pessoa especial pra mim. ❤️
+</p>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- PERGUNTA -->
+
+<section>
+
+<div class="container">
+
+<div class="card">
+
+<span class="emojiBig">💌</span>
+
+<h2>Então...</h2>
+
+<p>
+Depois de tudo isso,
+tenho uma pergunta importante.
+</p>
+
+<br>
+
+<p class="highlight">
+Você aceita continuar
+fazendo parte da minha vida? ❤️
+</p>
+
+<div class="buttons">
+
+<button class="yes" onclick="yes()">
+SIM ❤️
+</button>
+
+<button
+class="no"
+id="noButton"
+onmouseover="runAway()"
+onclick="runAway()">
+NÃO 😭
+</button>
+
+</div>
+
+<div id="final">
+
+<div class="finalHeart">
+💖
+</div>
+
+<h2>
+EU SABIA!!! 😂❤️
+</h2>
+
+<p>
+Pronto.
+Agora você oficialmente
+não pode mais fugir. 😌
+</p>
+
+<br>
+
+<p>
+Brincadeiras à parte...
+</p>
+
+<p class="highlight">
+Obrigado por existir. ❤️
+</p>
+
+<p>
+Que essa seja só a primeira
+de muitas histórias boas
+que ainda vamos viver.
+</p>
+
+<div class="signature">
+Com carinho... ❤️
+<br>
+<b>Maik</b>
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+</div>
+
+
 <script>
 
-function verificar() {
+/* SENHA */
 
-    const senha = document
-        .getElementById("senha")
-        .value
-        .trim()
-        .toLowerCase();
+const correctPassword = "maik";
 
-    const erro = document.getElementById("erro");
-    const cadeado = document.getElementById("cadeado");
-    const lock = document.getElementById("lock");
+function unlock(){
 
-    if (senha === "maik") {
+    const input =
+        document.getElementById("password");
 
-        lock.innerHTML = "🔓";
+    const value =
+        input.value.trim().toLowerCase();
 
-        cadeado.classList.add("unlocked");
+    const lockBox =
+        document.getElementById("lockBox");
 
-        for (let i = 0; i < 50; i++) {
-            criarCoracao();
-        }
+    const lockEmoji =
+        document.getElementById("lockEmoji");
 
-        setTimeout(() => {
+    const error =
+        document.getElementById("error");
 
-            // COLOQUE AQUI O LINK DA PÁGINA PRINCIPAL
-            window.location.href = "principal.html";
+    if(value === correctPassword){
 
-        }, 900);
+        lockEmoji.innerHTML = "🔓";
 
-    } else {
+        error.innerHTML =
+            "✨ Senha correta... preparando surpresa...";
 
-        lock.innerHTML = "🔒";
+        createHearts(60);
 
-        erro.innerHTML =
-            "❌ Senha errada! Você não vai desistir tão fácil, né? 😂❤️";
+        lockBox.style.transform = "scale(1.1)";
+        lockBox.style.transition = "1s";
 
-        document.getElementById("senha").value = "";
+        setTimeout(()=>{
+
+            document.getElementById("lockScreen")
+                .style.display="none";
+
+            document.getElementById("site")
+                .style.display="block";
+
+            window.scrollTo(0,0);
+
+        },1200);
+
+    }else{
+
+        lockEmoji.innerHTML="🔒";
+
+        error.innerHTML =
+            "❌ Senha incorreta... tenta de novo 😂";
+
+        lockBox.classList.remove("shake");
+
+        void lockBox.offsetWidth;
+
+        lockBox.classList.add("shake");
+
+        input.value="";
 
     }
+
 }
 
-function criarCoracao() {
 
-    const heart = document.createElement("div");
+/* BOTÃO NÃO */
 
-    heart.className = "heart";
+function runAway(){
 
-    const emojis = [
-        "❤️","💖","💕","💘",
-        "💗","🥰","😍","✨"
+    const button =
+        document.getElementById("noButton");
+
+    const x =
+        Math.random()*260-130;
+
+    const y =
+        Math.random()*150-75;
+
+    button.style.transform =
+        `translate(${x}px,${y}px)`;
+
+}
+
+
+/* SIM */
+
+function yes(){
+
+    document.getElementById("final")
+        .style.display="block";
+
+    createHearts(100);
+
+    setTimeout(()=>{
+
+        document.getElementById("final")
+            .scrollIntoView({
+                behavior:"smooth"
+            });
+
+    },200);
+
+}
+
+
+/* CORAÇÕES */
+
+function createHeart(){
+
+    const heart =
+        document.createElement("div");
+
+    heart.className="heart";
+
+    const emojis=[
+        "❤️",
+        "💖",
+        "💕",
+        "💘",
+        "💗",
+        "🥰",
+        "😍",
+        "✨",
+        "🌹"
     ];
 
     heart.innerHTML =
-        emojis[Math.floor(Math.random() * emojis.length)];
+        emojis[
+            Math.floor(
+                Math.random()*emojis.length
+            )
+        ];
 
     heart.style.left =
-        Math.random() * 100 + "vw";
+        Math.random()*100+"vw";
 
     heart.style.fontSize =
-        (15 + Math.random() * 25) + "px";
+        15+Math.random()*30+"px";
 
     heart.style.animationDuration =
-        (2 + Math.random() * 3) + "s";
+        3+Math.random()*4+"s";
 
     document.body.appendChild(heart);
 
-    setTimeout(() => {
+    setTimeout(()=>{
         heart.remove();
-    }, 5000);
+    },7000);
+
 }
+
+
+function createHearts(amount){
+
+    for(let i=0;i<amount;i++){
+
+        setTimeout(()=>{
+            createHeart();
+        },i*30);
+
+    }
+
+}
+
+
+/* CORAÇÕES CONTÍNUOS */
+
+setInterval(()=>{
+    createHeart();
+},1000);
+
+
+/* ESTRELAS */
+
+function createStars(){
+
+    const stars =
+        document.getElementById("stars");
+
+    for(let i=0;i<80;i++){
+
+        const star =
+            document.createElement("span");
+
+        star.innerHTML="✦";
+
+        star.style.position="absolute";
+
+        star.style.left =
+            Math.random()*100+"%";
+
+        star.style.top =
+            Math.random()*100+"%";
+
+        star.style.opacity =
+            Math.random();
+
+        star.style.fontSize =
+            5+Math.random()*10+"px";
+
+        stars.appendChild(star);
+
+    }
+
+}
+
+createStars();
 
 </script>
 
