@@ -1,916 +1,744 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Despachante Veicular - Serviços Rápidos e Confiáveis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-<title>Uma coisa pra você ❤️</title>
+        html {
+            scroll-behavior: smooth;
+        }
 
-<style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #333;
+            overflow-x: hidden;
+        }
 
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-}
+        :root {
+            --primary: #ff6b35;
+            --secondary: #004e89;
+            --accent: #f7931e;
+            --light: #f5f5f5;
+            --dark: #1a1a1a;
+        }
 
-html{
-    scroll-behavior:smooth;
-}
+        /* HEADER & NAV */
+        
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            padding: 15px 50px;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
 
-body{
-    font-family:Arial,Helvetica,sans-serif;
-    color:white;
-    background:#08010d;
-    overflow-x:hidden;
-}
+        .logo {
+            font-size: 28px;
+            font-weight: 800;
+            color: var(--secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
 
-/* FUNDO */
+        .logo span {
+            color: var(--primary);
+        }
 
-.background{
-    position:fixed;
-    inset:0;
-    z-index:-2;
-    background:
-        radial-gradient(circle at 20% 20%,#ff3974 0%,transparent 30%),
-        radial-gradient(circle at 80% 30%,#7b2cff 0%,transparent 30%),
-        radial-gradient(circle at 50% 90%,#ff0055 0%,transparent 35%),
-        #08010d;
-}
+        nav {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
 
-.stars{
-    position:fixed;
-    inset:0;
-    z-index:-1;
-    pointer-events:none;
-}
+        nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
 
-/* TELA DO CADEADO */
+        nav a:hover {
+            color: var(--primary);
+        }
 
-#lockScreen{
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    align-items:center;
-    padding:25px;
-}
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
 
-.lockBox{
-    width:100%;
-    max-width:450px;
-    text-align:center;
-    padding:40px 25px;
-    border-radius:30px;
-    background:rgba(255,255,255,.09);
-    border:1px solid rgba(255,255,255,.2);
-    backdrop-filter:blur(20px);
-    box-shadow:0 25px 80px rgba(0,0,0,.5);
-}
+        nav a:hover::after {
+            width: 100%;
+        }
 
-.lockEmoji{
-    font-size:95px;
-    display:block;
-    animation:float 2s infinite;
-}
+        .cta-button {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
+        }
 
-.lockBox h1{
-    font-size:34px;
-    margin:15px 0;
-}
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        }
 
-.lockBox p{
-    line-height:1.7;
-    opacity:.9;
-}
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
 
-input{
-    width:100%;
-    margin:20px 0 12px;
-    padding:17px;
-    border:none;
-    outline:none;
-    border-radius:15px;
-    text-align:center;
-    font-size:18px;
-    background:white;
-}
+            nav {
+                display: none;
+            }
 
-.mainButton{
-    border:none;
-    padding:16px 30px;
-    border-radius:50px;
-    font-size:17px;
-    font-weight:bold;
-    cursor:pointer;
-    background:white;
-    color:#d4145a;
-    transition:.3s;
-}
+            .logo {
+                font-size: 22px;
+            }
+        }
 
-.mainButton:hover{
-    transform:scale(1.08);
-}
+        /* HERO */
 
-#error{
-    min-height:25px;
-    margin-top:12px;
-    color:#ffb3c6;
-}
+        .hero {
+            margin-top: 70px;
+            min-height: calc(100vh - 70px);
+            background: linear-gradient(135deg, var(--secondary) 0%, #0066b3 100%);
+            color: white;
+            display: flex;
+            align-items: center;
+            padding: 60px 50px;
+            position: relative;
+            overflow: hidden;
+        }
 
-.shake{
-    animation:shake .4s;
-}
+        .hero::before {
+            content: '';
+            position: absolute;
+            width: 400px;
+            height: 400px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 50%;
+            top: -100px;
+            right: -100px;
+            animation: float 6s ease-in-out infinite;
+        }
 
-/* SITE */
+        .hero::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 107, 53, 0.08);
+            border-radius: 50%;
+            bottom: -50px;
+            left: -50px;
+            animation: float 8s ease-in-out infinite reverse;
+        }
 
-#site{
-    display:none;
-}
+        .hero-content {
+            max-width: 700px;
+            position: relative;
+            z-index: 2;
+        }
 
-section{
-    min-height:100vh;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    padding:70px 20px;
-}
+        .hero-content h1 {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.1;
+        }
 
-.container{
-    width:100%;
-    max-width:850px;
-    text-align:center;
-}
+        .hero-content h1 span {
+            color: var(--accent);
+        }
 
-.card{
-    padding:40px 25px;
-    border-radius:30px;
-    background:rgba(255,255,255,.08);
-    border:1px solid rgba(255,255,255,.15);
-    backdrop-filter:blur(15px);
-    box-shadow:0 20px 70px rgba(0,0,0,.3);
-}
+        .hero-content p {
+            font-size: clamp(16px, 3vw, 22px);
+            opacity: 0.95;
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
 
-.emojiBig{
-    font-size:75px;
-    animation:float 2s infinite;
-    display:inline-block;
-}
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
 
-h1{
-    font-size:clamp(38px,8vw,70px);
-    margin:20px 0;
-}
+        .btn-primary {
+            background: white;
+            color: var(--secondary);
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: transform 0.3s, box-shadow 0.3s;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-h2{
-    font-size:clamp(28px,6vw,45px);
-    margin-bottom:20px;
-}
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
 
-p{
-    font-size:19px;
-    line-height:1.8;
-}
+        .btn-secondary {
+            background: transparent;
+            color: white;
+            padding: 15px 40px;
+            border: 2px solid white;
+            border-radius: 50px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: all 0.3s;
+            cursor: pointer;
+            font-size: 16px;
+        }
 
-.highlight{
-    font-size:28px;
-    font-weight:bold;
-    margin:25px 0;
-}
+        .btn-secondary:hover {
+            background: white;
+            color: var(--secondary);
+        }
 
-/* DIGITAÇÃO */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 30px 20px;
+                margin-top: 60px;
+            }
 
-.typing{
-    border-right:3px solid white;
-    white-space:nowrap;
-    overflow:hidden;
-    margin:auto;
-    width:0;
-    animation:
-        typing 4s steps(35,end) forwards,
-        blink .7s infinite;
-}
+            .hero-buttons {
+                flex-direction: column;
+            }
 
-/* LISTA */
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                text-align: center;
+            }
+        }
 
-.list{
-    margin-top:25px;
-    text-align:left;
-}
+        /* SERVIÇOS */
 
-.item{
-    padding:18px;
-    margin:12px 0;
-    border-radius:18px;
-    background:rgba(255,255,255,.08);
-    transition:.3s;
-}
+        .services {
+            padding: 100px 50px;
+            background: var(--light);
+        }
 
-.item:hover{
-    transform:translateX(8px);
-    background:rgba(255,255,255,.15);
-}
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
 
-/* BARRA */
+        .section-header h2 {
+            font-size: clamp(32px, 6vw, 50px);
+            color: var(--dark);
+            margin-bottom: 15px;
+            position: relative;
+            display: inline-block;
+        }
 
-.progress{
-    height:22px;
-    background:rgba(255,255,255,.15);
-    border-radius:30px;
-    overflow:hidden;
-    margin:25px 0;
-}
+        .section-header h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 3px;
+        }
 
-.progressBar{
-    height:100%;
-    width:0;
-    background:white;
-    border-radius:30px;
-    animation:progress 2.5s forwards;
-}
+        .section-header p {
+            color: #666;
+            font-size: 18px;
+            margin-top: 30px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
 
-/* BOTÕES */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-.buttons{
-    margin-top:30px;
-    min-height:100px;
-    position:relative;
-}
+        .service-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 20px;
+            text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+        }
 
-.yes{
-    background:#ff477e;
-    color:white;
-    border:none;
-    padding:18px 35px;
-    border-radius:50px;
-    font-size:19px;
-    font-weight:bold;
-    cursor:pointer;
-    box-shadow:0 10px 30px rgba(255,0,90,.4);
-}
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
 
-.no{
-    background:#222;
-    color:white;
-    border:none;
-    padding:18px 30px;
-    border-radius:50px;
-    font-size:17px;
-    cursor:pointer;
-    position:relative;
-}
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
 
-/* FINAL */
+        .service-icon {
+            font-size: 50px;
+            margin-bottom: 20px;
+            display: inline-block;
+        }
 
-#final{
-    display:none;
-    margin-top:35px;
-    animation:appear 1s;
-}
+        .service-card h3 {
+            font-size: 24px;
+            color: var(--dark);
+            margin-bottom: 15px;
+        }
 
-.finalHeart{
-    font-size:100px;
-    animation:heartbeat 1s infinite;
-}
+        .service-card p {
+            color: #666;
+            line-height: 1.6;
+            font-size: 15px;
+        }
 
-.signature{
-    margin-top:30px;
-    font-size:20px;
-    opacity:.8;
-}
+        @media (max-width: 768px) {
+            .services {
+                padding: 60px 20px;
+            }
 
-/* CORAÇÕES */
+            .services-grid {
+                gap: 20px;
+            }
+        }
 
-.heart{
-    position:fixed;
-    top:-50px;
-    pointer-events:none;
-    z-index:20;
-    animation:fall linear forwards;
-}
+        /* DIFERENCIAIS */
 
-/* ANIMAÇÕES */
+        .diferentials {
+            padding: 100px 50px;
+            background: white;
+        }
 
-@keyframes float{
-    50%{
-        transform:translateY(-15px) rotate(5deg);
-    }
-}
+        .diferentials-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
 
-@keyframes shake{
-    25%{transform:translateX(-10px);}
-    50%{transform:translateX(10px);}
-    75%{transform:translateX(-10px);}
-}
+        .diferentials-text h2 {
+            font-size: clamp(32px, 6vw, 50px);
+            color: var(--dark);
+            margin-bottom: 30px;
+            line-height: 1.2;
+        }
 
-@keyframes typing{
-    from{width:0;}
-    to{width:100%;}
-}
+        .diferentials-text h2 span {
+            color: var(--primary);
+        }
 
-@keyframes blink{
-    50%{border-color:transparent;}
-}
+        .diferentials-list {
+            list-style: none;
+            margin-top: 30px;
+        }
 
-@keyframes progress{
-    to{width:97%;}
-}
+        .diferentials-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            color: #333;
+        }
 
-@keyframes appear{
-    from{
-        opacity:0;
-        transform:translateY(30px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
+        .diferentials-list li::before {
+            content: '✓';
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
 
-@keyframes heartbeat{
-    50%{
-        transform:scale(1.2);
-    }
-}
+        .diferentials-image {
+            width: 100%;
+            height: 400px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #0066b3 100%);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 100px;
+        }
 
-@keyframes fall{
-    to{
-        transform:
-            translateY(110vh)
-            rotate(360deg);
-        opacity:0;
-    }
-}
+        @media (max-width: 768px) {
+            .diferentials {
+                padding: 60px 20px;
+            }
 
-</style>
+            .diferentials-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
+            }
+
+            .diferentials-image {
+                height: 300px;
+            }
+        }
+
+        /* FORMULÁRIO */
+
+        .contact {
+            padding: 100px 50px;
+            background: linear-gradient(135deg, var(--secondary) 0%, #0066b3 100%);
+            color: white;
+        }
+
+        .contact-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact h2 {
+            font-size: clamp(32px, 6vw, 50px);
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: none;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            transition: box-shadow 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 15px;
+            background: white;
+            color: var(--secondary);
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        @media (max-width: 768px) {
+            .contact {
+                padding: 60px 20px;
+            }
+        }
+
+        /* FOOTER */
+
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        /* ANIMAÇÕES */
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(30px);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate {
+            animation: slideInUp 0.6s ease-out forwards;
+        }
+
+    </style>
 </head>
-
 <body>
 
-<div class="background"></div>
-<div class="stars" id="stars"></div>
-
-<!-- ========================= -->
-<!-- TELA DE SENHA -->
-<!-- ========================= -->
-
-<div id="lockScreen">
-
-    <div class="lockBox" id="lockBox">
-
-        <span class="lockEmoji" id="lockEmoji">🔐</span>
-
-        <h1>Área Restrita 👀</h1>
-
-        <p>
-            Existe uma coisa aqui que foi feita
-            especialmente para você. ❤️
-        </p>
-
-        <br>
-
-        <p>
-            Mas antes você precisa descobrir
-            a <b>palavra-chave</b>. 🤫
-        </p>
-
-        <p>
-            Dica: é um nome. 😏
-        </p>
-
-        <input
-            id="password"
-            type="password"
-            placeholder="Digite a palavra-chave"
-            autocomplete="off"
-            onkeydown="if(event.key==='Enter') unlock()"
-        >
-
-        <button class="mainButton" onclick="unlock()">
-            🔓 DESBLOQUEAR
-        </button>
-
-        <div id="error"></div>
-
-    </div>
-
-</div>
-
-
-<!-- ========================= -->
-<!-- SITE PRINCIPAL -->
-<!-- ========================= -->
-
-<div id="site">
-
-<!-- INTRO -->
-
-<section>
-
-<div class="container">
-
-<div class="card">
-
-<span class="emojiBig">👀</span>
-
-<h1>Oi, você... ❤️</h1>
-
-<p class="typing">
-> Tenho uma coisa pra te contar...
-</p>
-
-<br>
-
-<p>
-Se você chegou até aqui,
-é porque conseguiu passar pelo
-primeiro desafio. 😂
-</p>
-
-<p>
-Agora não adianta voltar.
-Você já entrou. 😌
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- RELATÓRIO -->
-
-<section>
-
-<div class="container">
-
-<div class="card">
-
-<span class="emojiBig">📋</span>
-
-<h2>RELATÓRIO OFICIAL</h2>
-
-<p>
-Após uma investigação extremamente séria,
-cientistas chegaram aos seguintes resultados:
-</p>
-
-<div class="list">
-
-<div class="item">
-❤️ <b>Charme:</b> 99,9%
-</div>
-
-<div class="item">
-👀 <b>Poder de chamar atenção:</b> absurdo
-</div>
-
-<div class="item">
-😂 <b>Chance de me fazer rir:</b> altíssima
-</div>
-
-<div class="item">
-😳 <b>Chance de me deixar sem graça:</b> 100%
-</div>
-
-<div class="item">
-🧠 <b>Espaço ocupado na minha cabeça:</b> preocupante
-</div>
-
-<div class="item">
-💘 <b>Perigo de eu gostar:</b> CRÍTICO
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- INVESTIGAÇÃO -->
-
-<section>
-
-<div class="container">
-
-<div class="card">
-
-<span class="emojiBig">🕵️</span>
-
-<h2>Investigação secreta</h2>
-
-<p>
-Foram realizadas diversas análises
-para entender o motivo de você
-ser tão interessante.
-</p>
-
-<br>
-
-<p>
-Resultado:
-</p>
-
-<p class="highlight">
-❌ Nenhuma explicação encontrada.
-</p>
-
-<p>
-Os especialistas desistiram. 😂
-</p>
-
-<p>
-Segundo eles, provavelmente é
-culpa desse seu jeito. 👀❤️
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PORCENTAGEM -->
-
-<section>
-
-<div class="container">
-
-<div class="card">
-
-<span class="emojiBig">🧪</span>
-
-<h2>Teste científico</h2>
-
-<p>
-Foi realizado um teste para descobrir
-quanto você mexe comigo.
-</p>
-
-<div class="progress">
-<div class="progressBar"></div>
-</div>
-
-<h2>97% ❤️</h2>
-
-<p>
-Os outros 3% são apenas minha tentativa
-de manter a dignidade. 🤡
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- CONFISSÃO -->
-
-<section>
-
-<div class="container">
-
-<div class="card">
-
-<span class="emojiBig">🥺</span>
-
-<h2>Agora falando sério...</h2>
-
-<p>
-No meio de toda essa palhaçada,
-tem uma coisa que é verdade.
-</p>
-
-<br>
-
-<p>
-Eu gosto de conversar com você.
-<br>
-Gosto quando você aparece.
-<br>
-Gosto da sua companhia.
-<br>
-Gosto do seu jeito.
-</p>
-
-<br>
-
-<p class="highlight">
-E você acabou se tornando
-uma pessoa especial pra mim. ❤️
-</p>
-
-</div>
-
-</div>
-
-</section>
-
-
-<!-- PERGUNTA -->
-
-<section>
-
-<div class="container">
-
-<div class="card">
-
-<span class="emojiBig">💌</span>
-
-<h2>Então...</h2>
-
-<p>
-Depois de tudo isso,
-tenho uma pergunta importante.
-</p>
-
-<br>
-
-<p class="highlight">
-Você aceita continuar
-fazendo parte da minha vida? ❤️
-</p>
-
-<div class="buttons">
-
-<button class="yes" onclick="yes()">
-SIM ❤️
-</button>
-
-<button
-class="no"
-id="noButton"
-onmouseover="runAway()"
-onclick="runAway()">
-NÃO 😭
-</button>
-
-</div>
-
-<div id="final">
-
-<div class="finalHeart">
-💖
-</div>
-
-<h2>
-EU SABIA!!! 😂❤️
-</h2>
-
-<p>
-Pronto.
-Agora você oficialmente
-não pode mais fugir. 😌
-</p>
-
-<br>
-
-<p>
-Brincadeiras à parte...
-</p>
-
-<p class="highlight">
-Obrigado por existir. ❤️
-</p>
-
-<p>
-Que essa seja só a primeira
-de muitas histórias boas
-que ainda vamos viver.
-</p>
-
-<div class="signature">
-Com carinho... ❤️
-<br>
-<b>Maik</b>
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-</div>
-
-
-<script>
-
-/* SENHA */
-
-const correctPassword = "maik";
-
-function unlock(){
-
-    const input =
-        document.getElementById("password");
-
-    const value =
-        input.value.trim().toLowerCase();
-
-    const lockBox =
-        document.getElementById("lockBox");
-
-    const lockEmoji =
-        document.getElementById("lockEmoji");
-
-    const error =
-        document.getElementById("error");
-
-    if(value === correctPassword){
-
-        lockEmoji.innerHTML = "🔓";
-
-        error.innerHTML =
-            "✨ Senha correta... preparando surpresa...";
-
-        createHearts(60);
-
-        lockBox.style.transform = "scale(1.1)";
-        lockBox.style.transition = "1s";
-
-        setTimeout(()=>{
-
-            document.getElementById("lockScreen")
-                .style.display="none";
-
-            document.getElementById("site")
-                .style.display="block";
-
-            window.scrollTo(0,0);
-
-        },1200);
-
-    }else{
-
-        lockEmoji.innerHTML="🔒";
-
-        error.innerHTML =
-            "❌ Senha incorreta... tenta de novo 😂";
-
-        lockBox.classList.remove("shake");
-
-        void lockBox.offsetWidth;
-
-        lockBox.classList.add("shake");
-
-        input.value="";
-
-    }
-
-}
-
-
-/* BOTÃO NÃO */
-
-function runAway(){
-
-    const button =
-        document.getElementById("noButton");
-
-    const x =
-        Math.random()*260-130;
-
-    const y =
-        Math.random()*150-75;
-
-    button.style.transform =
-        `translate(${x}px,${y}px)`;
-
-}
-
-
-/* SIM */
-
-function yes(){
-
-    document.getElementById("final")
-        .style.display="block";
-
-    createHearts(100);
-
-    setTimeout(()=>{
-
-        document.getElementById("final")
-            .scrollIntoView({
-                behavior:"smooth"
+    <!-- HEADER -->
+    <header>
+        <div class="logo">
+            🚗 <span>MAIK</span> Despachante
+        </div>
+        <nav>
+            <a href="#servicos">Serviços</a>
+            <a href="#diferenciais">Por que nós?</a>
+            <a href="#contato">Contato</a>
+            <button class="cta-button">Solicitar Serviço</button>
+        </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Despachante <span>Veicular</span> de Confiança</h1>
+            <p>Resolvemos toda sua documentação veicular com rapidez e segurança. Deixe a burocracia conosco!</p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="document.getElementById('contato').scrollIntoView({behavior: 'smooth'})">
+                    Entrar em contato agora
+                </button>
+                <button class="btn-secondary" onclick="document.getElementById('servicos').scrollIntoView({behavior: 'smooth'})">
+                    Ver serviços
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- SERVIÇOS -->
+    <section class="services" id="servicos">
+        <div class="section-header">
+            <h2>Nossos <span>Serviços</span></h2>
+            <p>Oferecemos uma completa gama de serviços de despachante veicular</p>
+        </div>
+
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">📋</div>
+                <h3>Emissão de Documentos</h3>
+                <p>Emitimos RG, CPF, CNH, Certidão de Óbito e outros documentos com agilidade</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🏷️</div>
+                <h3>Transferência de Veículo</h3>
+                <p>Realizamos transferência de propriedade com toda segurança e rapidez</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🔍</div>
+                <h3>Consulta Veicular</h3>
+                <p>Consulta completa da situação do veículo junto aos órgãos competentes</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">💳</div>
+                <h3>IPVA e Impostos</h3>
+                <p>Regularização de IPVA, impostos e taxas vencidas de forma prática</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📅</div>
+                <h3>Renovação de CNH</h3>
+                <p>Agilizamos o processo de renovação da sua carteira de motorista</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">⚖️</div>
+                <h3>Assessoria Jurídica</h3>
+                <p>Orientação completa sobre direitos e deveres no trânsito</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- DIFERENCIAIS -->
+    <section class="diferentials" id="diferenciais">
+        <div class="diferentials-content">
+            <div class="diferentials-text">
+                <h2>Por que escolher a <span>MAIK</span>?</h2>
+                <ul class="diferentials-list">
+                    <li>Experiência de 15+ anos no mercado</li>
+                    <li>Atendimento 100% personalizado</li>
+                    <li>Processos rápidos e seguros</li>
+                    <li>Profissionais altamente qualificados</li>
+                    <li>Orientação completa em cada etapa</li>
+                    <li>Preços competitivos e transparentes</li>
+                    <li>Suporte via WhatsApp 24/7</li>
+                </ul>
+            </div>
+            <div class="diferentials-image">
+                🏆
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTATO -->
+    <section class="contact" id="contato">
+        <div class="contact-content">
+            <h2>Entre em Contato</h2>
+            <form onsubmit="handleSubmit(event)">
+                <div class="form-group">
+                    <label for="nome">Seu Nome *</label>
+                    <input type="text" id="nome" name="nome" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email *</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="telefone">Telefone/WhatsApp *</label>
+                    <input type="tel" id="telefone" name="telefone" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="servico">Qual serviço? *</label>
+                    <input type="text" id="servico" name="servico" placeholder="Ex: Transferência de veículo" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="mensagem">Mensagem *</label>
+                    <textarea id="mensagem" name="mensagem" required></textarea>
+                </div>
+
+                <button type="submit" class="form-submit">Enviar Solicitação</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2024 MAIK Despachante Veicular. Todos os direitos reservados.</p>
+        <div class="footer-links">
+            <a href="#">Política de Privacidade</a>
+            <a href="#">Termos de Serviço</a>
+            <a href="mailto:contato@maikdespachante.com">contato@maikdespachante.com</a>
+        </div>
+    </footer>
+
+    <script>
+        // Formulário
+        function handleSubmit(event) {
+            event.preventDefault();
+            
+            const nome = document.getElementById('nome').value;
+            const telefone = document.getElementById('telefone').value;
+            const servico = document.getElementById('servico').value;
+            const mensagem = document.getElementById('mensagem').value;
+            
+            const whatsappMessage = `Olá! Me chamo ${nome}. Gostaria de solicitar o serviço de ${servico}. ${mensagem}`;
+            const whatsappLink = `https://wa.me/5511999999999?text=${encodeURIComponent(whatsappMessage)}`;
+            
+            // Aqui você coloca seu número do WhatsApp
+            window.open(whatsappLink, '_blank');
+            
+            event.target.reset();
+        }
+
+        // Animações ao scroll
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
             });
+        }, { threshold: 0.1 });
 
-    },200);
-
-}
-
-
-/* CORAÇÕES */
-
-function createHeart(){
-
-    const heart =
-        document.createElement("div");
-
-    heart.className="heart";
-
-    const emojis=[
-        "❤️",
-        "💖",
-        "💕",
-        "💘",
-        "💗",
-        "🥰",
-        "😍",
-        "✨",
-        "🌹"
-    ];
-
-    heart.innerHTML =
-        emojis[
-            Math.floor(
-                Math.random()*emojis.length
-            )
-        ];
-
-    heart.style.left =
-        Math.random()*100+"vw";
-
-    heart.style.fontSize =
-        15+Math.random()*30+"px";
-
-    heart.style.animationDuration =
-        3+Math.random()*4+"s";
-
-    document.body.appendChild(heart);
-
-    setTimeout(()=>{
-        heart.remove();
-    },7000);
-
-}
-
-
-function createHearts(amount){
-
-    for(let i=0;i<amount;i++){
-
-        setTimeout(()=>{
-            createHeart();
-        },i*30);
-
-    }
-
-}
-
-
-/* CORAÇÕES CONTÍNUOS */
-
-setInterval(()=>{
-    createHeart();
-},1000);
-
-
-/* ESTRELAS */
-
-function createStars(){
-
-    const stars =
-        document.getElementById("stars");
-
-    for(let i=0;i<80;i++){
-
-        const star =
-            document.createElement("span");
-
-        star.innerHTML="✦";
-
-        star.style.position="absolute";
-
-        star.style.left =
-            Math.random()*100+"%";
-
-        star.style.top =
-            Math.random()*100+"%";
-
-        star.style.opacity =
-            Math.random();
-
-        star.style.fontSize =
-            5+Math.random()*10+"px";
-
-        stars.appendChild(star);
-
-    }
-
-}
-
-createStars();
-
-</script>
+        document.querySelectorAll('.service-card').forEach(card => {
+            observer.observe(card);
+        });
+    </script>
 
 </body>
 </html>
