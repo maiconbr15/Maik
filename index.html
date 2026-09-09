@@ -3,14 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Despachante Veicular - Serviços Rápidos e Confiáveis</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <title>Lucas Despachante - Agendamentos Online</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #004a87;
+            --secondary: #0066b3;
+            --accent: #1b8fa3;
+            --light: #f8f9fa;
+            --dark: #1a1a1a;
+            --success: #27ae60;
+            --warning: #f39c12;
+            --danger: #e74c3c;
         }
 
         html {
@@ -21,17 +33,10 @@
             font-family: 'Poppins', sans-serif;
             color: #333;
             overflow-x: hidden;
+            line-height: 1.6;
         }
 
-        :root {
-            --primary: #ff6b35;
-            --secondary: #004e89;
-            --accent: #f7931e;
-            --light: #f5f5f5;
-            --dark: #1a1a1a;
-        }
-
-        /* HEADER & NAV */
+        /* HEADER & NAVBAR */
         
         header {
             position: fixed;
@@ -41,40 +46,47 @@
             backdrop-filter: blur(10px);
             padding: 15px 50px;
             z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            border-bottom: 3px solid var(--primary);
         }
 
-        .logo {
-            font-size: 28px;
-            font-weight: 800;
-            color: var(--secondary);
+        .logo-container {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 15px;
+            font-weight: 800;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 20px;
         }
 
-        .logo span {
-            color: var(--primary);
+        .logo-container img {
+            height: 50px;
+            width: auto;
         }
 
         nav {
             display: flex;
-            gap: 40px;
+            gap: 35px;
             align-items: center;
         }
 
-        nav a {
+        nav a, nav button {
             text-decoration: none;
             color: #333;
-            font-weight: 500;
-            transition: color 0.3s;
+            font-weight: 600;
+            font-size: 14px;
+            transition: all 0.3s;
             position: relative;
+            cursor: pointer;
+            border: none;
+            background: none;
         }
 
-        nav a:hover {
+        nav a:hover, nav button:hover {
             color: var(--primary);
         }
 
@@ -84,7 +96,7 @@
             bottom: -5px;
             left: 0;
             width: 0;
-            height: 3px;
+            height: 2px;
             background: var(--primary);
             transition: width 0.3s;
         }
@@ -93,44 +105,48 @@
             width: 100%;
         }
 
-        .cta-button {
-            background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+        .btn-agendar {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 12px 28px;
+            border-radius: 25px;
+            font-weight: 700;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0, 74, 135, 0.3);
             border: none;
             cursor: pointer;
-            box-shadow: 0 5px 20px rgba(255, 107, 53, 0.3);
         }
 
-        .cta-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255, 107, 53, 0.4);
+        .btn-agendar:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 74, 135, 0.4);
         }
 
         @media (max-width: 768px) {
             header {
                 padding: 15px 20px;
+                flex-wrap: wrap;
             }
 
             nav {
                 display: none;
             }
 
-            .logo {
-                font-size: 22px;
+            .logo-container {
+                font-size: 18px;
+            }
+
+            .logo-container img {
+                height: 40px;
             }
         }
 
-        /* HERO */
+        /* HERO SECTION */
 
         .hero {
-            margin-top: 70px;
-            min-height: calc(100vh - 70px);
-            background: linear-gradient(135deg, var(--secondary) 0%, #0066b3 100%);
+            margin-top: 85px;
+            min-height: 90vh;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
             color: white;
             display: flex;
             align-items: center;
@@ -142,25 +158,25 @@
         .hero::before {
             content: '';
             position: absolute;
-            width: 400px;
-            height: 400px;
-            background: rgba(255, 107, 53, 0.1);
+            width: 500px;
+            height: 500px;
+            background: rgba(255, 255, 255, 0.08);
             border-radius: 50%;
             top: -100px;
             right: -100px;
-            animation: float 6s ease-in-out infinite;
+            animation: float 8s ease-in-out infinite;
         }
 
         .hero::after {
             content: '';
             position: absolute;
-            width: 300px;
-            height: 300px;
-            background: rgba(255, 107, 53, 0.08);
+            width: 400px;
+            height: 400px;
+            background: rgba(27, 143, 163, 0.1);
             border-radius: 50%;
             bottom: -50px;
             left: -50px;
-            animation: float 8s ease-in-out infinite reverse;
+            animation: float 10s ease-in-out infinite reverse;
         }
 
         .hero-content {
@@ -170,21 +186,21 @@
         }
 
         .hero-content h1 {
-            font-size: clamp(40px, 8vw, 80px);
+            font-size: clamp(42px, 8vw, 80px);
             font-weight: 800;
             margin-bottom: 20px;
             line-height: 1.1;
         }
 
-        .hero-content h1 span {
-            color: var(--accent);
+        .hero-content .highlight {
+            color: #ffd700;
         }
 
         .hero-content p {
             font-size: clamp(16px, 3vw, 22px);
             opacity: 0.95;
-            margin-bottom: 30px;
-            line-height: 1.6;
+            margin-bottom: 40px;
+            line-height: 1.7;
         }
 
         .hero-buttons {
@@ -195,28 +211,29 @@
 
         .btn-primary {
             background: white;
-            color: var(--secondary);
-            padding: 15px 40px;
-            border-radius: 50px;
+            color: var(--primary);
+            padding: 16px 45px;
+            border-radius: 30px;
             font-weight: 700;
             text-decoration: none;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             border: none;
             cursor: pointer;
             font-size: 16px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
         }
 
         .btn-primary:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
         }
 
         .btn-secondary {
             background: transparent;
             color: white;
-            padding: 15px 40px;
+            padding: 16px 45px;
             border: 2px solid white;
-            border-radius: 50px;
+            border-radius: 30px;
             font-weight: 700;
             text-decoration: none;
             transition: all 0.3s;
@@ -226,13 +243,22 @@
 
         .btn-secondary:hover {
             background: white;
-            color: var(--secondary);
+            color: var(--primary);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px);
+            }
+            50% {
+                transform: translateY(30px);
+            }
         }
 
         @media (max-width: 768px) {
             .hero {
-                padding: 30px 20px;
-                margin-top: 60px;
+                padding: 40px 20px;
+                margin-top: 70px;
             }
 
             .hero-buttons {
@@ -245,97 +271,194 @@
             }
         }
 
-        /* SERVIÇOS */
+        /* AGENDAMENTO RÁPIDO */
 
-        .services {
-            padding: 100px 50px;
+        .quick-schedule {
+            padding: 80px 50px;
             background: var(--light);
         }
 
-        .section-header {
+        .section-title {
             text-align: center;
-            margin-bottom: 80px;
+            margin-bottom: 60px;
         }
 
-        .section-header h2 {
+        .section-title h2 {
             font-size: clamp(32px, 6vw, 50px);
-            color: var(--dark);
+            color: var(--primary);
             margin-bottom: 15px;
             position: relative;
             display: inline-block;
         }
 
-        .section-header h2::after {
+        .section-title h2::after {
             content: '';
             position: absolute;
-            bottom: -10px;
+            bottom: -12px;
             left: 50%;
             transform: translateX(-50%);
-            width: 100px;
-            height: 5px;
+            width: 150px;
+            height: 4px;
             background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 3px;
+            border-radius: 2px;
         }
 
-        .section-header p {
+        .section-title p {
             color: #666;
             font-size: 18px;
-            margin-top: 30px;
+            margin-top: 25px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
         }
 
+        .schedule-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-family: 'Poppins', sans-serif;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 4px rgba(0, 74, 135, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+            grid-column: 1 / -1;
+        }
+
+        .form-full {
+            grid-column: 1 / -1;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-top: 15px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 74, 135, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .quick-schedule {
+                padding: 60px 20px;
+            }
+
+            .schedule-container {
+                padding: 30px;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        /* SERVIÇOS */
+
+        .services {
+            padding: 80px 50px;
+            background: white;
+        }
+
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 40px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 35px;
             max-width: 1200px;
             margin: 0 auto;
         }
 
         .service-card {
-            background: white;
-            padding: 40px 30px;
-            border-radius: 20px;
+            background: var(--light);
+            padding: 40px;
+            border-radius: 15px;
             text-align: center;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
+            border-left: 5px solid var(--primary);
             box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
         }
 
         .service-card:hover {
             transform: translateY(-10px);
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 15px 40px rgba(0, 74, 135, 0.15);
+            border-left-color: var(--accent);
         }
 
         .service-icon {
             font-size: 50px;
             margin-bottom: 20px;
             display: inline-block;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         .service-card h3 {
-            font-size: 24px;
-            color: var(--dark);
+            font-size: 22px;
+            color: var(--primary);
             margin-bottom: 15px;
+            font-weight: 700;
         }
 
         .service-card p {
             color: #666;
-            line-height: 1.6;
             font-size: 15px;
+            line-height: 1.7;
         }
 
         @media (max-width: 768px) {
@@ -348,160 +471,120 @@
             }
         }
 
-        /* DIFERENCIAIS */
+        /* STATS */
 
-        .diferentials {
-            padding: 100px 50px;
-            background: white;
+        .stats {
+            padding: 80px 50px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
         }
 
-        .diferentials-content {
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: clamp(32px, 8vw, 60px);
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #ffd700;
+        }
+
+        .stat-label {
+            font-size: 18px;
+            opacity: 0.95;
+            font-weight: 500;
+        }
+
+        @media (max-width: 768px) {
+            .stats {
+                padding: 60px 20px;
+            }
+
+            .stats-grid {
+                gap: 30px;
+            }
+        }
+
+        /* CONTATO */
+
+        .contact {
+            padding: 80px 50px;
+            background: var(--light);
+        }
+
+        .contact-content {
             max-width: 1200px;
             margin: 0 auto;
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 80px;
+            gap: 60px;
             align-items: center;
         }
 
-        .diferentials-text h2 {
-            font-size: clamp(32px, 6vw, 50px);
-            color: var(--dark);
-            margin-bottom: 30px;
-            line-height: 1.2;
-        }
-
-        .diferentials-text h2 span {
-            color: var(--primary);
-        }
-
-        .diferentials-list {
-            list-style: none;
-            margin-top: 30px;
-        }
-
-        .diferentials-list li {
+        .contact-info {
             display: flex;
-            align-items: center;
-            gap: 15px;
-            margin-bottom: 20px;
-            font-size: 16px;
-            color: #333;
+            flex-direction: column;
+            gap: 30px;
         }
 
-        .diferentials-list li::before {
-            content: '✓';
+        .contact-item {
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            width: 30px;
-            height: 30px;
-            background: linear-gradient(135deg, var(--primary), var(--accent));
             color: white;
-            border-radius: 50%;
-            font-weight: bold;
+            font-size: 24px;
             flex-shrink: 0;
         }
 
-        .diferentials-image {
-            width: 100%;
-            height: 400px;
-            background: linear-gradient(135deg, var(--secondary) 0%, #0066b3 100%);
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 100px;
+        .contact-text h4 {
+            color: var(--primary);
+            font-size: 18px;
+            margin-bottom: 5px;
         }
 
-        @media (max-width: 768px) {
-            .diferentials {
-                padding: 60px 20px;
-            }
-
-            .diferentials-content {
-                grid-template-columns: 1fr;
-                gap: 40px;
-            }
-
-            .diferentials-image {
-                height: 300px;
-            }
+        .contact-text p {
+            color: #666;
+            font-size: 15px;
         }
 
-        /* FORMULÁRIO */
-
-        .contact {
-            padding: 100px 50px;
-            background: linear-gradient(135deg, var(--secondary) 0%, #0066b3 100%);
-            color: white;
-        }
-
-        .contact-content {
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        .contact h2 {
-            font-size: clamp(32px, 6vw, 50px);
-            text-align: center;
-            margin-bottom: 50px;
-        }
-
-        .form-group {
-            margin-bottom: 25px;
-        }
-
-        .form-group label {
-            display: block;
-            margin-bottom: 8px;
+        .contact-text a {
+            color: var(--primary);
+            text-decoration: none;
             font-weight: 600;
-            font-size: 15px;
+            transition: color 0.3s;
         }
 
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 15px;
-            border: none;
-            border-radius: 10px;
-            font-family: 'Poppins', sans-serif;
-            font-size: 15px;
-            transition: box-shadow 0.3s;
-        }
-
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.3);
-        }
-
-        .form-group textarea {
-            resize: vertical;
-            min-height: 120px;
-        }
-
-        .form-submit {
-            width: 100%;
-            padding: 15px;
-            background: white;
-            color: var(--secondary);
-            border: none;
-            border-radius: 10px;
-            font-weight: 700;
-            font-size: 16px;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-
-        .form-submit:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        .contact-text a:hover {
+            color: var(--accent);
         }
 
         @media (max-width: 768px) {
             .contact {
                 padding: 60px 20px;
+            }
+
+            .contact-content {
+                grid-template-columns: 1fr;
+                gap: 40px;
             }
         }
 
@@ -512,10 +595,12 @@
             color: white;
             padding: 50px;
             text-align: center;
+            border-top: 3px solid var(--primary);
         }
 
         footer p {
-            margin-bottom: 10px;
+            margin-bottom: 15px;
+            opacity: 0.9;
         }
 
         .footer-links {
@@ -530,36 +615,102 @@
             color: white;
             text-decoration: none;
             transition: color 0.3s;
+            font-size: 14px;
         }
 
         .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        /* MODAL */
+
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            animation: fadeIn 0.3s;
+        }
+
+        .modal-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideDown 0.3s;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+
+        .close:hover {
             color: var(--primary);
         }
 
-        /* ANIMAÇÕES */
-
-        @keyframes float {
-            0%, 100% {
-                transform: translateY(0px);
-            }
-            50% {
-                transform: translateY(30px);
-            }
+        .modal-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            margin-top: 0;
         }
 
-        @keyframes slideInUp {
+        .modal-content p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes slideDown {
             from {
+                transform: translateY(-50px);
                 opacity: 0;
-                transform: translateY(30px);
             }
             to {
-                opacity: 1;
                 transform: translateY(0);
+                opacity: 1;
             }
         }
 
-        .animate {
-            animation: slideInUp 0.6s ease-out forwards;
+        /* SUCCESS MESSAGE */
+
+        .success-message {
+            position: fixed;
+            top: 100px;
+            right: 20px;
+            background: var(--success);
+            color: white;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+            animation: slideInRight 0.3s;
+            z-index: 3000;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(400px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
         }
 
     </style>
@@ -568,169 +719,311 @@
 
     <!-- HEADER -->
     <header>
-        <div class="logo">
-            🚗 <span>MAIK</span> Despachante
-        </div>
+        <a href="#" class="logo-container">
+            <i class="fas fa-car" style="font-size: 40px; color: var(--primary);"></i>
+            <span>LUCAS DESPACHANTE</span>
+        </a>
         <nav>
             <a href="#servicos">Serviços</a>
-            <a href="#diferenciais">Por que nós?</a>
+            <a href="#agendar">Agendar</a>
             <a href="#contato">Contato</a>
-            <button class="cta-button">Solicitar Serviço</button>
+            <button class="btn-agendar" onclick="scrollToAgendamento()">Agendar Agora</button>
         </nav>
     </header>
 
-    <!-- HERO -->
+    <!-- HERO SECTION -->
     <section class="hero">
         <div class="hero-content">
-            <h1>Despachante <span>Veicular</span> de Confiança</h1>
-            <p>Resolvemos toda sua documentação veicular com rapidez e segurança. Deixe a burocracia conosco!</p>
+            <h1>Despachante Veicular <span class="highlight">de Confiança</span></h1>
+            <p>Documentação veicular rápida, segura e confiável. Atendimento profissional para todas as suas necessidades de trânsito.</p>
             <div class="hero-buttons">
-                <button class="btn-primary" onclick="document.getElementById('contato').scrollIntoView({behavior: 'smooth'})">
-                    Entrar em contato agora
-                </button>
-                <button class="btn-secondary" onclick="document.getElementById('servicos').scrollIntoView({behavior: 'smooth'})">
-                    Ver serviços
-                </button>
+                <button class="btn-primary" onclick="scrollToAgendamento()">Agendar Consulta</button>
+                <button class="btn-secondary" onclick="scrollToServicos()">Conheça Serviços</button>
             </div>
+        </div>
+    </section>
+
+    <!-- AGENDAMENTO RÁPIDO -->
+    <section class="quick-schedule" id="agendar">
+        <div class="section-title">
+            <h2>Agende seu Atendimento</h2>
+            <p>Preencha o formulário abaixo e entraremos em contato para confirmar seu agendamento</p>
+        </div>
+
+        <div class="schedule-container">
+            <form onsubmit="handleSubmit(event)">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="nome">Nome Completo *</label>
+                        <input type="text" id="nome" name="nome" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="telefone">Telefone/WhatsApp *</label>
+                        <input type="tel" id="telefone" name="telefone" placeholder="(11) 99999-9999" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="servico">Serviço Desejado *</label>
+                        <select id="servico" name="servico" required>
+                            <option value="">Selecione um serviço</option>
+                            <option value="transferencia">Transferência de Veículo</option>
+                            <option value="ipva">IPVA e Licenciamento</option>
+                            <option value="cnh">Renovação de CNH</option>
+                            <option value="documentos">Emissão de Documentos</option>
+                            <option value="consulta">Consulta Veicular</option>
+                            <option value="outro">Outro Serviço</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="data">Data Preferida *</label>
+                        <input type="date" id="data" name="data" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="horario">Horário Preferido *</label>
+                        <select id="horario" name="horario" required>
+                            <option value="">Selecione um horário</option>
+                            <option value="08:00">08:00 - 09:00</option>
+                            <option value="09:00">09:00 - 10:00</option>
+                            <option value="10:00">10:00 - 11:00</option>
+                            <option value="11:00">11:00 - 12:00</option>
+                            <option value="14:00">14:00 - 15:00</option>
+                            <option value="15:00">15:00 - 16:00</option>
+                            <option value="16:00">16:00 - 17:00</option>
+                            <option value="17:00">17:00 - 18:00</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group form-full">
+                    <label for="mensagem">Mensagem / Observações</label>
+                    <textarea id="mensagem" name="mensagem" placeholder="Conte-nos mais sobre sua necessidade..."></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">✓ Confirmar Agendamento</button>
+            </form>
         </div>
     </section>
 
     <!-- SERVIÇOS -->
     <section class="services" id="servicos">
-        <div class="section-header">
-            <h2>Nossos <span>Serviços</span></h2>
+        <div class="section-title">
+            <h2>Nossos Serviços</h2>
             <p>Oferecemos uma completa gama de serviços de despachante veicular</p>
         </div>
 
         <div class="services-grid">
             <div class="service-card">
                 <div class="service-icon">📋</div>
-                <h3>Emissão de Documentos</h3>
-                <p>Emitimos RG, CPF, CNH, Certidão de Óbito e outros documentos com agilidade</p>
+                <h3>Transferência de Veículo</h3>
+                <p>Realizamos transferência de propriedade com segurança e rapidez total.</p>
             </div>
 
             <div class="service-card">
-                <div class="service-icon">🏷️</div>
-                <h3>Transferência de Veículo</h3>
-                <p>Realizamos transferência de propriedade com toda segurança e rapidez</p>
+                <div class="service-icon">💳</div>
+                <h3>IPVA e Licenciamento</h3>
+                <p>Regularização completa de IPVA, impostos e taxas vencidas.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">🚗</div>
+                <h3>Renovação de CNH</h3>
+                <p>Agilizamos o processo de renovação da sua carteira de motorista.</p>
+            </div>
+
+            <div class="service-card">
+                <div class="service-icon">📄</div>
+                <h3>Emissão de Documentos</h3>
+                <p>Emitimos RG, CPF, CNH e outros documentos com agilidade garantida.</p>
             </div>
 
             <div class="service-card">
                 <div class="service-icon">🔍</div>
                 <h3>Consulta Veicular</h3>
-                <p>Consulta completa da situação do veículo junto aos órgãos competentes</p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-icon">💳</div>
-                <h3>IPVA e Impostos</h3>
-                <p>Regularização de IPVA, impostos e taxas vencidas de forma prática</p>
-            </div>
-
-            <div class="service-card">
-                <div class="service-icon">📅</div>
-                <h3>Renovação de CNH</h3>
-                <p>Agilizamos o processo de renovação da sua carteira de motorista</p>
+                <p>Consulta completa da situação do veículo junto aos órgãos competentes.</p>
             </div>
 
             <div class="service-card">
                 <div class="service-icon">⚖️</div>
                 <h3>Assessoria Jurídica</h3>
-                <p>Orientação completa sobre direitos e deveres no trânsito</p>
+                <p>Orientação completa sobre seus direitos e deveres no trânsito.</p>
             </div>
         </div>
     </section>
 
-    <!-- DIFERENCIAIS -->
-    <section class="diferentials" id="diferenciais">
-        <div class="diferentials-content">
-            <div class="diferentials-text">
-                <h2>Por que escolher a <span>MAIK</span>?</h2>
-                <ul class="diferentials-list">
-                    <li>Experiência de 15+ anos no mercado</li>
-                    <li>Atendimento 100% personalizado</li>
-                    <li>Processos rápidos e seguros</li>
-                    <li>Profissionais altamente qualificados</li>
-                    <li>Orientação completa em cada etapa</li>
-                    <li>Preços competitivos e transparentes</li>
-                    <li>Suporte via WhatsApp 24/7</li>
-                </ul>
+    <!-- STATS -->
+    <section class="stats">
+        <div class="stats-grid">
+            <div class="stat-item">
+                <div class="stat-number">2.500+</div>
+                <div class="stat-label">Clientes Satisfeitos</div>
             </div>
-            <div class="diferentials-image">
-                🏆
+            <div class="stat-item">
+                <div class="stat-number">15+</div>
+                <div class="stat-label">Anos de Experiência</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">98%</div>
+                <div class="stat-label">Taxa de Satisfação</div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-number">24/7</div>
+                <div class="stat-label">Suporte via WhatsApp</div>
             </div>
         </div>
     </section>
 
     <!-- CONTATO -->
     <section class="contact" id="contato">
-        <div class="contact-content">
+        <div class="section-title">
             <h2>Entre em Contato</h2>
-            <form onsubmit="handleSubmit(event)">
-                <div class="form-group">
-                    <label for="nome">Seu Nome *</label>
-                    <input type="text" id="nome" name="nome" required>
+            <p>Múltiplas formas de nos alcançar</p>
+        </div>
+
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Endereço</h4>
+                        <p>Av. Paulista, 1000 - São Paulo, SP<br>CEP: 01311-100</p>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="email">Email *</label>
-                    <input type="email" id="email" name="email" required>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Telefone</h4>
+                        <p><a href="tel:1133334444">(11) 3333-4444</a></p>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="telefone">Telefone/WhatsApp *</label>
-                    <input type="tel" id="telefone" name="telefone" required>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fab fa-whatsapp"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>WhatsApp</h4>
+                        <p><a href="https://wa.me/5511999999999" target="_blank">(11) 99999-9999</a></p>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="servico">Qual serviço? *</label>
-                    <input type="text" id="servico" name="servico" placeholder="Ex: Transferência de veículo" required>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Email</h4>
+                        <p><a href="mailto:contato@lucasdespachante.com">contato@lucasdespachante.com</a></p>
+                    </div>
                 </div>
 
-                <div class="form-group">
-                    <label for="mensagem">Mensagem *</label>
-                    <textarea id="mensagem" name="mensagem" required></textarea>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-text">
+                        <h4>Horário de Atendimento</h4>
+                        <p>Segunda a Sexta: 08:00 - 18:00<br>Sábado: 08:00 - 13:00</p>
+                    </div>
                 </div>
+            </div>
 
-                <button type="submit" class="form-submit">Enviar Solicitação</button>
-            </form>
+            <div>
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3657.1976169856396!2d-46.656437!3d-23.561684!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x94ce59c8da0aa699%3A0xab6da57248af916!2sAv.%20Paulista%2C%201000%20-%20Bela%20Vista%2C%20S%C3%A3o%20Paulo%20-%20SP!5e0!3m2!1spt-BR!2sbr!4v" width="100%" height="400" style="border: none; border-radius: 15px;" allowfullscreen="" loading="lazy"></iframe>
+            </div>
         </div>
     </section>
 
     <!-- FOOTER -->
     <footer>
-        <p>&copy; 2024 MAIK Despachante Veicular. Todos os direitos reservados.</p>
+        <p>&copy; 2024 Lucas Despachante - Documentação Veicular & Trânsito. Todos os direitos reservados.</p>
+        <p>Rapidez & Segurança em cada atendimento.</p>
         <div class="footer-links">
             <a href="#">Política de Privacidade</a>
             <a href="#">Termos de Serviço</a>
-            <a href="mailto:contato@maikdespachante.com">contato@maikdespachante.com</a>
+            <a href="#">Transparência</a>
+            <a href="#">Avaliações</a>
         </div>
     </footer>
 
+    <!-- MODAL DE CONFIRMAÇÃO -->
+    <div id="confirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>✓ Agendamento Confirmado!</h2>
+            <p>Seu agendamento foi realizado com sucesso!</p>
+            <p>Entraremos em contato para confirmar via WhatsApp ou telefone nos próximos minutos.</p>
+            <button class="btn-primary" onclick="closeModal()" style="width: 100%; margin-top: 20px;">Fechar</button>
+        </div>
+    </div>
+
     <script>
-        // Formulário
+        function scrollToAgendamento() {
+            document.getElementById('agendar').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToServicos() {
+            document.getElementById('servicos').scrollIntoView({ behavior: 'smooth' });
+        }
+
         function handleSubmit(event) {
             event.preventDefault();
-            
+
             const nome = document.getElementById('nome').value;
             const telefone = document.getElementById('telefone').value;
+            const email = document.getElementById('email').value;
             const servico = document.getElementById('servico').value;
+            const data = document.getElementById('data').value;
+            const horario = document.getElementById('horario').value;
             const mensagem = document.getElementById('mensagem').value;
-            
-            const whatsappMessage = `Olá! Me chamo ${nome}. Gostaria de solicitar o serviço de ${servico}. ${mensagem}`;
+
+            // Mensagem WhatsApp
+            const whatsappMessage = `*NOVO AGENDAMENTO* 📅\n\n👤 Nome: ${nome}\n📧 Email: ${email}\n📱 Telefone: ${telefone}\n🚗 Serviço: ${servico}\n📅 Data: ${data}\n⏰ Horário: ${horario}\n💬 Observações: ${mensagem || 'Nenhuma'}`;
+
             const whatsappLink = `https://wa.me/5511999999999?text=${encodeURIComponent(whatsappMessage)}`;
-            
-            // Aqui você coloca seu número do WhatsApp
-            window.open(whatsappLink, '_blank');
-            
+
+            // Abrir modal
+            document.getElementById('confirmModal').style.display = 'block';
+
+            // Abrir WhatsApp após 1 segundo
+            setTimeout(() => {
+                window.open(whatsappLink, '_blank');
+            }, 1000);
+
+            // Limpar formulário
             event.target.reset();
         }
 
-        // Animações ao scroll
+        function closeModal() {
+            document.getElementById('confirmModal').style.display = 'none';
+        }
+
+        // Fechar modal ao clicar fora
+        window.onclick = function(event) {
+            const modal = document.getElementById('confirmModal');
+            if (event.target == modal) {
+                modal.style.display = 'none';
+            }
+        }
+
+        // Animação ao scroll
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    entry.target.classList.add('animate');
+                    entry.target.style.animation = 'slideInUp 0.6s ease-out forwards';
                 }
             });
         }, { threshold: 0.1 });
